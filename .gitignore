@@ -84,3 +84,6 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Antigravity AI agent configuration (local tooling, not app source)
+.agents/

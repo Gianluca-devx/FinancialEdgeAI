@@ -87,3 +87,9 @@ fastlane/test_output
 
 # Antigravity AI agent configuration (local tooling, not app source)
 .agents/
+
+# Local agent context
+.claude/
+CLAUDE.local.md
+status.md
+CLAUDE.local.md.bak

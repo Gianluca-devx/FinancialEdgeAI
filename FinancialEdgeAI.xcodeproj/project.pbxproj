@@ -10,6 +10,9 @@
 		AF9EE09D306E93E9000CFE94 /* MLXHuggingFace in Frameworks */ = {isa = PBXBuildFile; productRef = AF9EE09C306E93E9000CFE94 /* MLXHuggingFace */; };
 		AF9EE09F306E93E9000CFE94 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = AF9EE09E306E93E9000CFE94 /* MLXLLM */; };
 		AF9EE0A1306E93E9000CFE94 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = AF9EE0A0306E93E9000CFE94 /* MLXLMCommon */; };
+		AFE7D36F3071968900417E9E /* Hub in Frameworks */ = {isa = PBXBuildFile; productRef = AFE7D36E3071968900417E9E /* Hub */; };
+		AFE7D3713071968900417E9E /* Tokenizers in Frameworks */ = {isa = PBXBuildFile; productRef = AFE7D3703071968900417E9E /* Tokenizers */; };
+		AFE7D3733071968900417E9E /* Transformers in Frameworks */ = {isa = PBXBuildFile; productRef = AFE7D3723071968900417E9E /* Transformers */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,9 +31,12 @@
 		AF9EE05F306E46A7000CFE94 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				AFE7D3733071968900417E9E /* Transformers in Frameworks */,
 				AF9EE09F306E93E9000CFE94 /* MLXLLM in Frameworks */,
 				AF9EE0A1306E93E9000CFE94 /* MLXLMCommon in Frameworks */,
+				AFE7D36F3071968900417E9E /* Hub in Frameworks */,
 				AF9EE09D306E93E9000CFE94 /* MLXHuggingFace in Frameworks */,
+				AFE7D3713071968900417E9E /* Tokenizers in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -73,6 +79,9 @@
 				AF9EE09C306E93E9000CFE94 /* MLXHuggingFace */,
 				AF9EE09E306E93E9000CFE94 /* MLXLLM */,
 				AF9EE0A0306E93E9000CFE94 /* MLXLMCommon */,
+				AFE7D36E3071968900417E9E /* Hub */,
+				AFE7D3703071968900417E9E /* Tokenizers */,
+				AFE7D3723071968900417E9E /* Transformers */,
 			);
 			productName = FinancialEdgeAI;
 			productReference = AF9EE062306E46A7000CFE94 /* FinancialEdgeAI.app */;
@@ -104,6 +113,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				AF9EE09B306E93E9000CFE94 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */,
+				AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AF9EE063306E46A7000CFE94 /* Products */;
@@ -347,6 +357,16 @@
 				minimumVersion = 3.32.3;
 			};
 		};
+		AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/huggingface/swift-transformers";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.4;
+			};
+			traits = (
+			);
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -364,6 +384,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AF9EE09B306E93E9000CFE94 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
 			productName = MLXLMCommon;
+		};
+		AFE7D36E3071968900417E9E /* Hub */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */;
+			productName = Hub;
+		};
+		AFE7D3703071968900417E9E /* Tokenizers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */;
+			productName = Tokenizers;
+		};
+		AFE7D3723071968900417E9E /* Transformers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */;
+			productName = Transformers;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

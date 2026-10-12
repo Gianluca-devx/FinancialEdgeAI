@@ -14,11 +14,11 @@ struct FinancialEdgeAIApp: App {
         Memory.cacheLimit = 20 * 1024 * 1024
     }
     
-    @State var loader = LLMService()
+    @State var viewModel = ChatViewModel(service: LLMService())
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: viewModel)
         }
     }
 }

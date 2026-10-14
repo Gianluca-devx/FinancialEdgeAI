@@ -8,22 +8,37 @@ import SwiftUI
 
 @MainActor @Observable
 class ChatViewModel {
-    var progress: Double = 0
-    var modelLoaded: Bool = false
-    var response: String = ""
-    var errorMessage: String? = nil
     private let service: LLMService
+    var progress: Double { service.progress }
+    var modelLoaded: Bool { service.isLoaded }
+    var response: String = ""
+    var isResponding: Bool = false
+    var errorMessage: String? = nil
     
     init(service: LLMService) {
         self.service = service
     }
     
     func loadModel() async {
-        
+        errorMessage = nil
+        do {
+            try await service.loadModel()
+        } catch {
+            errorMessage = "An Error Occurred: \(error.localizedDescription)"
+        }
     }
     
     func sendMessage(to message: String) async {
-        
+        guard isResponding == false && modelLoaded == true else { return }
+        isResponding = true
+        errorMessage = nil
+        defer { isResponding = false }
+
+        do {
+            response = try await service.respond(to: message)
+        } catch {
+            errorMessage = "An Error Occurred: \(error.localizedDescription)"
+        }
     }
     
 }

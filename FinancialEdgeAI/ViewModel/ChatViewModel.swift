@@ -38,6 +38,7 @@ class ChatViewModel {
         guard isResponding == false && modelLoaded == true else { return }
         isResponding = true
         errorMessage = nil
+        textInput = ""
         defer { isResponding = false }
 
         do {

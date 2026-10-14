@@ -23,15 +23,32 @@ struct ContentView: View {
                     Text(viewModel.progress >= 1 ? "Loading model into memory..." : "Connecting...")
                 }
             } else {
+                Text(viewModel.modelInfo)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                 ScrollView {
                     Text(viewModel.response)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .textSelection(.enabled)
+                }
+                if let summary = viewModel.performanceSummary {
+                    Text(summary)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                if viewModel.isResponding {
+                    ProgressView()
                 }
                 HStack {
-                    TextField("Enter your prompt", text: $viewModel.textInput)
+                    TextField("Financial statement", text: $viewModel.textInput, axis: .vertical)
+                        .lineLimit(1...4)
+                    Button("Sample") {
+                        viewModel.useSampleStatement()
+                    }
                     Button("Send") {
                         Task { await viewModel.sendMessage(to: viewModel.textInput) }
                     }
-                    .disabled(viewModel.isResponding)
+                    .disabled(viewModel.isResponding || viewModel.textInput.isEmpty)
                 }
             }
         }

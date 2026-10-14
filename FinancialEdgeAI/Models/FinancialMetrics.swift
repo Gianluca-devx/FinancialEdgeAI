@@ -20,4 +20,18 @@ struct FinancialMetrics: Codable, Equatable, Sendable {
         "revenue", "revenueGrowth", "operatingIncome", "operatingIncomeGrowth",
         "netIncome", "netIncomeGrowth", "previousYearNetIncome",
     ]
+
+    /// The value of one of the seven keys.
+    func value(forKey key: String) -> Double? {
+        switch key {
+        case "revenue": revenue
+        case "revenueGrowth": revenueGrowth
+        case "operatingIncome": operatingIncome
+        case "operatingIncomeGrowth": operatingIncomeGrowth
+        case "netIncome": netIncome
+        case "netIncomeGrowth": netIncomeGrowth
+        case "previousYearNetIncome": previousYearNetIncome
+        default: nil
+        }
+    }
 }

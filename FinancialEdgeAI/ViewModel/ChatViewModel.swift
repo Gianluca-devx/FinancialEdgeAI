@@ -9,11 +9,17 @@ import SwiftUI
 @MainActor @Observable
 class ChatViewModel {
     private let service: LLMService
+
+    var textInput: String = ""
     var progress: Double { service.progress }
     var modelLoaded: Bool { service.isLoaded }
     var response: String = ""
     var isResponding: Bool = false
     var errorMessage: String? = nil
+    var hasError: Bool {
+        get { errorMessage != nil }
+        set { if newValue == false { errorMessage = nil }}
+    }
     
     init(service: LLMService) {
         self.service = service

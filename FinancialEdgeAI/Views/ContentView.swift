@@ -7,14 +7,35 @@
 import SwiftUI
 
 struct ContentView: View {
-    let viewModel: ChatViewModel
+    @Bindable var viewModel: ChatViewModel
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if viewModel.modelLoaded == false {
+                ProgressView(value: viewModel.progress)
+                    .progressViewStyle(.linear)
+                    .padding()
+                Text("Loading...")
+            } else {
+                Text(viewModel.response)
+                HStack {
+                    TextField("Enter your prompt", text: $viewModel.textInput)
+                    Button("Send") {
+                        Task { await viewModel.sendMessage(to: viewModel.textInput) }
+                    }
+                    .disabled(viewModel.isResponding)
+                }
+            }
+        }
+        .task {
+            await viewModel.loadModel()
+        }
+        .alert("Fail to load model", isPresented: $viewModel.hasError) {
+            Button("Retry") {
+                Task { await viewModel.loadModel() }
+            }
+        } message: {
+            Text(viewModel.errorMessage ?? "Unknown error")
         }
         .padding()
     }

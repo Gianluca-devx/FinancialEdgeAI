@@ -93,3 +93,6 @@ fastlane/test_output
 CLAUDE.local.md
 status.md
 CLAUDE.local.md.bak
+
+# Python cache
+__pycache__/

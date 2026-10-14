@@ -67,9 +67,5 @@ struct EvaluationView: View {
             }
             .navigationTitle("Evaluation")
         }
-        .onChange(of: viewModel.isRunning) { _, isRunning in
-            // An auto-locked phone would pause the app in the middle of the evaluation.
-            UIApplication.shared.isIdleTimerDisabled = isRunning
-        }
     }
 }

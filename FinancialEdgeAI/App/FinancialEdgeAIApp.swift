@@ -5,6 +5,7 @@
 //  Created by Gianluca Pascarella on 01/10/2026.
 //
 import SwiftUI
+import UIKit
 import MLX
 
 @main
@@ -31,6 +32,13 @@ struct FinancialEdgeAIApp: App {
                 Tab("Evaluate", systemImage: "chart.bar") {
                     EvaluationView(viewModel: evaluationViewModel)
                 }
+            }
+            // iOS does not allow GPU work in the background, and MLX stops the app with a fatal
+            // error if it is attempted. A locked screen sends the app to the background, so the
+            // screen must stay on while the evaluation runs. This lives here, not in a tab,
+            // because a tab only exists while it is on screen.
+            .onChange(of: evaluationViewModel.isRunning) { _, isRunning in
+                UIApplication.shared.isIdleTimerDisabled = isRunning
             }
         }
     }

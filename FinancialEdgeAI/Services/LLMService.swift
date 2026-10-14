@@ -13,7 +13,7 @@ import HuggingFace
 import Tokenizers
 
 //Here is were the model is choosed
-private let modelConfiguration = LLMRegistry.gemma3_1B_qat_4bit
+private let modelConfiguration = LLMRegistry.qwen3_4b_4bit
 
 //Here the accuracy and creativness of the model is chosen
 //More the temperature is high, more creative it will be

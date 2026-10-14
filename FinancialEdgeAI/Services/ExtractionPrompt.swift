@@ -12,7 +12,6 @@ import Foundation
 /// with the app, so the dataset, the fine-tuning data and the app always use the same words.
 /// `Scripts/validate_dataset.py` fails if a bundled copy differs from the one in `Dataset/`.
 enum ExtractionPrompt {
-    static let placeholder = "<<STATEMENT>>"
 
     /// The statement from the first test on the iPhone.
     static let sampleStatement =
@@ -21,10 +20,15 @@ enum ExtractionPrompt {
         + "of 8%. Net income was $21 billion, down 4% from $21.9 billion in the previous year."
 
     static let system = load("system_prompt")
-    private static let template = load("prompt_template")
+    static let template: PromptTemplate = {
+        guard let template = PromptTemplate(text: load("prompt_template")) else {
+            preconditionFailure("prompt_template.txt must contain \(PromptTemplate.placeholder) exactly once")
+        }
+        return template
+    }()
 
     static func userPrompt(for statement: String) -> String {
-        template.replacingOccurrences(of: placeholder, with: statement)
+        template.render(statement)
     }
 
     private static func load(_ name: String) -> String {

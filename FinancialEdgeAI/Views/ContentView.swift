@@ -12,12 +12,20 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if viewModel.modelLoaded == false {
-                ProgressView(value: viewModel.progress)
-                    .progressViewStyle(.linear)
-                    .padding()
-                Text("Loading...")
+                if viewModel.progress > 0 && viewModel.progress < 1 {
+                    ProgressView(value: viewModel.progress)
+                        .progressViewStyle(.linear)
+                        .padding()
+                    Text("Downloading model... \(Int(viewModel.progress * 100))%")
+                } else {
+                    ProgressView()
+                        .padding()
+                    Text(viewModel.progress >= 1 ? "Loading model into memory..." : "Connecting...")
+                }
             } else {
-                Text(viewModel.response)
+                ScrollView {
+                    Text(viewModel.response)
+                }
                 HStack {
                     TextField("Enter your prompt", text: $viewModel.textInput)
                     Button("Send") {

@@ -18,7 +18,15 @@ private let modelConfiguration = LLMRegistry.qwen3_4b_4bit
 //Here the accuracy and creativness of the model is chosen
 //More the temperature is high, more creative it will be
 //maxTokens stops an answer that never ends
-private let generateParameters = GenerateParameters(maxTokens: 256, temperature: 0.2)
+enum GenerationSettings {
+    static let temperature: Float = 0.2
+    static let maxTokens = 256
+}
+
+private let generateParameters = GenerateParameters(
+    maxTokens: GenerationSettings.maxTokens,
+    temperature: GenerationSettings.temperature
+)
 
 enum LLMServiceError: LocalizedError {
     case modelNotLoaded

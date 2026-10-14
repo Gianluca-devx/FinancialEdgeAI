@@ -10,15 +10,28 @@ import MLX
 @main
 struct FinancialEdgeAIApp: App {
     
+    @State private var chatViewModel: ChatViewModel
+    @State private var evaluationViewModel: EvaluationViewModel
+    
     init() {
         Memory.cacheLimit = 20 * 1024 * 1024
+        
+        // One service, so the model is in memory once and both screens use it.
+        let service = LLMService()
+        _chatViewModel = State(initialValue: ChatViewModel(service: service))
+        _evaluationViewModel = State(initialValue: EvaluationViewModel(service: service))
     }
-    
-    @State var viewModel = ChatViewModel(service: LLMService())
     
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: viewModel)
+            TabView {
+                Tab("Extract", systemImage: "text.magnifyingglass") {
+                    ContentView(viewModel: chatViewModel)
+                }
+                Tab("Evaluate", systemImage: "chart.bar") {
+                    EvaluationView(viewModel: evaluationViewModel)
+                }
+            }
         }
     }
 }

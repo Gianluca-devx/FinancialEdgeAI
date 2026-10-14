@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATASET = ROOT / "Dataset"
 BUNDLE = ROOT / "FinancialEdgeAI" / "Resources"
 # Files that the app bundles; the copy must never drift from Dataset/.
-BUNDLED = ["prompt_template.txt", "system_prompt.txt"]
+BUNDLED = ["prompt_template.txt", "system_prompt.txt", "test.jsonl", "index.csv"]
 KEYS = [
     "revenue", "revenueGrowth", "operatingIncome", "operatingIncomeGrowth",
     "netIncome", "netIncomeGrowth", "previousYearNetIncome",

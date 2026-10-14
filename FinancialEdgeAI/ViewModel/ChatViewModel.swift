@@ -6,6 +6,13 @@
 //
 import SwiftUI
 
+/// One line of the decoded result, ready to show.
+struct MetricRow: Identifiable {
+    let label: String
+    let value: String
+    var id: String { label }
+}
+
 @MainActor @Observable
 class ChatViewModel {
     private let service: LLMService
@@ -14,6 +21,7 @@ class ChatViewModel {
     var progress: Double { service.progress }
     var modelLoaded: Bool { service.isLoaded }
     var result: GenerationResult? = nil
+    var outcome: ParseOutcome? = nil
     var response: String { result?.text ?? "" }
     var isResponding: Bool = false
     var errorMessage: String? = nil
@@ -36,6 +44,40 @@ class ChatViewModel {
         let total = result.totalTime.formatted(.number.precision(.fractionLength(1)))
         let peak = Int64(result.peakMemory).formatted(.byteCount(style: .memory))
         return "\(result.generatedTokens) tokens - \(speed) tokens/s - first token \(firstToken) s - total \(total) s - peak memory \(peak)"
+    }
+    
+    /// Whether the answer could be read, and what had to be skipped to read it.
+    var parseStatus: String? {
+        guard let outcome else { return nil }
+        switch outcome.failure {
+        case nil:
+            let skipped = [outcome.hadThinking ? "a reasoning block" : nil,
+                           outcome.hadFence ? "a code fence" : nil].compactMap { $0 }
+            return skipped.isEmpty ? "Decoded" : "Decoded, after skipping \(skipped.joined(separator: " and "))"
+        case .noJSON:
+            return "No JSON found in the answer"
+        case .invalidJSON:
+            return "The answer is not valid JSON"
+        case .wrongSchema(let problem):
+            return "Valid JSON, wrong schema: \(problem)"
+        }
+    }
+    
+    /// The seven decoded values. A missing value is shown as null, not hidden.
+    var metricRows: [MetricRow] {
+        guard let metrics = outcome?.metrics else { return [] }
+        func show(_ value: Double?) -> String {
+            value.map { $0.formatted(.number.precision(.fractionLength(0...3))) } ?? "null"
+        }
+        return [
+            MetricRow(label: "Revenue", value: show(metrics.revenue)),
+            MetricRow(label: "Revenue growth", value: show(metrics.revenueGrowth)),
+            MetricRow(label: "Operating income", value: show(metrics.operatingIncome)),
+            MetricRow(label: "Operating income growth", value: show(metrics.operatingIncomeGrowth)),
+            MetricRow(label: "Net income", value: show(metrics.netIncome)),
+            MetricRow(label: "Net income growth", value: show(metrics.netIncomeGrowth)),
+            MetricRow(label: "Previous-year net income", value: show(metrics.previousYearNetIncome)),
+        ]
     }
     
     init(service: LLMService) {
@@ -63,7 +105,9 @@ class ChatViewModel {
         defer { isResponding = false }
 
         do {
-            result = try await service.generate(statement: statement)
+            let generated = try await service.generate(statement: statement)
+            result = generated
+            outcome = MetricsParser.parse(generated.text)
         } catch {
             errorMessage = "An Error Occurred: \(error.localizedDescription)"
         }

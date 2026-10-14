@@ -27,9 +27,29 @@ struct ContentView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 ScrollView {
-                    Text(viewModel.response)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .textSelection(.enabled)
+                    VStack(alignment: .leading, spacing: 8) {
+                        if let status = viewModel.parseStatus {
+                            Text(status)
+                                .font(.headline)
+                        }
+                        ForEach(viewModel.metricRows) { row in
+                            HStack {
+                                Text(row.label)
+                                Spacer()
+                                Text(row.value)
+                                    .monospacedDigit()
+                            }
+                        }
+                        if viewModel.response.isEmpty == false {
+                            DisclosureGroup("Raw answer") {
+                                Text(viewModel.response)
+                                    .font(.caption.monospaced())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .textSelection(.enabled)
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 if let summary = viewModel.performanceSummary {
                     Text(summary)

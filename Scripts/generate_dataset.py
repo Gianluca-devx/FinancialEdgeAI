@@ -31,7 +31,7 @@ KEYS = (
     "netIncomeGrowth",
     "previousYearNetIncome",
 )
-SYSTEM = "You are a financial expert that is able to retrieve JSON from unstructured text"
+SYSTEM = (DATASET / "system_prompt.txt").read_text().strip()
 
 # Generated statements per split. Hand-written ones are added on top.
 GENERATED = {"train": 225, "valid": 28, "test": 27}

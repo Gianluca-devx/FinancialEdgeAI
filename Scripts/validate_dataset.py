@@ -8,7 +8,8 @@ Checks, for every line of train/valid/test.jsonl:
     each a number or null (the same shape as the Swift Decodable struct)
   - every non-null value is grounded in the statement: its number appears in
     the text (a percentage may be negative, an amount may be stated in millions)
-and across files: no statement appears twice (no train/test leakage).
+and across files: no statement appears twice (no train/test leakage), and the copies of the
+prompt files bundled in the app (FinancialEdgeAI/Resources) are byte-identical to Dataset/.
 
 Usage: python3 Scripts/validate_dataset.py
 Exit code 0 if everything is valid, 1 otherwise.
@@ -20,7 +21,11 @@ from collections import Counter
 from decimal import Decimal
 from pathlib import Path
 
-DATASET = Path(__file__).resolve().parent.parent / "Dataset"
+ROOT = Path(__file__).resolve().parent.parent
+DATASET = ROOT / "Dataset"
+BUNDLE = ROOT / "FinancialEdgeAI" / "Resources"
+# Files that the app bundles; the copy must never drift from Dataset/.
+BUNDLED = ["prompt_template.txt", "system_prompt.txt"]
 KEYS = [
     "revenue", "revenueGrowth", "operatingIncome", "operatingIncomeGrowth",
     "netIncome", "netIncomeGrowth", "previousYearNetIncome",
@@ -40,6 +45,7 @@ def grounded(value, nums):
 def main():
     template = (DATASET / "prompt_template.txt").read_text().rstrip("\n")
     prefix, suffix = template.split("<<STATEMENT>>")
+    system = (DATASET / "system_prompt.txt").read_text().strip()
     errors = []
     seen = {}
     counts = {}
@@ -57,6 +63,8 @@ def main():
                 if roles != ["system", "user", "assistant"]:
                     errors.append(f"{where}: roles are {roles}")
                     continue
+                if messages[0]["content"] != system:
+                    errors.append(f"{where}: system message does not match system_prompt.txt")
                 user, assistant = messages[1]["content"], messages[2]["content"]
                 if not (user.startswith(prefix) and user.endswith(suffix)):
                     errors.append(f"{where}: user message does not match prompt_template.txt")
@@ -86,6 +94,13 @@ def main():
                 errors.append(f"{where}: statement already used in {seen[statement]}")
             seen[statement] = where
 
+    for name in BUNDLED:
+        copy = BUNDLE / name
+        if not copy.exists():
+            errors.append(f"FinancialEdgeAI/Resources/{name} is missing")
+        elif copy.read_bytes() != (DATASET / name).read_bytes():
+            errors.append(f"FinancialEdgeAI/Resources/{name} differs from Dataset/{name}")
+
     print("lines per split:", counts)
     print("non-null labels per field (all splits):")
     for key in KEYS:
@@ -95,7 +110,7 @@ def main():
         for e in errors[:50]:
             print(" -", e)
         sys.exit(1)
-    print("\nOK: all files are valid, every label is grounded, no statement is shared between files.")
+    print("\nOK: all files are valid, every label is grounded, no statement is shared between files, bundled copies match.")
 
 
 if __name__ == "__main__":

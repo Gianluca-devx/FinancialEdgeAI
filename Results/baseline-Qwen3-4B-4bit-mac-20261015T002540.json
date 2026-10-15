@@ -1,0 +1,5319 @@
+{
+  "byPool" : {
+    "A" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 0.907563025210084,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 45,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 6,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 45,
+          "hallucinated" : 6,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 48,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 3,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 51,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 39,
+          "hallucinated" : 9,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 3,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 45,
+          "hallucinated" : 3,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 3,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 51,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 33,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 1.0014688968658447,
+      "medianTokensPerSecond" : 10.306436833191187,
+      "medianTotalTime" : 8.352707084,
+      "peakMemory" : 2876232872,
+      "records" : 51,
+      "schemaValid" : 51,
+      "thinking" : 0,
+      "validJSON" : 51
+    },
+    "B" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 0.9010989010989011,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 33,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 6,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 36,
+          "hallucinated" : 3,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 36,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 3,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 39,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 27,
+          "hallucinated" : 6,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 6,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 36,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 3,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 39,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 24,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 1.022320032119751,
+      "medianTokensPerSecond" : 10.26774752580245,
+      "medianTotalTime" : 7.756622708,
+      "peakMemory" : 2876232872,
+      "records" : 39,
+      "schemaValid" : 39,
+      "thinking" : 0,
+      "validJSON" : 39
+    }
+  },
+  "byScenario" : {
+    "amounts_only" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 9,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 0.9934158325195312,
+      "medianTokensPerSecond" : 10.235520893898808,
+      "medianTotalTime" : 7.699084625,
+      "peakMemory" : 2876232872,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "full" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 0.7714285714285715,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 6,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 15,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 6,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 15,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 6,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 6,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 15,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 9,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 1.141711950302124,
+      "medianTokensPerSecond" : 10.262837695283958,
+      "medianTotalTime" : 8.976610459,
+      "peakMemory" : 2876232872,
+      "records" : 15,
+      "schemaValid" : 15,
+      "thinking" : 0,
+      "validJSON" : 15
+    },
+    "growth_only" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 9,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 0.966405987739563,
+      "medianTokensPerSecond" : 10.344063696126733,
+      "medianTotalTime" : 7.6850299159999995,
+      "peakMemory" : 2876232872,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "hand" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 0.9047619047619048,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 3,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 6,
+          "hallucinated" : 3,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 6,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 0.9816319942474365,
+      "medianTokensPerSecond" : 10.277262468111871,
+      "medianTotalTime" : 8.207271333,
+      "peakMemory" : 2876232872,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "mixed" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 0.7142857142857143,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 0,
+          "hallucinated" : 3,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 0,
+          "hallucinated" : 3,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 0,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 0.9689029455184937,
+      "medianTokensPerSecond" : 10.273832353552281,
+      "medianTotalTime" : 8.487983125,
+      "peakMemory" : 2876232872,
+      "records" : 3,
+      "schemaValid" : 3,
+      "thinking" : 0,
+      "validJSON" : 3
+    },
+    "net_only" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 0.8571428571428571,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 3,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 3,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 3,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 0.9570064544677734,
+      "medianTokensPerSecond" : 10.32866241868695,
+      "medianTotalTime" : 7.7672362915,
+      "peakMemory" : 2876232872,
+      "records" : 6,
+      "schemaValid" : 6,
+      "thinking" : 0,
+      "validJSON" : 6
+    },
+    "no_operating" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 9,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 1.0630649328231812,
+      "medianTokensPerSecond" : 10.292828309858654,
+      "medianTotalTime" : 8.336132625,
+      "peakMemory" : 2876232872,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "no_prior" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 0.8571428571428571,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 0,
+          "hallucinated" : 9,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 0,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 1.077962040901184,
+      "medianTokensPerSecond" : 10.441809532304546,
+      "medianTotalTime" : 8.857003042,
+      "peakMemory" : 2876232872,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "none" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 6,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 0.9667900204658508,
+      "medianTokensPerSecond" : 10.36837652221799,
+      "medianTotalTime" : 6.900672417,
+      "peakMemory" : 2876232872,
+      "records" : 6,
+      "schemaValid" : 6,
+      "thinking" : 0,
+      "validJSON" : 6
+    },
+    "prior_no_growth" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 0.8571428571428571,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 0,
+          "hallucinated" : 9,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 0,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 1.1105680465698242,
+      "medianTokensPerSecond" : 10.673347536088608,
+      "medianTotalTime" : 9.00182075,
+      "peakMemory" : 2876232872,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "revenue_only" : {
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "netIncome" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "netIncomeGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncome" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "operatingIncomeGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "previousYearNetIncome" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenue" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        },
+        "revenueGrowth" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 6,
+      "generationFailures" : 0,
+      "maxThermalState" : 0,
+      "medianFirstTokenTime" : 0.9066055417060852,
+      "medianTokensPerSecond" : 10.225858733059773,
+      "medianTotalTime" : 7.435428208499999,
+      "peakMemory" : 2876232872,
+      "records" : 6,
+      "schemaValid" : 6,
+      "thinking" : 0,
+      "validJSON" : 6
+    }
+  },
+  "metadata" : {
+    "date" : "2026-10-15T00:25:40Z",
+    "device" : "iPad8,6",
+    "examples" : 30,
+    "maxTokens" : 256,
+    "model" : "mlx-community\/Qwen3-4B-4bit",
+    "modelLoadSeconds" : 1.5879802079999998,
+    "promptHash" : "47ac4b0a26b034438affa40c6131c67c39a8a4122a9b818bfb6bd21c4a7161af",
+    "runs" : 3,
+    "seeds" : [
+      1,
+      2,
+      3
+    ],
+    "system" : "iOS Version 27.0.1 (Build 26A434)",
+    "temperature" : 0.20000000298023224,
+    "testSetHash" : "fb56534b71a09c03cbd85083b2b9b57a7b46e6819cf9a0009abf3b5dfae5844c"
+  },
+  "records" : [
+    {
+      "exampleID" : 1,
+      "expected" : {
+        "netIncomeGrowth" : -7.1,
+        "operatingIncomeGrowth" : 1,
+        "revenueGrowth" : 19
+      },
+      "extracted" : {
+        "netIncomeGrowth" : -7.1,
+        "operatingIncomeGrowth" : 1,
+        "revenueGrowth" : 19
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.9369150400161743,
+        "generatedTokens" : 67,
+        "peakMemory" : 2800865532,
+        "promptTime" : 0.9138798713684082,
+        "promptTokens" : 271,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": 19,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": 1,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": -7.1,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 34.591088723974444,
+        "totalTime" : 2.889957542
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "growth_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 2,
+      "expected" : {
+        "netIncome" : 3,
+        "netIncomeGrowth" : -23.1,
+        "previousYearNetIncome" : 3.9,
+        "revenue" : 29,
+        "revenueGrowth" : -29.8
+      },
+      "extracted" : {
+        "netIncome" : 3,
+        "netIncomeGrowth" : -23.1,
+        "previousYearNetIncome" : 3.9,
+        "revenue" : 29,
+        "revenueGrowth" : -29.8
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.180796980857849,
+        "generatedTokens" : 75,
+        "peakMemory" : 2846741684,
+        "promptTime" : 0.9731000661849976,
+        "promptTokens" : 305,
+        "text" : "{\n  \"revenue\": 29,\n  \"revenueGrowth\": -29.8,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 3,\n  \"netIncomeGrowth\": -23.1,\n  \"previousYearNetIncome\": 3.9\n}",
+        "tokensPerSecond" : 34.391096767979576,
+        "totalTime" : 3.17459575
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "no_operating",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 3,
+      "expected" : {
+        "netIncome" : 6,
+        "netIncomeGrowth" : -8.8,
+        "operatingIncome" : 9,
+        "operatingIncomeGrowth" : 35,
+        "revenue" : 55,
+        "revenueGrowth" : 12
+      },
+      "extracted" : {
+        "netIncome" : 6,
+        "netIncomeGrowth" : -8.8,
+        "operatingIncome" : 9,
+        "operatingIncomeGrowth" : 35,
+        "previousYearNetIncome" : 49.1,
+        "revenue" : 55,
+        "revenueGrowth" : 12
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.0985820293426514,
+        "generatedTokens" : 76,
+        "peakMemory" : 2868876456,
+        "promptTime" : 1.0654009580612183,
+        "promptTokens" : 339,
+        "text" : "{\n  \"revenue\": 55,\n  \"revenueGrowth\": 12,\n  \"operatingIncome\": 9,\n  \"operatingIncomeGrowth\": 35,\n  \"netIncome\": 6,\n  \"netIncomeGrowth\": -8.8,\n  \"previousYearNetIncome\": 49.1\n}",
+        "tokensPerSecond" : 36.21492938439287,
+        "totalTime" : 3.183794375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "no_prior",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 4,
+      "expected" : {
+        "netIncome" : 1.081,
+        "operatingIncome" : 1.212,
+        "operatingIncomeGrowth" : -1,
+        "previousYearNetIncome" : 1.006,
+        "revenue" : 8.295,
+        "revenueGrowth" : 19
+      },
+      "extracted" : {
+        "netIncome" : 1.081,
+        "netIncomeGrowth" : -1,
+        "operatingIncome" : 1.212,
+        "operatingIncomeGrowth" : -1,
+        "previousYearNetIncome" : 1.006,
+        "revenue" : 8.295,
+        "revenueGrowth" : 19
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.3854660987854004,
+        "generatedTokens" : 85,
+        "peakMemory" : 2868876456,
+        "promptTime" : 1.0615698099136353,
+        "promptTokens" : 325,
+        "text" : "{\n  \"revenue\": 8.295,\n  \"revenueGrowth\": 19,\n  \"operatingIncome\": 1.212,\n  \"operatingIncomeGrowth\": -1,\n  \"netIncome\": 1.081,\n  \"netIncomeGrowth\": -1,\n  \"previousYearNetIncome\": 1.006\n}",
+        "tokensPerSecond" : 35.63244937468579,
+        "totalTime" : 3.467545292
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "prior_no_growth",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 5,
+      "expected" : {
+        "netIncome" : 26.6,
+        "netIncomeGrowth" : 35.1,
+        "operatingIncome" : 46.4,
+        "operatingIncomeGrowth" : -8,
+        "revenue" : 143.7,
+        "revenueGrowth" : 4
+      },
+      "extracted" : {
+        "netIncome" : 26.6,
+        "netIncomeGrowth" : 35.1,
+        "operatingIncome" : 46.4,
+        "operatingIncomeGrowth" : -8,
+        "previousYearNetIncome" : 50.4,
+        "revenue" : 143.7,
+        "revenueGrowth" : 4
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.380292057991028,
+        "generatedTokens" : 84,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.9727129936218262,
+        "promptTokens" : 312,
+        "text" : "{\n  \"revenue\": 143.7,\n  \"revenueGrowth\": 4,\n  \"operatingIncome\": 46.4,\n  \"operatingIncomeGrowth\": -8,\n  \"netIncome\": 26.6,\n  \"netIncomeGrowth\": 35.1,\n  \"previousYearNetIncome\": 50.4\n}",
+        "tokensPerSecond" : 35.28978711582821,
+        "totalTime" : 3.374259417
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "no_prior",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 6,
+      "expected" : {
+
+      },
+      "extracted" : {
+
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.7001750469207764,
+        "generatedTokens" : 61,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.8776189088821411,
+        "promptTokens" : 277,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 35.878658559586796,
+        "totalTime" : 2.600060709
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "none",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 7,
+      "expected" : {
+
+      },
+      "extracted" : {
+
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6931170225143433,
+        "generatedTokens" : 61,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.8747889995574951,
+        "promptTokens" : 261,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 36.028224386647935,
+        "totalTime" : 2.587364833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "none",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 8,
+      "expected" : {
+        "revenue" : 96.9,
+        "revenueGrowth" : -34
+      },
+      "extracted" : {
+        "revenue" : 96.9,
+        "revenueGrowth" : -34
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.8600269556045532,
+        "generatedTokens" : 67,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.7866411209106445,
+        "promptTokens" : 255,
+        "text" : "{\n  \"revenue\": 96.9,\n  \"revenueGrowth\": -34,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 36.02098335086945,
+        "totalTime" : 2.665279083
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "revenue_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 9,
+      "expected" : {
+        "netIncome" : 0.254,
+        "netIncomeGrowth" : 32,
+        "operatingIncome" : 0.437,
+        "operatingIncomeGrowth" : 18,
+        "previousYearNetIncome" : 0.192,
+        "revenue" : 2.772,
+        "revenueGrowth" : 34
+      },
+      "extracted" : {
+        "netIncome" : 254,
+        "netIncomeGrowth" : 32,
+        "operatingIncome" : 437,
+        "operatingIncomeGrowth" : 18,
+        "previousYearNetIncome" : 192,
+        "revenue" : 2772,
+        "revenueGrowth" : 34
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "unitError",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "unitError",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.2584820985794067,
+        "generatedTokens" : 80,
+        "peakMemory" : 2868876456,
+        "promptTime" : 1.093338966369629,
+        "promptTokens" : 336,
+        "text" : "{\n  \"revenue\": 2772,\n  \"revenueGrowth\": 34,\n  \"operatingIncome\": 437,\n  \"operatingIncomeGrowth\": 18,\n  \"netIncome\": 254,\n  \"netIncomeGrowth\": 32,\n  \"previousYearNetIncome\": 192\n}",
+        "tokensPerSecond" : 35.42202085653913,
+        "totalTime" : 3.372165666
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 10,
+      "expected" : {
+        "netIncome" : 28,
+        "operatingIncome" : 37,
+        "revenue" : 186
+      },
+      "extracted" : {
+        "netIncome" : 28,
+        "operatingIncome" : 37,
+        "revenue" : 186
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.849518060684204,
+        "generatedTokens" : 68,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.8791148662567139,
+        "promptTokens" : 286,
+        "text" : "{\n  \"revenue\": 186,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 37,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 28,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 36.76633467144642,
+        "totalTime" : 2.747332375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "amounts_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 11,
+      "expected" : {
+        "netIncome" : 16.3,
+        "netIncomeGrowth" : 33.6,
+        "previousYearNetIncome" : 12.2,
+        "revenue" : 221.1,
+        "revenueGrowth" : 3
+      },
+      "extracted" : {
+        "netIncome" : 16.3,
+        "netIncomeGrowth" : 33.6,
+        "previousYearNetIncome" : 12.2,
+        "revenue" : 221.1,
+        "revenueGrowth" : 3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.1513760089874268,
+        "generatedTokens" : 79,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.9710369110107422,
+        "promptTokens" : 301,
+        "text" : "{\n  \"revenue\": 221.1,\n  \"revenueGrowth\": 3,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 16.3,\n  \"netIncomeGrowth\": 33.6,\n  \"previousYearNetIncome\": 12.2\n}",
+        "tokensPerSecond" : 36.72068465483279,
+        "totalTime" : 3.141703042
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "no_operating",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 12,
+      "expected" : {
+        "netIncome" : 30.7,
+        "operatingIncome" : 39.3,
+        "operatingIncomeGrowth" : 34,
+        "previousYearNetIncome" : 35.6,
+        "revenue" : 113,
+        "revenueGrowth" : -25.4
+      },
+      "extracted" : {
+        "netIncome" : 30.7,
+        "netIncomeGrowth" : -4.9,
+        "operatingIncome" : 39.3,
+        "operatingIncomeGrowth" : 34,
+        "previousYearNetIncome" : 35.6,
+        "revenue" : 113,
+        "revenueGrowth" : -25.4
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.3115190267562866,
+        "generatedTokens" : 85,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.9829719066619873,
+        "promptTokens" : 307,
+        "text" : "{\n  \"revenue\": 113,\n  \"revenueGrowth\": -25.4,\n  \"operatingIncome\": 39.3,\n  \"operatingIncomeGrowth\": 34,\n  \"netIncome\": 30.7,\n  \"netIncomeGrowth\": -4.9,\n  \"previousYearNetIncome\": 35.6\n}",
+        "tokensPerSecond" : 36.77235576091233,
+        "totalTime" : 3.315021833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "prior_no_growth",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 13,
+      "expected" : {
+        "netIncome" : 6.9,
+        "netIncomeGrowth" : 10,
+        "previousYearNetIncome" : 6.3
+      },
+      "extracted" : {
+        "netIncome" : 6900,
+        "netIncomeGrowth" : 10,
+        "previousYearNetIncome" : 6300
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.9440799951553345,
+        "generatedTokens" : 71,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.8782899379730225,
+        "promptTokens" : 276,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 6900,\n  \"netIncomeGrowth\": 10,\n  \"previousYearNetIncome\": 6300\n}",
+        "tokensPerSecond" : 36.52113090867282,
+        "totalTime" : 2.84104
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "net_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 14,
+      "expected" : {
+        "netIncome" : 8,
+        "netIncomeGrowth" : -33.8,
+        "previousYearNetIncome" : 12.1,
+        "revenue" : 36,
+        "revenueGrowth" : -7
+      },
+      "extracted" : {
+        "netIncome" : 8,
+        "netIncomeGrowth" : -33.8,
+        "previousYearNetIncome" : 12.1,
+        "revenue" : 36,
+        "revenueGrowth" : -7
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.0311440229415894,
+        "generatedTokens" : 73,
+        "peakMemory" : 2868876456,
+        "promptTime" : 1.0710989236831665,
+        "promptTokens" : 337,
+        "text" : "{\n  \"revenue\": 36,\n  \"revenueGrowth\": -7,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 8,\n  \"netIncomeGrowth\": -33.8,\n  \"previousYearNetIncome\": 12.1\n}",
+        "tokensPerSecond" : 35.940336665185505,
+        "totalTime" : 3.122744916
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "no_operating",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 15,
+      "expected" : {
+        "netIncome" : 3.6,
+        "operatingIncome" : 6.2,
+        "operatingIncomeGrowth" : -11,
+        "revenueGrowth" : 28.3
+      },
+      "extracted" : {
+        "netIncome" : 3.6,
+        "operatingIncome" : 6.2,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 7,
+        "revenue" : 3.6,
+        "revenueGrowth" : 28.3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "hallucinated",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.0741779804229736,
+        "generatedTokens" : 77,
+        "peakMemory" : 2868876456,
+        "promptTime" : 0.8810720443725586,
+        "promptTokens" : 278,
+        "text" : "{\n  \"revenue\": 3.6,\n  \"revenueGrowth\": 28.3,\n  \"operatingIncome\": 6.2,\n  \"operatingIncomeGrowth\": -11,\n  \"netIncome\": 3.6,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": 7\n}",
+        "tokensPerSecond" : 37.12314021591237,
+        "totalTime" : 2.973482708
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "mixed",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 16,
+      "expected" : {
+        "netIncome" : 0.104,
+        "netIncomeGrowth" : 38.1,
+        "operatingIncome" : 0.128,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 0.075,
+        "revenue" : 0.726,
+        "revenueGrowth" : 23.5
+      },
+      "extracted" : {
+        "netIncome" : 104,
+        "netIncomeGrowth" : 38.1,
+        "operatingIncome" : 128,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 75,
+        "revenue" : 726,
+        "revenueGrowth" : 23.5
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "unitError",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "unitError",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 5.747557044029236,
+        "generatedTokens" : 82,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.073594093322754,
+        "promptTokens" : 344,
+        "text" : "{\n  \"revenue\": 726,\n  \"revenueGrowth\": 23.5,\n  \"operatingIncome\": 128,\n  \"operatingIncomeGrowth\": -11,\n  \"netIncome\": 104,\n  \"netIncomeGrowth\": 38.1,\n  \"previousYearNetIncome\": 75\n}",
+        "tokensPerSecond" : 14.266931040760088,
+        "totalTime" : 6.833152958
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 17,
+      "expected" : {
+        "netIncome" : 10,
+        "operatingIncome" : 13,
+        "operatingIncomeGrowth" : 11.5,
+        "previousYearNetIncome" : 9.7,
+        "revenue" : 53,
+        "revenueGrowth" : -13
+      },
+      "extracted" : {
+        "netIncome" : 10,
+        "netIncomeGrowth" : 0.3,
+        "operatingIncome" : 13,
+        "operatingIncomeGrowth" : 11.5,
+        "previousYearNetIncome" : 9.7,
+        "revenue" : 53,
+        "revenueGrowth" : -13
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.2929099798202515,
+        "generatedTokens" : 79,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1517369747161865,
+        "promptTokens" : 321,
+        "text" : "{\n  \"revenue\": 53,\n  \"revenueGrowth\": -13,\n  \"operatingIncome\": 13,\n  \"operatingIncomeGrowth\": 11.5,\n  \"netIncome\": 10,\n  \"netIncomeGrowth\": 0.3,\n  \"previousYearNetIncome\": 9.7\n}",
+        "tokensPerSecond" : 10.832438658724143,
+        "totalTime" : 8.470117125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "prior_no_growth",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 18,
+      "expected" : {
+        "netIncome" : 13.3,
+        "netIncomeGrowth" : -8,
+        "previousYearNetIncome" : 14.5
+      },
+      "extracted" : {
+        "netIncome" : 13.3,
+        "netIncomeGrowth" : -8,
+        "previousYearNetIncome" : 14.5
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.780010938644409,
+        "generatedTokens" : 70,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9673739671707153,
+        "promptTokens" : 285,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 13.3,\n  \"netIncomeGrowth\": -8,\n  \"previousYearNetIncome\": 14.5\n}",
+        "tokensPerSecond" : 10.324467118632075,
+        "totalTime" : 7.770914166
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "net_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 19,
+      "expected" : {
+        "netIncomeGrowth" : -38.1,
+        "operatingIncomeGrowth" : -17,
+        "revenueGrowth" : -3.5
+      },
+      "extracted" : {
+        "netIncomeGrowth" : -38.1,
+        "operatingIncomeGrowth" : -17,
+        "revenueGrowth" : -3.5
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.79302704334259,
+        "generatedTokens" : 70,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.953590989112854,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": -3.5,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": -17,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": -38.1,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.304684429101826,
+        "totalTime" : 7.774334417
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "growth_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 20,
+      "expected" : {
+        "netIncome" : 39,
+        "netIncomeGrowth" : -2,
+        "operatingIncome" : 48,
+        "operatingIncomeGrowth" : 4,
+        "previousYearNetIncome" : 39.8,
+        "revenue" : 230,
+        "revenueGrowth" : 7
+      },
+      "extracted" : {
+        "netIncome" : 39,
+        "netIncomeGrowth" : -2,
+        "operatingIncome" : 48,
+        "operatingIncomeGrowth" : 4,
+        "previousYearNetIncome" : 39.8,
+        "revenue" : 230,
+        "revenueGrowth" : 7
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.1424720287323,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9716689586639404,
+        "promptTokens" : 286,
+        "text" : "{\n  \"revenue\": 230,\n  \"revenueGrowth\": 7,\n  \"operatingIncome\": 48,\n  \"operatingIncomeGrowth\": 4,\n  \"netIncome\": 39,\n  \"netIncomeGrowth\": -2,\n  \"previousYearNetIncome\": 39.8\n}",
+        "tokensPerSecond" : 10.500566148287957,
+        "totalTime" : 8.138877125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "hand",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 21,
+      "expected" : {
+        "netIncome" : 13,
+        "netIncomeGrowth" : 8.3,
+        "operatingIncome" : 23,
+        "operatingIncomeGrowth" : 20.4,
+        "revenue" : 198,
+        "revenueGrowth" : 6.1
+      },
+      "extracted" : {
+        "netIncome" : 13,
+        "netIncomeGrowth" : 8.3,
+        "operatingIncome" : 23,
+        "operatingIncomeGrowth" : 20.4,
+        "previousYearNetIncome" : 19.1,
+        "revenue" : 198,
+        "revenueGrowth" : 6.1
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.8530449867248535,
+        "generatedTokens" : 82,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0759450197219849,
+        "promptTokens" : 320,
+        "text" : "{\n  \"revenue\": 198,\n  \"revenueGrowth\": 6.1,\n  \"operatingIncome\": 23,\n  \"operatingIncomeGrowth\": 20.4,\n  \"netIncome\": 13,\n  \"netIncomeGrowth\": 8.3,\n  \"previousYearNetIncome\": 19.1\n}",
+        "tokensPerSecond" : 10.441809532304546,
+        "totalTime" : 8.950866417
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "no_prior",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 22,
+      "expected" : {
+        "netIncome" : 22,
+        "netIncomeGrowth" : 9.7,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 7,
+        "previousYearNetIncome" : 20.1,
+        "revenue" : 74.4,
+        "revenueGrowth" : -8
+      },
+      "extracted" : {
+        "netIncome" : 22,
+        "netIncomeGrowth" : 9.7,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 7,
+        "previousYearNetIncome" : 20.1,
+        "revenue" : 74.4,
+        "revenueGrowth" : -8
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.561280012130737,
+        "generatedTokens" : 78,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.175333023071289,
+        "promptTokens" : 328,
+        "text" : "{\n  \"revenue\": 74.4,\n  \"revenueGrowth\": -8,\n  \"operatingIncome\": 25,\n  \"operatingIncomeGrowth\": 7,\n  \"netIncome\": 22,\n  \"netIncomeGrowth\": 9.7,\n  \"previousYearNetIncome\": 20.1\n}",
+        "tokensPerSecond" : 10.315713725038986,
+        "totalTime" : 8.765548708
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 23,
+      "expected" : {
+        "netIncomeGrowth" : 21.8,
+        "operatingIncomeGrowth" : 13,
+        "revenueGrowth" : -32
+      },
+      "extracted" : {
+        "netIncomeGrowth" : 21.8,
+        "operatingIncomeGrowth" : 13,
+        "revenueGrowth" : -32
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.517622947692871,
+        "generatedTokens" : 69,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9475969076156616,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": -32,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": 13,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": 21.8,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.586681763237753,
+        "totalTime" : 7.487938791
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "growth_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 24,
+      "expected" : {
+        "netIncome" : 57.1,
+        "netIncomeGrowth" : -22,
+        "operatingIncome" : 80.3,
+        "operatingIncomeGrowth" : -15,
+        "previousYearNetIncome" : 73.2,
+        "revenue" : 232,
+        "revenueGrowth" : -3
+      },
+      "extracted" : {
+        "netIncome" : 57.1,
+        "netIncomeGrowth" : -22,
+        "operatingIncome" : 80.3,
+        "operatingIncomeGrowth" : -15,
+        "previousYearNetIncome" : 73.2,
+        "revenue" : 232,
+        "revenueGrowth" : -3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.814517974853516,
+        "generatedTokens" : 81,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0969631671905518,
+        "promptTokens" : 317,
+        "text" : "{\n  \"revenue\": 232,\n  \"revenueGrowth\": -3,\n  \"operatingIncome\": 80.3,\n  \"operatingIncomeGrowth\": -15,\n  \"netIncome\": 57.1,\n  \"netIncomeGrowth\": -22,\n  \"previousYearNetIncome\": 73.2\n}",
+        "tokensPerSecond" : 10.365322629067004,
+        "totalTime" : 8.938244625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 25,
+      "expected" : {
+        "revenue" : 264,
+        "revenueGrowth" : -37
+      },
+      "extracted" : {
+        "revenue" : 264,
+        "revenueGrowth" : -37
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.475361943244934,
+        "generatedTokens" : 66,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9667800664901733,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": 264,\n  \"revenueGrowth\": -37,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.192480447961813,
+        "totalTime" : 7.476594167
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "revenue_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 26,
+      "expected" : {
+        "netIncome" : 16,
+        "netIncomeGrowth" : -28,
+        "operatingIncome" : 28,
+        "operatingIncomeGrowth" : -23.4,
+        "previousYearNetIncome" : 22.2,
+        "revenue" : 147,
+        "revenueGrowth" : 8.6
+      },
+      "extracted" : {
+        "netIncome" : 16,
+        "netIncomeGrowth" : -28,
+        "operatingIncome" : 28,
+        "operatingIncomeGrowth" : -23.4,
+        "previousYearNetIncome" : 22.2,
+        "revenue" : 147,
+        "revenueGrowth" : 8.6
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.934983968734741,
+        "generatedTokens" : 81,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.135483980178833,
+        "promptTokens" : 336,
+        "text" : "{\n  \"revenue\": 147,\n  \"revenueGrowth\": 8.6,\n  \"operatingIncome\": 28,\n  \"operatingIncomeGrowth\": -23.4,\n  \"netIncome\": 16,\n  \"netIncomeGrowth\": -28,\n  \"previousYearNetIncome\": 22.2\n}",
+        "tokensPerSecond" : 10.207960131886153,
+        "totalTime" : 9.099422291
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 27,
+      "expected" : {
+        "netIncome" : 6,
+        "operatingIncome" : 10,
+        "revenue" : 98.3
+      },
+      "extracted" : {
+        "netIncome" : 6,
+        "operatingIncome" : 10,
+        "revenue" : 98.3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.685272932052612,
+        "generatedTokens" : 68,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9819040298461914,
+        "promptTokens" : 282,
+        "text" : "{\n  \"revenue\": 98.3,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 10,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 6,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.17161164415192,
+        "totalTime" : 7.699084625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "amounts_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 28,
+      "expected" : {
+        "netIncome" : 2.1,
+        "netIncomeGrowth" : 14
+      },
+      "extracted" : {
+        "netIncome" : 2100,
+        "netIncomeGrowth" : 14,
+        "previousYearNetIncome" : 1836.36
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.8241740465164185,
+        "generatedTokens" : 74,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9414348602294922,
+        "promptTokens" : 264,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 2100,\n  \"netIncomeGrowth\": 14,\n  \"previousYearNetIncome\": 1836.36\n}",
+        "tokensPerSecond" : 10.843803146810899,
+        "totalTime" : 7.7781485
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "hand",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 29,
+      "expected" : {
+        "netIncome" : 21,
+        "netIncomeGrowth" : -4,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 8,
+        "previousYearNetIncome" : 21.9,
+        "revenue" : 94,
+        "revenueGrowth" : 12
+      },
+      "extracted" : {
+        "netIncome" : 21,
+        "netIncomeGrowth" : -4,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 8,
+        "previousYearNetIncome" : 21.9,
+        "revenue" : 94,
+        "revenueGrowth" : 12
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.420894026756287,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0970079898834229,
+        "promptTokens" : 310,
+        "text" : "{\n  \"revenue\": 94,\n  \"revenueGrowth\": 12,\n  \"operatingIncome\": 25,\n  \"operatingIncomeGrowth\": 8,\n  \"netIncome\": 21,\n  \"netIncomeGrowth\": -4,\n  \"previousYearNetIncome\": 21.9\n}",
+        "tokensPerSecond" : 10.10659897979744,
+        "totalTime" : 8.551528416
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "hand",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 30,
+      "expected" : {
+        "netIncome" : 1.049,
+        "operatingIncome" : 1.191,
+        "revenue" : 3.92
+      },
+      "extracted" : {
+        "netIncome" : 1.049,
+        "operatingIncome" : 1.191,
+        "revenue" : 3.92
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.199120998382568,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0328251123428345,
+        "promptTokens" : 291,
+        "text" : "{\n  \"revenue\": 3.92,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 1.191,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 1.049,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.417938525668662,
+        "totalTime" : 8.260065416
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "amounts_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 1,
+      "expected" : {
+        "netIncomeGrowth" : -7.1,
+        "operatingIncomeGrowth" : 1,
+        "revenueGrowth" : 19
+      },
+      "extracted" : {
+        "netIncomeGrowth" : -7.1,
+        "operatingIncomeGrowth" : 1,
+        "revenueGrowth" : 19
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.477144956588745,
+        "generatedTokens" : 67,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9903030395507812,
+        "promptTokens" : 271,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": 19,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": 1,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": -7.1,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.344063696126733,
+        "totalTime" : 7.4931466669999995
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "growth_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 2,
+      "expected" : {
+        "netIncome" : 3,
+        "netIncomeGrowth" : -23.1,
+        "previousYearNetIncome" : 3.9,
+        "revenue" : 29,
+        "revenueGrowth" : -29.8
+      },
+      "extracted" : {
+        "netIncome" : 3,
+        "netIncomeGrowth" : -23.1,
+        "previousYearNetIncome" : 3.9,
+        "revenue" : 29,
+        "revenueGrowth" : -29.8
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.289683938026428,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0829380750656128,
+        "promptTokens" : 305,
+        "text" : "{\n  \"revenue\": 29,\n  \"revenueGrowth\": -29.8,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 3,\n  \"netIncomeGrowth\": -23.1,\n  \"previousYearNetIncome\": 3.9\n}",
+        "tokensPerSecond" : 10.2885119077337,
+        "totalTime" : 8.397345916999999
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "no_operating",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 3,
+      "expected" : {
+        "netIncome" : 6,
+        "netIncomeGrowth" : -8.8,
+        "operatingIncome" : 9,
+        "operatingIncomeGrowth" : 35,
+        "revenue" : 55,
+        "revenueGrowth" : 12
+      },
+      "extracted" : {
+        "netIncome" : 6,
+        "netIncomeGrowth" : -8.8,
+        "operatingIncome" : 9,
+        "operatingIncomeGrowth" : 35,
+        "previousYearNetIncome" : 49.1,
+        "revenue" : 55,
+        "revenueGrowth" : 12
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.425588965415955,
+        "generatedTokens" : 76,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1413241624832153,
+        "promptTokens" : 339,
+        "text" : "{\n  \"revenue\": 55,\n  \"revenueGrowth\": 12,\n  \"operatingIncome\": 9,\n  \"operatingIncomeGrowth\": 35,\n  \"netIncome\": 6,\n  \"netIncomeGrowth\": -8.8,\n  \"previousYearNetIncome\": 49.1\n}",
+        "tokensPerSecond" : 10.234878385265263,
+        "totalTime" : 8.588817083
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "no_prior",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 4,
+      "expected" : {
+        "netIncome" : 1.081,
+        "operatingIncome" : 1.212,
+        "operatingIncomeGrowth" : -1,
+        "previousYearNetIncome" : 1.006,
+        "revenue" : 8.295,
+        "revenueGrowth" : 19
+      },
+      "extracted" : {
+        "netIncome" : 1.081,
+        "netIncomeGrowth" : -1,
+        "operatingIncome" : 1.212,
+        "operatingIncomeGrowth" : -1,
+        "previousYearNetIncome" : 1.006,
+        "revenue" : 8.295,
+        "revenueGrowth" : 19
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 8.348837971687317,
+        "generatedTokens" : 85,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1806540489196777,
+        "promptTokens" : 325,
+        "text" : "{\n  \"revenue\": 8.295,\n  \"revenueGrowth\": 19,\n  \"operatingIncome\": 1.212,\n  \"operatingIncomeGrowth\": -1,\n  \"netIncome\": 1.081,\n  \"netIncomeGrowth\": -1,\n  \"previousYearNetIncome\": 1.006\n}",
+        "tokensPerSecond" : 10.181057566125137,
+        "totalTime" : 9.554600291
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "prior_no_growth",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 5,
+      "expected" : {
+        "netIncome" : 26.6,
+        "netIncomeGrowth" : 35.1,
+        "operatingIncome" : 46.4,
+        "operatingIncomeGrowth" : -8,
+        "revenue" : 143.7,
+        "revenueGrowth" : 4
+      },
+      "extracted" : {
+        "netIncome" : 26.6,
+        "netIncomeGrowth" : 35.1,
+        "operatingIncome" : 46.4,
+        "operatingIncomeGrowth" : -8,
+        "previousYearNetIncome" : 50.4,
+        "revenue" : 143.7,
+        "revenueGrowth" : 4
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.737337946891785,
+        "generatedTokens" : 84,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0871710777282715,
+        "promptTokens" : 312,
+        "text" : "{\n  \"revenue\": 143.7,\n  \"revenueGrowth\": 4,\n  \"operatingIncome\": 46.4,\n  \"operatingIncomeGrowth\": -8,\n  \"netIncome\": 26.6,\n  \"netIncomeGrowth\": 35.1,\n  \"previousYearNetIncome\": 50.4\n}",
+        "tokensPerSecond" : 10.856447085104273,
+        "totalTime" : 8.857003042
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "no_prior",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 6,
+      "expected" : {
+
+      },
+      "extracted" : {
+
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 5.961174011230469,
+        "generatedTokens" : 61,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9679319858551025,
+        "promptTokens" : 277,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.232883637531788,
+        "totalTime" : 6.948857709
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "none",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 7,
+      "expected" : {
+
+      },
+      "extracted" : {
+
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 5.940932989120483,
+        "generatedTokens" : 61,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9656480550765991,
+        "promptTokens" : 261,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.26774752580245,
+        "totalTime" : 6.933260167
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "none",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 8,
+      "expected" : {
+        "revenue" : 96.9,
+        "revenueGrowth" : -34
+      },
+      "extracted" : {
+        "revenue" : 96.9,
+        "revenueGrowth" : -34
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.623481035232544,
+        "generatedTokens" : 67,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.8564270734786987,
+        "promptTokens" : 255,
+        "text" : "{\n  \"revenue\": 96.9,\n  \"revenueGrowth\": -34,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.1155268118991,
+        "totalTime" : 7.501813167
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "revenue_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 9,
+      "expected" : {
+        "netIncome" : 0.254,
+        "netIncomeGrowth" : 32,
+        "operatingIncome" : 0.437,
+        "operatingIncomeGrowth" : 18,
+        "previousYearNetIncome" : 0.192,
+        "revenue" : 2.772,
+        "revenueGrowth" : 34
+      },
+      "extracted" : {
+        "netIncome" : 254,
+        "netIncomeGrowth" : 32,
+        "operatingIncome" : 437,
+        "operatingIncomeGrowth" : 18,
+        "previousYearNetIncome" : 192,
+        "revenue" : 2772,
+        "revenueGrowth" : 34
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "unitError",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "unitError",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.795114994049072,
+        "generatedTokens" : 80,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1495310068130493,
+        "promptTokens" : 336,
+        "text" : "{\n  \"revenue\": 2772,\n  \"revenueGrowth\": 34,\n  \"operatingIncome\": 437,\n  \"operatingIncomeGrowth\": 18,\n  \"netIncome\": 254,\n  \"netIncomeGrowth\": 32,\n  \"previousYearNetIncome\": 192\n}",
+        "tokensPerSecond" : 10.262837695283958,
+        "totalTime" : 8.976610459
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 10,
+      "expected" : {
+        "netIncome" : 28,
+        "operatingIncome" : 37,
+        "revenue" : 186
+      },
+      "extracted" : {
+        "netIncome" : 28,
+        "operatingIncome" : 37,
+        "revenue" : 186
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.643530964851379,
+        "generatedTokens" : 68,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9920830726623535,
+        "promptTokens" : 286,
+        "text" : "{\n  \"revenue\": 186,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 37,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 28,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.235520893898808,
+        "totalTime" : 7.65809925
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "amounts_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 11,
+      "expected" : {
+        "netIncome" : 16.3,
+        "netIncomeGrowth" : 33.6,
+        "previousYearNetIncome" : 12.2,
+        "revenue" : 221.1,
+        "revenueGrowth" : 3
+      },
+      "extracted" : {
+        "netIncome" : 16.3,
+        "netIncomeGrowth" : 33.6,
+        "previousYearNetIncome" : 12.2,
+        "revenue" : 221.1,
+        "revenueGrowth" : 3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.734027981758118,
+        "generatedTokens" : 79,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0630649328231812,
+        "promptTokens" : 301,
+        "text" : "{\n  \"revenue\": 221.1,\n  \"revenueGrowth\": 3,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 16.3,\n  \"netIncomeGrowth\": 33.6,\n  \"previousYearNetIncome\": 12.2\n}",
+        "tokensPerSecond" : 10.214599712637908,
+        "totalTime" : 8.817153833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "no_operating",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 12,
+      "expected" : {
+        "netIncome" : 30.7,
+        "operatingIncome" : 39.3,
+        "operatingIncomeGrowth" : 34,
+        "previousYearNetIncome" : 35.6,
+        "revenue" : 113,
+        "revenueGrowth" : -25.4
+      },
+      "extracted" : {
+        "netIncome" : 30.7,
+        "netIncomeGrowth" : -4.9,
+        "operatingIncome" : 39.3,
+        "operatingIncomeGrowth" : 34,
+        "previousYearNetIncome" : 35.6,
+        "revenue" : 113,
+        "revenueGrowth" : -25.4
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.963762044906616,
+        "generatedTokens" : 85,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0434579849243164,
+        "promptTokens" : 307,
+        "text" : "{\n  \"revenue\": 113,\n  \"revenueGrowth\": -25.4,\n  \"operatingIncome\": 39.3,\n  \"operatingIncomeGrowth\": 34,\n  \"netIncome\": 30.7,\n  \"netIncomeGrowth\": -4.9,\n  \"previousYearNetIncome\": 35.6\n}",
+        "tokensPerSecond" : 10.673347536088608,
+        "totalTime" : 9.033325541
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "prior_no_growth",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 13,
+      "expected" : {
+        "netIncome" : 6.9,
+        "netIncomeGrowth" : 10,
+        "previousYearNetIncome" : 6.3
+      },
+      "extracted" : {
+        "netIncome" : 6900,
+        "netIncomeGrowth" : 10,
+        "previousYearNetIncome" : 6300
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.925956964492798,
+        "generatedTokens" : 71,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9905810356140137,
+        "promptTokens" : 276,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 6900,\n  \"netIncomeGrowth\": 10,\n  \"previousYearNetIncome\": 6300\n}",
+        "tokensPerSecond" : 10.251290957191138,
+        "totalTime" : 7.944529292
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "net_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 14,
+      "expected" : {
+        "netIncome" : 8,
+        "netIncomeGrowth" : -33.8,
+        "previousYearNetIncome" : 12.1,
+        "revenue" : 36,
+        "revenueGrowth" : -7
+      },
+      "extracted" : {
+        "netIncome" : 8,
+        "netIncomeGrowth" : -33.8,
+        "previousYearNetIncome" : 12.1,
+        "revenue" : 36,
+        "revenueGrowth" : -7
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.118950009346008,
+        "generatedTokens" : 73,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1858110427856445,
+        "promptTokens" : 337,
+        "text" : "{\n  \"revenue\": 36,\n  \"revenueGrowth\": -7,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 8,\n  \"netIncomeGrowth\": -33.8,\n  \"previousYearNetIncome\": 12.1\n}",
+        "tokensPerSecond" : 10.254321199638012,
+        "totalTime" : 8.336132625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "no_operating",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 15,
+      "expected" : {
+        "netIncome" : 3.6,
+        "operatingIncome" : 6.2,
+        "operatingIncomeGrowth" : -11,
+        "revenueGrowth" : 28.3
+      },
+      "extracted" : {
+        "netIncome" : 3.6,
+        "operatingIncome" : 6.2,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 7,
+        "revenue" : 3.6,
+        "revenueGrowth" : 28.3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "hallucinated",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.494768977165222,
+        "generatedTokens" : 77,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0092530250549316,
+        "promptTokens" : 278,
+        "text" : "{\n  \"revenue\": 3.6,\n  \"revenueGrowth\": 28.3,\n  \"operatingIncome\": 6.2,\n  \"operatingIncomeGrowth\": -11,\n  \"netIncome\": 3.6,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": 7\n}",
+        "tokensPerSecond" : 10.273832353552281,
+        "totalTime" : 8.534078542
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "mixed",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 16,
+      "expected" : {
+        "netIncome" : 0.104,
+        "netIncomeGrowth" : 38.1,
+        "operatingIncome" : 0.128,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 0.075,
+        "revenue" : 0.726,
+        "revenueGrowth" : 23.5
+      },
+      "extracted" : {
+        "netIncome" : 104,
+        "netIncomeGrowth" : 38.1,
+        "operatingIncome" : 128,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 75,
+        "revenue" : 726,
+        "revenueGrowth" : 23.5
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "unitError",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "unitError",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.9673320055007935,
+        "generatedTokens" : 82,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1462509632110596,
+        "promptTokens" : 344,
+        "text" : "{\n  \"revenue\": 726,\n  \"revenueGrowth\": 23.5,\n  \"operatingIncome\": 128,\n  \"operatingIncomeGrowth\": -11,\n  \"netIncome\": 104,\n  \"netIncomeGrowth\": 38.1,\n  \"previousYearNetIncome\": 75\n}",
+        "tokensPerSecond" : 10.292027487167058,
+        "totalTime" : 9.141197417
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 17,
+      "expected" : {
+        "netIncome" : 10,
+        "operatingIncome" : 13,
+        "operatingIncomeGrowth" : 11.5,
+        "previousYearNetIncome" : 9.7,
+        "revenue" : 53,
+        "revenueGrowth" : -13
+      },
+      "extracted" : {
+        "netIncome" : 10,
+        "netIncomeGrowth" : 0.3,
+        "operatingIncome" : 13,
+        "operatingIncomeGrowth" : 11.5,
+        "previousYearNetIncome" : 9.7,
+        "revenue" : 53,
+        "revenueGrowth" : -13
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.863039016723633,
+        "generatedTokens" : 79,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1105680465698242,
+        "promptTokens" : 321,
+        "text" : "{\n  \"revenue\": 53,\n  \"revenueGrowth\": -13,\n  \"operatingIncome\": 13,\n  \"operatingIncomeGrowth\": 11.5,\n  \"netIncome\": 10,\n  \"netIncomeGrowth\": 0.3,\n  \"previousYearNetIncome\": 9.7\n}",
+        "tokensPerSecond" : 10.047005977202652,
+        "totalTime" : 9.002046958
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "prior_no_growth",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 18,
+      "expected" : {
+        "netIncome" : 13.3,
+        "netIncomeGrowth" : -8,
+        "previousYearNetIncome" : 14.5
+      },
+      "extracted" : {
+        "netIncome" : 13.3,
+        "netIncomeGrowth" : -8,
+        "previousYearNetIncome" : 14.5
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.791872024536133,
+        "generatedTokens" : 70,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9466389417648315,
+        "promptTokens" : 285,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 13.3,\n  \"netIncomeGrowth\": -8,\n  \"previousYearNetIncome\": 14.5\n}",
+        "tokensPerSecond" : 10.306436833191187,
+        "totalTime" : 7.7635584170000005
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "net_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 19,
+      "expected" : {
+        "netIncomeGrowth" : -38.1,
+        "operatingIncomeGrowth" : -17,
+        "revenueGrowth" : -3.5
+      },
+      "extracted" : {
+        "netIncomeGrowth" : -38.1,
+        "operatingIncomeGrowth" : -17,
+        "revenueGrowth" : -3.5
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.679345011711121,
+        "generatedTokens" : 70,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.983630895614624,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": -3.5,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": -17,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": -38.1,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.480069509400494,
+        "totalTime" : 7.6850299159999995
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "growth_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 20,
+      "expected" : {
+        "netIncome" : 39,
+        "netIncomeGrowth" : -2,
+        "operatingIncome" : 48,
+        "operatingIncomeGrowth" : 4,
+        "previousYearNetIncome" : 39.8,
+        "revenue" : 230,
+        "revenueGrowth" : 7
+      },
+      "extracted" : {
+        "netIncome" : 39,
+        "netIncomeGrowth" : -2,
+        "operatingIncome" : 48,
+        "operatingIncomeGrowth" : 4,
+        "previousYearNetIncome" : 39.8,
+        "revenue" : 230,
+        "revenueGrowth" : 7
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.952938914299011,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.95415198802948,
+        "promptTokens" : 286,
+        "text" : "{\n  \"revenue\": 230,\n  \"revenueGrowth\": 7,\n  \"operatingIncome\": 48,\n  \"operatingIncomeGrowth\": 4,\n  \"netIncome\": 39,\n  \"netIncomeGrowth\": -2,\n  \"previousYearNetIncome\": 39.8\n}",
+        "tokensPerSecond" : 10.786805539993937,
+        "totalTime" : 7.92395875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "hand",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 21,
+      "expected" : {
+        "netIncome" : 13,
+        "netIncomeGrowth" : 8.3,
+        "operatingIncome" : 23,
+        "operatingIncomeGrowth" : 20.4,
+        "revenue" : 198,
+        "revenueGrowth" : 6.1
+      },
+      "extracted" : {
+        "netIncome" : 13,
+        "netIncomeGrowth" : 8.3,
+        "operatingIncome" : 23,
+        "operatingIncomeGrowth" : 20.4,
+        "previousYearNetIncome" : 19.1,
+        "revenue" : 198,
+        "revenueGrowth" : 6.1
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 8.041146039962769,
+        "generatedTokens" : 82,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0626909732818604,
+        "promptTokens" : 320,
+        "text" : "{\n  \"revenue\": 198,\n  \"revenueGrowth\": 6.1,\n  \"operatingIncome\": 23,\n  \"operatingIncomeGrowth\": 20.4,\n  \"netIncome\": 13,\n  \"netIncomeGrowth\": 8.3,\n  \"previousYearNetIncome\": 19.1\n}",
+        "tokensPerSecond" : 10.197551392858383,
+        "totalTime" : 9.136138
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "no_prior",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 22,
+      "expected" : {
+        "netIncome" : 22,
+        "netIncomeGrowth" : 9.7,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 7,
+        "previousYearNetIncome" : 20.1,
+        "revenue" : 74.4,
+        "revenueGrowth" : -8
+      },
+      "extracted" : {
+        "netIncome" : 22,
+        "netIncomeGrowth" : 9.7,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 7,
+        "previousYearNetIncome" : 20.1,
+        "revenue" : 74.4,
+        "revenueGrowth" : -8
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.628301978111267,
+        "generatedTokens" : 78,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1280039548873901,
+        "promptTokens" : 328,
+        "text" : "{\n  \"revenue\": 74.4,\n  \"revenueGrowth\": -8,\n  \"operatingIncome\": 25,\n  \"operatingIncomeGrowth\": 7,\n  \"netIncome\": 22,\n  \"netIncomeGrowth\": 9.7,\n  \"previousYearNetIncome\": 20.1\n}",
+        "tokensPerSecond" : 10.2250802634471,
+        "totalTime" : 8.769441417
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 23,
+      "expected" : {
+        "netIncomeGrowth" : 21.8,
+        "operatingIncomeGrowth" : 13,
+        "revenueGrowth" : -32
+      },
+      "extracted" : {
+        "netIncomeGrowth" : 21.8,
+        "operatingIncomeGrowth" : 13,
+        "revenueGrowth" : -32
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.7521140575408936,
+        "generatedTokens" : 69,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9813498258590698,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": -32,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": 13,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": 21.8,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.219021688909335,
+        "totalTime" : 7.756622708
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "growth_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 24,
+      "expected" : {
+        "netIncome" : 57.1,
+        "netIncomeGrowth" : -22,
+        "operatingIncome" : 80.3,
+        "operatingIncomeGrowth" : -15,
+        "previousYearNetIncome" : 73.2,
+        "revenue" : 232,
+        "revenueGrowth" : -3
+      },
+      "extracted" : {
+        "netIncome" : 57.1,
+        "netIncomeGrowth" : -22,
+        "operatingIncome" : 80.3,
+        "operatingIncomeGrowth" : -15,
+        "previousYearNetIncome" : 73.2,
+        "revenue" : 232,
+        "revenueGrowth" : -3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.9549560546875,
+        "generatedTokens" : 81,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0626989603042603,
+        "promptTokens" : 317,
+        "text" : "{\n  \"revenue\": 232,\n  \"revenueGrowth\": -3,\n  \"operatingIncome\": 80.3,\n  \"operatingIncomeGrowth\": -15,\n  \"netIncome\": 57.1,\n  \"netIncomeGrowth\": -22,\n  \"previousYearNetIncome\": 73.2\n}",
+        "tokensPerSecond" : 10.182331548176224,
+        "totalTime" : 9.043355083
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 25,
+      "expected" : {
+        "revenue" : 264,
+        "revenueGrowth" : -37
+      },
+      "extracted" : {
+        "revenue" : 264,
+        "revenueGrowth" : -37
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.433226943016052,
+        "generatedTokens" : 66,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9368530511856079,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": 264,\n  \"revenueGrowth\": -37,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.259237018157734,
+        "totalTime" : 7.39426225
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "revenue_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 26,
+      "expected" : {
+        "netIncome" : 16,
+        "netIncomeGrowth" : -28,
+        "operatingIncome" : 28,
+        "operatingIncomeGrowth" : -23.4,
+        "previousYearNetIncome" : 22.2,
+        "revenue" : 147,
+        "revenueGrowth" : 8.6
+      },
+      "extracted" : {
+        "netIncome" : 16,
+        "netIncomeGrowth" : -28,
+        "operatingIncome" : 28,
+        "operatingIncomeGrowth" : -23.4,
+        "previousYearNetIncome" : 22.2,
+        "revenue" : 147,
+        "revenueGrowth" : 8.6
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.933923959732056,
+        "generatedTokens" : 81,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1474790573120117,
+        "promptTokens" : 336,
+        "text" : "{\n  \"revenue\": 147,\n  \"revenueGrowth\": 8.6,\n  \"operatingIncome\": 28,\n  \"operatingIncomeGrowth\": -23.4,\n  \"netIncome\": 16,\n  \"netIncomeGrowth\": -28,\n  \"previousYearNetIncome\": 22.2\n}",
+        "tokensPerSecond" : 10.209323962658136,
+        "totalTime" : 9.104827125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 27,
+      "expected" : {
+        "netIncome" : 6,
+        "operatingIncome" : 10,
+        "revenue" : 98.3
+      },
+      "extracted" : {
+        "netIncome" : 6,
+        "operatingIncome" : 10,
+        "revenue" : 98.3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.303268074989319,
+        "generatedTokens" : 68,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9934158325195312,
+        "promptTokens" : 282,
+        "text" : "{\n  \"revenue\": 98.3,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 10,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 6,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.788054575977277,
+        "totalTime" : 7.318184333
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "amounts_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 28,
+      "expected" : {
+        "netIncome" : 2.1,
+        "netIncomeGrowth" : 14
+      },
+      "extracted" : {
+        "netIncome" : 2100,
+        "netIncomeGrowth" : 14,
+        "previousYearNetIncome" : 1836.36
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.200361013412476,
+        "generatedTokens" : 74,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9816319942474365,
+        "promptTokens" : 264,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 2100,\n  \"netIncomeGrowth\": 14,\n  \"previousYearNetIncome\": 1836.36\n}",
+        "tokensPerSecond" : 10.277262468111871,
+        "totalTime" : 8.207271333
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "hand",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 29,
+      "expected" : {
+        "netIncome" : 21,
+        "netIncomeGrowth" : -4,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 8,
+        "previousYearNetIncome" : 21.9,
+        "revenue" : 94,
+        "revenueGrowth" : 12
+      },
+      "extracted" : {
+        "netIncome" : 21,
+        "netIncomeGrowth" : -4,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 8,
+        "previousYearNetIncome" : 21.9,
+        "revenue" : 94,
+        "revenueGrowth" : 12
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.262578964233398,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.071679949760437,
+        "promptTokens" : 310,
+        "text" : "{\n  \"revenue\": 94,\n  \"revenueGrowth\": 12,\n  \"operatingIncome\": 25,\n  \"operatingIncomeGrowth\": 8,\n  \"netIncome\": 21,\n  \"netIncomeGrowth\": -4,\n  \"previousYearNetIncome\": 21.9\n}",
+        "tokensPerSecond" : 10.326910092042851,
+        "totalTime" : 8.352707084
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "hand",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 30,
+      "expected" : {
+        "netIncome" : 1.049,
+        "operatingIncome" : 1.191,
+        "revenue" : 3.92
+      },
+      "extracted" : {
+        "netIncome" : 1.049,
+        "operatingIncome" : 1.191,
+        "revenue" : 3.92
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.401183009147644,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.082279920578003,
+        "promptTokens" : 291,
+        "text" : "{\n  \"revenue\": 3.92,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 1.191,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 1.049,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.13351512958161,
+        "totalTime" : 8.509192291
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "amounts_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 1,
+      "expected" : {
+        "netIncomeGrowth" : -7.1,
+        "operatingIncomeGrowth" : 1,
+        "revenueGrowth" : 19
+      },
+      "extracted" : {
+        "netIncomeGrowth" : -7.1,
+        "operatingIncomeGrowth" : 1,
+        "revenueGrowth" : 19
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.520514011383057,
+        "generatedTokens" : 67,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9936940670013428,
+        "promptTokens" : 271,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": 19,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": 1,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": -7.1,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.2752635579091,
+        "totalTime" : 7.536765834
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "growth_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 2,
+      "expected" : {
+        "netIncome" : 3,
+        "netIncomeGrowth" : -23.1,
+        "previousYearNetIncome" : 3.9,
+        "revenue" : 29,
+        "revenueGrowth" : -29.8
+      },
+      "extracted" : {
+        "netIncome" : 3,
+        "netIncomeGrowth" : -23.1,
+        "previousYearNetIncome" : 3.9,
+        "revenue" : 29,
+        "revenueGrowth" : -29.8
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.286626935005188,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0506640672683716,
+        "promptTokens" : 305,
+        "text" : "{\n  \"revenue\": 29,\n  \"revenueGrowth\": -29.8,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 3,\n  \"netIncomeGrowth\": -23.1,\n  \"previousYearNetIncome\": 3.9\n}",
+        "tokensPerSecond" : 10.292828309858654,
+        "totalTime" : 8.362579042
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "no_operating",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 3,
+      "expected" : {
+        "netIncome" : 6,
+        "netIncomeGrowth" : -8.8,
+        "operatingIncome" : 9,
+        "operatingIncomeGrowth" : 35,
+        "revenue" : 55,
+        "revenueGrowth" : 12
+      },
+      "extracted" : {
+        "netIncome" : 6,
+        "netIncomeGrowth" : -8.8,
+        "operatingIncome" : 9,
+        "operatingIncomeGrowth" : 35,
+        "previousYearNetIncome" : 49.1,
+        "revenue" : 55,
+        "revenueGrowth" : 12
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.564735054969788,
+        "generatedTokens" : 76,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1703599691390991,
+        "promptTokens" : 339,
+        "text" : "{\n  \"revenue\": 55,\n  \"revenueGrowth\": 12,\n  \"operatingIncome\": 9,\n  \"operatingIncomeGrowth\": 35,\n  \"netIncome\": 6,\n  \"netIncomeGrowth\": -8.8,\n  \"previousYearNetIncome\": 49.1\n}",
+        "tokensPerSecond" : 10.046617554711377,
+        "totalTime" : 8.76206075
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "no_prior",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 4,
+      "expected" : {
+        "netIncome" : 1.081,
+        "operatingIncome" : 1.212,
+        "operatingIncomeGrowth" : -1,
+        "previousYearNetIncome" : 1.006,
+        "revenue" : 8.295,
+        "revenueGrowth" : 19
+      },
+      "extracted" : {
+        "netIncome" : 1.081,
+        "netIncomeGrowth" : -1,
+        "operatingIncome" : 1.212,
+        "operatingIncomeGrowth" : -1,
+        "previousYearNetIncome" : 1.006,
+        "revenue" : 8.295,
+        "revenueGrowth" : 19
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.855273008346558,
+        "generatedTokens" : 85,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1298760175704956,
+        "promptTokens" : 325,
+        "text" : "{\n  \"revenue\": 8.295,\n  \"revenueGrowth\": 19,\n  \"operatingIncome\": 1.212,\n  \"operatingIncomeGrowth\": -1,\n  \"netIncome\": 1.081,\n  \"netIncomeGrowth\": -1,\n  \"previousYearNetIncome\": 1.006\n}",
+        "tokensPerSecond" : 10.820756950100133,
+        "totalTime" : 9.00182075
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "prior_no_growth",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 5,
+      "expected" : {
+        "netIncome" : 26.6,
+        "netIncomeGrowth" : 35.1,
+        "operatingIncome" : 46.4,
+        "operatingIncomeGrowth" : -8,
+        "revenue" : 143.7,
+        "revenueGrowth" : 4
+      },
+      "extracted" : {
+        "netIncome" : 26.6,
+        "netIncomeGrowth" : 35.1,
+        "operatingIncome" : 46.4,
+        "operatingIncomeGrowth" : -8,
+        "previousYearNetIncome" : 50.4,
+        "revenue" : 143.7,
+        "revenueGrowth" : 4
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 8.222774982452393,
+        "generatedTokens" : 84,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.077962040901184,
+        "promptTokens" : 312,
+        "text" : "{\n  \"revenue\": 143.7,\n  \"revenueGrowth\": 4,\n  \"operatingIncome\": 46.4,\n  \"operatingIncomeGrowth\": -8,\n  \"netIncome\": 26.6,\n  \"netIncomeGrowth\": 35.1,\n  \"previousYearNetIncome\": 50.4\n}",
+        "tokensPerSecond" : 10.215529450733857,
+        "totalTime" : 9.316591292
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "no_prior",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 6,
+      "expected" : {
+
+      },
+      "extracted" : {
+
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 5.857485055923462,
+        "generatedTokens" : 61,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9893120527267456,
+        "promptTokens" : 277,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.414025715407147,
+        "totalTime" : 6.8734684999999995
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "none",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 7,
+      "expected" : {
+
+      },
+      "extracted" : {
+
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 5.90929102897644,
+        "generatedTokens" : 61,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9969520568847656,
+        "promptTokens" : 261,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.322727329028831,
+        "totalTime" : 6.9278763340000005
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "none",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 8,
+      "expected" : {
+        "revenue" : 96.9,
+        "revenueGrowth" : -34
+      },
+      "extracted" : {
+        "revenue" : 96.9,
+        "revenueGrowth" : -34
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.652768015861511,
+        "generatedTokens" : 67,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.8763580322265625,
+        "promptTokens" : 255,
+        "text" : "{\n  \"revenue\": 96.9,\n  \"revenueGrowth\": -34,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.070995988475591,
+        "totalTime" : 7.547287125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "revenue_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 9,
+      "expected" : {
+        "netIncome" : 0.254,
+        "netIncomeGrowth" : 32,
+        "operatingIncome" : 0.437,
+        "operatingIncomeGrowth" : 18,
+        "previousYearNetIncome" : 0.192,
+        "revenue" : 2.772,
+        "revenueGrowth" : 34
+      },
+      "extracted" : {
+        "netIncome" : 254,
+        "netIncomeGrowth" : 32,
+        "operatingIncome" : 437,
+        "operatingIncomeGrowth" : 18,
+        "previousYearNetIncome" : 192,
+        "revenue" : 2772,
+        "revenueGrowth" : 34
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "unitError",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "unitError",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.916893005371094,
+        "generatedTokens" : 80,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.141711950302124,
+        "promptTokens" : 336,
+        "text" : "{\n  \"revenue\": 2772,\n  \"revenueGrowth\": 34,\n  \"operatingIncome\": 437,\n  \"operatingIncomeGrowth\": 18,\n  \"netIncome\": 254,\n  \"netIncomeGrowth\": 32,\n  \"previousYearNetIncome\": 192\n}",
+        "tokensPerSecond" : 10.10497425514343,
+        "totalTime" : 9.087021959
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 10,
+      "expected" : {
+        "netIncome" : 28,
+        "operatingIncome" : 37,
+        "revenue" : 186
+      },
+      "extracted" : {
+        "netIncome" : 28,
+        "operatingIncome" : 37,
+        "revenue" : 186
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.629063963890076,
+        "generatedTokens" : 68,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9504150152206421,
+        "promptTokens" : 286,
+        "text" : "{\n  \"revenue\": 186,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 37,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 28,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.257858480535184,
+        "totalTime" : 7.603332458
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "amounts_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 11,
+      "expected" : {
+        "netIncome" : 16.3,
+        "netIncomeGrowth" : 33.6,
+        "previousYearNetIncome" : 12.2,
+        "revenue" : 221.1,
+        "revenueGrowth" : 3
+      },
+      "extracted" : {
+        "netIncome" : 16.3,
+        "netIncomeGrowth" : 33.6,
+        "previousYearNetIncome" : 12.2,
+        "revenue" : 221.1,
+        "revenueGrowth" : 3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.477480053901672,
+        "generatedTokens" : 79,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0452698469161987,
+        "promptTokens" : 301,
+        "text" : "{\n  \"revenue\": 221.1,\n  \"revenueGrowth\": 3,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 16.3,\n  \"netIncomeGrowth\": 33.6,\n  \"previousYearNetIncome\": 12.2\n}",
+        "tokensPerSecond" : 10.565056600689775,
+        "totalTime" : 8.548998791
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "no_operating",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 12,
+      "expected" : {
+        "netIncome" : 30.7,
+        "operatingIncome" : 39.3,
+        "operatingIncomeGrowth" : 34,
+        "previousYearNetIncome" : 35.6,
+        "revenue" : 113,
+        "revenueGrowth" : -25.4
+      },
+      "extracted" : {
+        "netIncome" : 30.7,
+        "netIncomeGrowth" : -4.9,
+        "operatingIncome" : 39.3,
+        "operatingIncomeGrowth" : 34,
+        "previousYearNetIncome" : 35.6,
+        "revenue" : 113,
+        "revenueGrowth" : -25.4
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 8.264406085014343,
+        "generatedTokens" : 85,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0766558647155762,
+        "promptTokens" : 307,
+        "text" : "{\n  \"revenue\": 113,\n  \"revenueGrowth\": -25.4,\n  \"operatingIncome\": 39.3,\n  \"operatingIncomeGrowth\": 34,\n  \"netIncome\": 30.7,\n  \"netIncomeGrowth\": -4.9,\n  \"previousYearNetIncome\": 35.6\n}",
+        "tokensPerSecond" : 10.28507059377546,
+        "totalTime" : 9.367706833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "prior_no_growth",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 13,
+      "expected" : {
+        "netIncome" : 6.9,
+        "netIncomeGrowth" : 10,
+        "previousYearNetIncome" : 6.3
+      },
+      "extracted" : {
+        "netIncome" : 6900,
+        "netIncomeGrowth" : 10,
+        "previousYearNetIncome" : 6300
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.871284008026123,
+        "generatedTokens" : 71,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9832710027694702,
+        "promptTokens" : 276,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 6900,\n  \"netIncomeGrowth\": 10,\n  \"previousYearNetIncome\": 6300\n}",
+        "tokensPerSecond" : 10.332857718741826,
+        "totalTime" : 7.879031042
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "net_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 14,
+      "expected" : {
+        "netIncome" : 8,
+        "netIncomeGrowth" : -33.8,
+        "previousYearNetIncome" : 12.1,
+        "revenue" : 36,
+        "revenueGrowth" : -7
+      },
+      "extracted" : {
+        "netIncome" : 8,
+        "netIncomeGrowth" : -33.8,
+        "previousYearNetIncome" : 12.1,
+        "revenue" : 36,
+        "revenueGrowth" : -7
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.134694933891296,
+        "generatedTokens" : 73,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.128588080406189,
+        "promptTokens" : 337,
+        "text" : "{\n  \"revenue\": 36,\n  \"revenueGrowth\": -7,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 8,\n  \"netIncomeGrowth\": -33.8,\n  \"previousYearNetIncome\": 12.1\n}",
+        "tokensPerSecond" : 10.231691848972364,
+        "totalTime" : 8.296484083
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "no_operating",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 15,
+      "expected" : {
+        "netIncome" : 3.6,
+        "operatingIncome" : 6.2,
+        "operatingIncomeGrowth" : -11,
+        "revenueGrowth" : 28.3
+      },
+      "extracted" : {
+        "netIncome" : 3.6,
+        "operatingIncome" : 6.2,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 7,
+        "revenue" : 3.6,
+        "revenueGrowth" : 28.3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "hallucinated",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.505965948104858,
+        "generatedTokens" : 77,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9689029455184937,
+        "promptTokens" : 278,
+        "text" : "{\n  \"revenue\": 3.6,\n  \"revenueGrowth\": 28.3,\n  \"operatingIncome\": 6.2,\n  \"operatingIncomeGrowth\": -11,\n  \"netIncome\": 3.6,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": 7\n}",
+        "tokensPerSecond" : 10.258506437727888,
+        "totalTime" : 8.487983125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "mixed",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 16,
+      "expected" : {
+        "netIncome" : 0.104,
+        "netIncomeGrowth" : 38.1,
+        "operatingIncome" : 0.128,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 0.075,
+        "revenue" : 0.726,
+        "revenueGrowth" : 23.5
+      },
+      "extracted" : {
+        "netIncome" : 104,
+        "netIncomeGrowth" : 38.1,
+        "operatingIncome" : 128,
+        "operatingIncomeGrowth" : -11,
+        "previousYearNetIncome" : 75,
+        "revenue" : 726,
+        "revenueGrowth" : 23.5
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "unitError",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "unitError",
+        "revenue" : "unitError",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 8.025896906852722,
+        "generatedTokens" : 82,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1529510021209717,
+        "promptTokens" : 344,
+        "text" : "{\n  \"revenue\": 726,\n  \"revenueGrowth\": 23.5,\n  \"operatingIncome\": 128,\n  \"operatingIncomeGrowth\": -11,\n  \"netIncome\": 104,\n  \"netIncomeGrowth\": 38.1,\n  \"previousYearNetIncome\": 75\n}",
+        "tokensPerSecond" : 10.216926650277085,
+        "totalTime" : 9.206374125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 17,
+      "expected" : {
+        "netIncome" : 10,
+        "operatingIncome" : 13,
+        "operatingIncomeGrowth" : 11.5,
+        "previousYearNetIncome" : 9.7,
+        "revenue" : 53,
+        "revenueGrowth" : -13
+      },
+      "extracted" : {
+        "netIncome" : 10,
+        "netIncomeGrowth" : 0.3,
+        "operatingIncome" : 13,
+        "operatingIncomeGrowth" : 11.5,
+        "previousYearNetIncome" : 9.7,
+        "revenue" : 53,
+        "revenueGrowth" : -13
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "hallucinated",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.617550015449524,
+        "generatedTokens" : 79,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1318650245666504,
+        "promptTokens" : 321,
+        "text" : "{\n  \"revenue\": 53,\n  \"revenueGrowth\": -13,\n  \"operatingIncome\": 13,\n  \"operatingIncomeGrowth\": 11.5,\n  \"netIncome\": 10,\n  \"netIncomeGrowth\": 0.3,\n  \"previousYearNetIncome\": 9.7\n}",
+        "tokensPerSecond" : 10.370788487082626,
+        "totalTime" : 8.782318958
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "prior_no_growth",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 18,
+      "expected" : {
+        "netIncome" : 13.3,
+        "netIncomeGrowth" : -8,
+        "previousYearNetIncome" : 14.5
+      },
+      "extracted" : {
+        "netIncome" : 13.3,
+        "netIncomeGrowth" : -8,
+        "previousYearNetIncome" : 14.5
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.561606049537659,
+        "generatedTokens" : 70,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9338949918746948,
+        "promptTokens" : 285,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 13.3,\n  \"netIncomeGrowth\": -8,\n  \"previousYearNetIncome\": 14.5\n}",
+        "tokensPerSecond" : 10.668119888869633,
+        "totalTime" : 7.526600125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "net_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 19,
+      "expected" : {
+        "netIncomeGrowth" : -38.1,
+        "operatingIncomeGrowth" : -17,
+        "revenueGrowth" : -3.5
+      },
+      "extracted" : {
+        "netIncomeGrowth" : -38.1,
+        "operatingIncomeGrowth" : -17,
+        "revenueGrowth" : -3.5
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.742542028427124,
+        "generatedTokens" : 70,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.966405987739563,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": -3.5,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": -17,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": -38.1,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.38184110753394,
+        "totalTime" : 7.731455375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "growth_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 20,
+      "expected" : {
+        "netIncome" : 39,
+        "netIncomeGrowth" : -2,
+        "operatingIncome" : 48,
+        "operatingIncomeGrowth" : 4,
+        "previousYearNetIncome" : 39.8,
+        "revenue" : 230,
+        "revenueGrowth" : 7
+      },
+      "extracted" : {
+        "netIncome" : 39,
+        "netIncomeGrowth" : -2,
+        "operatingIncome" : 48,
+        "operatingIncomeGrowth" : 4,
+        "previousYearNetIncome" : 39.8,
+        "revenue" : 230,
+        "revenueGrowth" : 7
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.395577073097229,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.990799069404602,
+        "promptTokens" : 286,
+        "text" : "{\n  \"revenue\": 230,\n  \"revenueGrowth\": 7,\n  \"operatingIncome\": 48,\n  \"operatingIncomeGrowth\": 4,\n  \"netIncome\": 39,\n  \"netIncomeGrowth\": -2,\n  \"previousYearNetIncome\": 39.8\n}",
+        "tokensPerSecond" : 10.141196455490443,
+        "totalTime" : 8.410236833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "hand",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 21,
+      "expected" : {
+        "netIncome" : 13,
+        "netIncomeGrowth" : 8.3,
+        "operatingIncome" : 23,
+        "operatingIncomeGrowth" : 20.4,
+        "revenue" : 198,
+        "revenueGrowth" : 6.1
+      },
+      "extracted" : {
+        "netIncome" : 13,
+        "netIncomeGrowth" : 8.3,
+        "operatingIncome" : 23,
+        "operatingIncomeGrowth" : 20.4,
+        "previousYearNetIncome" : 19.1,
+        "revenue" : 198,
+        "revenueGrowth" : 6.1
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.772125005722046,
+        "generatedTokens" : 82,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0934749841690063,
+        "promptTokens" : 320,
+        "text" : "{\n  \"revenue\": 198,\n  \"revenueGrowth\": 6.1,\n  \"operatingIncome\": 23,\n  \"operatingIncomeGrowth\": 20.4,\n  \"netIncome\": 13,\n  \"netIncomeGrowth\": 8.3,\n  \"previousYearNetIncome\": 19.1\n}",
+        "tokensPerSecond" : 10.550525106020478,
+        "totalTime" : 8.893347875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "no_prior",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 22,
+      "expected" : {
+        "netIncome" : 22,
+        "netIncomeGrowth" : 9.7,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 7,
+        "previousYearNetIncome" : 20.1,
+        "revenue" : 74.4,
+        "revenueGrowth" : -8
+      },
+      "extracted" : {
+        "netIncome" : 22,
+        "netIncomeGrowth" : 9.7,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 7,
+        "previousYearNetIncome" : 20.1,
+        "revenue" : 74.4,
+        "revenueGrowth" : -8
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.536535024642944,
+        "generatedTokens" : 78,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1785229444503784,
+        "promptTokens" : 328,
+        "text" : "{\n  \"revenue\": 74.4,\n  \"revenueGrowth\": -8,\n  \"operatingIncome\": 25,\n  \"operatingIncomeGrowth\": 7,\n  \"netIncome\": 22,\n  \"netIncomeGrowth\": 9.7,\n  \"previousYearNetIncome\": 20.1\n}",
+        "tokensPerSecond" : 10.349583693959596,
+        "totalTime" : 8.740988957999999
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 23,
+      "expected" : {
+        "netIncomeGrowth" : 21.8,
+        "operatingIncomeGrowth" : 13,
+        "revenueGrowth" : -32
+      },
+      "extracted" : {
+        "netIncomeGrowth" : 21.8,
+        "operatingIncomeGrowth" : 13,
+        "revenueGrowth" : -32
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.742760062217712,
+        "generatedTokens" : 69,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9529179334640503,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": -32,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": 13,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": 21.8,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.233198180465243,
+        "totalTime" : 7.720359875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "growth_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 24,
+      "expected" : {
+        "netIncome" : 57.1,
+        "netIncomeGrowth" : -22,
+        "operatingIncome" : 80.3,
+        "operatingIncomeGrowth" : -15,
+        "previousYearNetIncome" : 73.2,
+        "revenue" : 232,
+        "revenueGrowth" : -3
+      },
+      "extracted" : {
+        "netIncome" : 57.1,
+        "netIncomeGrowth" : -22,
+        "operatingIncome" : 80.3,
+        "operatingIncomeGrowth" : -15,
+        "previousYearNetIncome" : 73.2,
+        "revenue" : 232,
+        "revenueGrowth" : -3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.957445979118347,
+        "generatedTokens" : 81,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0300729274749756,
+        "promptTokens" : 317,
+        "text" : "{\n  \"revenue\": 232,\n  \"revenueGrowth\": -3,\n  \"operatingIncome\": 80.3,\n  \"operatingIncomeGrowth\": -15,\n  \"netIncome\": 57.1,\n  \"netIncomeGrowth\": -22,\n  \"previousYearNetIncome\": 73.2\n}",
+        "tokensPerSecond" : 10.179145445983218,
+        "totalTime" : 9.001246
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 25,
+      "expected" : {
+        "revenue" : 264,
+        "revenueGrowth" : -37
+      },
+      "extracted" : {
+        "revenue" : 264,
+        "revenueGrowth" : -37
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.430788993835449,
+        "generatedTokens" : 66,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9428110122680664,
+        "promptTokens" : 281,
+        "text" : "{\n  \"revenue\": 264,\n  \"revenueGrowth\": -37,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": null,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.263126354055087,
+        "totalTime" : 7.38693925
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "revenue_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 26,
+      "expected" : {
+        "netIncome" : 16,
+        "netIncomeGrowth" : -28,
+        "operatingIncome" : 28,
+        "operatingIncomeGrowth" : -23.4,
+        "previousYearNetIncome" : 22.2,
+        "revenue" : 147,
+        "revenueGrowth" : 8.6
+      },
+      "extracted" : {
+        "netIncome" : 16,
+        "netIncomeGrowth" : -28,
+        "operatingIncome" : 28,
+        "operatingIncomeGrowth" : -23.4,
+        "previousYearNetIncome" : 22.2,
+        "revenue" : 147,
+        "revenueGrowth" : 8.6
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.515373110771179,
+        "generatedTokens" : 81,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.1497830152511597,
+        "promptTokens" : 336,
+        "text" : "{\n  \"revenue\": 147,\n  \"revenueGrowth\": 8.6,\n  \"operatingIncome\": 28,\n  \"operatingIncomeGrowth\": -23.4,\n  \"netIncome\": 16,\n  \"netIncomeGrowth\": -28,\n  \"previousYearNetIncome\": 22.2\n}",
+        "tokensPerSecond" : 10.77790800351738,
+        "totalTime" : 8.701431875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 27,
+      "expected" : {
+        "netIncome" : 6,
+        "operatingIncome" : 10,
+        "revenue" : 98.3
+      },
+      "extracted" : {
+        "netIncome" : 6,
+        "operatingIncome" : 10,
+        "revenue" : 98.3
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 6.7632750272750854,
+        "generatedTokens" : 68,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0014688968658447,
+        "promptTokens" : 282,
+        "text" : "{\n  \"revenue\": 98.3,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 10,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 6,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.05430057564835,
+        "totalTime" : 7.798618625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "amounts_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 28,
+      "expected" : {
+        "netIncome" : 2.1,
+        "netIncomeGrowth" : 14
+      },
+      "extracted" : {
+        "netIncome" : 2100,
+        "netIncomeGrowth" : 14,
+        "previousYearNetIncome" : 1836.36
+      },
+      "fields" : {
+        "netIncome" : "unitError",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "hallucinated",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.212442994117737,
+        "generatedTokens" : 74,
+        "peakMemory" : 2876232872,
+        "promptTime" : 0.9449900388717651,
+        "promptTokens" : 264,
+        "text" : "{\n  \"revenue\": null,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": null,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 2100,\n  \"netIncomeGrowth\": 14,\n  \"previousYearNetIncome\": 1836.36\n}",
+        "tokensPerSecond" : 10.260046430918386,
+        "totalTime" : 8.181500584
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "hand",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 29,
+      "expected" : {
+        "netIncome" : 21,
+        "netIncomeGrowth" : -4,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 8,
+        "previousYearNetIncome" : 21.9,
+        "revenue" : 94,
+        "revenueGrowth" : 12
+      },
+      "extracted" : {
+        "netIncome" : 21,
+        "netIncomeGrowth" : -4,
+        "operatingIncome" : 25,
+        "operatingIncomeGrowth" : 8,
+        "previousYearNetIncome" : 21.9,
+        "revenue" : 94,
+        "revenueGrowth" : 12
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.30745005607605,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.0599950551986694,
+        "promptTokens" : 310,
+        "text" : "{\n  \"revenue\": 94,\n  \"revenueGrowth\": 12,\n  \"operatingIncome\": 25,\n  \"operatingIncomeGrowth\": 8,\n  \"netIncome\": 21,\n  \"netIncomeGrowth\": -4,\n  \"previousYearNetIncome\": 21.9\n}",
+        "tokensPerSecond" : 10.263498131969916,
+        "totalTime" : 8.3942595
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "hand",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exampleID" : 30,
+      "expected" : {
+        "netIncome" : 1.049,
+        "operatingIncome" : 1.191,
+        "revenue" : 3.92
+      },
+      "extracted" : {
+        "netIncome" : 1.049,
+        "operatingIncome" : 1.191,
+        "revenue" : 3.92
+      },
+      "fields" : {
+        "netIncome" : "correct",
+        "netIncomeGrowth" : "correct",
+        "operatingIncome" : "correct",
+        "operatingIncomeGrowth" : "correct",
+        "previousYearNetIncome" : "correct",
+        "revenue" : "correct",
+        "revenueGrowth" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 7.385603070259094,
+        "generatedTokens" : 75,
+        "peakMemory" : 2876232872,
+        "promptTime" : 1.022320032119751,
+        "promptTokens" : 291,
+        "text" : "{\n  \"revenue\": 3.92,\n  \"revenueGrowth\": null,\n  \"operatingIncome\": 1.191,\n  \"operatingIncomeGrowth\": null,\n  \"netIncome\": 1.049,\n  \"netIncomeGrowth\": null,\n  \"previousYearNetIncome\": null\n}",
+        "tokensPerSecond" : 10.154891792386689,
+        "totalTime" : 8.425766833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "amounts_only",
+      "seed" : 3,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    }
+  ],
+  "summary" : {
+    "fenced" : 0,
+    "fieldAccuracy" : 0.9047619047619048,
+    "fieldOutcomes" : {
+      "netIncome" : {
+        "correct" : 78,
+        "hallucinated" : 0,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 12,
+        "unparsed" : 0,
+        "wrongValue" : 0
+      },
+      "netIncomeGrowth" : {
+        "correct" : 81,
+        "hallucinated" : 9,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 0,
+        "unparsed" : 0,
+        "wrongValue" : 0
+      },
+      "operatingIncome" : {
+        "correct" : 84,
+        "hallucinated" : 0,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 6,
+        "unparsed" : 0,
+        "wrongValue" : 0
+      },
+      "operatingIncomeGrowth" : {
+        "correct" : 90,
+        "hallucinated" : 0,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 0,
+        "unparsed" : 0,
+        "wrongValue" : 0
+      },
+      "previousYearNetIncome" : {
+        "correct" : 66,
+        "hallucinated" : 15,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 9,
+        "unparsed" : 0,
+        "wrongValue" : 0
+      },
+      "revenue" : {
+        "correct" : 81,
+        "hallucinated" : 3,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 6,
+        "unparsed" : 0,
+        "wrongValue" : 0
+      },
+      "revenueGrowth" : {
+        "correct" : 90,
+        "hallucinated" : 0,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 0,
+        "unparsed" : 0,
+        "wrongValue" : 0
+      }
+    },
+    "fullyCorrect" : 57,
+    "generationFailures" : 0,
+    "maxThermalState" : 0,
+    "medianFirstTokenTime" : 1.0053609609603882,
+    "medianTokensPerSecond" : 10.298756369480241,
+    "medianTotalTime" : 8.0417032085,
+    "peakMemory" : 2876232872,
+    "records" : 90,
+    "schemaValid" : 90,
+    "thinking" : 0,
+    "validJSON" : 90
+  }
+}

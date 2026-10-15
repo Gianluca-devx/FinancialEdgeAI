@@ -10,10 +10,14 @@
 		AF9EE09D306E93E9000CFE94 /* MLXHuggingFace in Frameworks */ = {isa = PBXBuildFile; productRef = AF9EE09C306E93E9000CFE94 /* MLXHuggingFace */; };
 		AF9EE09F306E93E9000CFE94 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = AF9EE09E306E93E9000CFE94 /* MLXLLM */; };
 		AF9EE0A1306E93E9000CFE94 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = AF9EE0A0306E93E9000CFE94 /* MLXLMCommon */; };
+		AFE7D36F3071968900417E9E /* Hub in Frameworks */ = {isa = PBXBuildFile; productRef = AFE7D36E3071968900417E9E /* Hub */; };
+		AFE7D3713071968900417E9E /* Tokenizers in Frameworks */ = {isa = PBXBuildFile; productRef = AFE7D3703071968900417E9E /* Tokenizers */; };
+		AFE7D3733071968900417E9E /* Transformers in Frameworks */ = {isa = PBXBuildFile; productRef = AFE7D3723071968900417E9E /* Transformers */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AF9EE062306E46A7000CFE94 /* FinancialEdgeAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinancialEdgeAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFD8EC50308028C000DBEA47 /* FinancialEdgeAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinancialEdgeAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -22,15 +26,28 @@
 			path = FinancialEdgeAI;
 			sourceTree = "<group>";
 		};
+		AFD8EC51308028C000DBEA47 /* FinancialEdgeAITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FinancialEdgeAITests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AF9EE05F306E46A7000CFE94 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				AFE7D3733071968900417E9E /* Transformers in Frameworks */,
 				AF9EE09F306E93E9000CFE94 /* MLXLLM in Frameworks */,
 				AF9EE0A1306E93E9000CFE94 /* MLXLMCommon in Frameworks */,
+				AFE7D36F3071968900417E9E /* Hub in Frameworks */,
 				AF9EE09D306E93E9000CFE94 /* MLXHuggingFace in Frameworks */,
+				AFE7D3713071968900417E9E /* Tokenizers in Frameworks */,
+			);
+		};
+		AFD8EC4D308028C000DBEA47 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -40,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				AF9EE064306E46A7000CFE94 /* FinancialEdgeAI */,
+				AFD8EC51308028C000DBEA47 /* FinancialEdgeAITests */,
 				AF9EE063306E46A7000CFE94 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				AF9EE062306E46A7000CFE94 /* FinancialEdgeAI.app */,
+				AFD8EC50308028C000DBEA47 /* FinancialEdgeAITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,10 +92,31 @@
 				AF9EE09C306E93E9000CFE94 /* MLXHuggingFace */,
 				AF9EE09E306E93E9000CFE94 /* MLXLLM */,
 				AF9EE0A0306E93E9000CFE94 /* MLXLMCommon */,
+				AFE7D36E3071968900417E9E /* Hub */,
+				AFE7D3703071968900417E9E /* Tokenizers */,
+				AFE7D3723071968900417E9E /* Transformers */,
 			);
 			productName = FinancialEdgeAI;
 			productReference = AF9EE062306E46A7000CFE94 /* FinancialEdgeAI.app */;
 			productType = "com.apple.product-type.application";
+		};
+		AFD8EC4F308028C000DBEA47 /* FinancialEdgeAITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFD8EC54308028C000DBEA47 /* Build configuration list for PBXNativeTarget "FinancialEdgeAITests" */;
+			buildPhases = (
+				AFD8EC4C308028C000DBEA47 /* Sources */,
+				AFD8EC4D308028C000DBEA47 /* Frameworks */,
+				AFD8EC4E308028C000DBEA47 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				AFD8EC51308028C000DBEA47 /* FinancialEdgeAITests */,
+			);
+			name = FinancialEdgeAITests;
+			productName = FinancialEdgeAITests;
+			productReference = AFD8EC50308028C000DBEA47 /* FinancialEdgeAITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -89,6 +129,9 @@
 				LastUpgradeCheck = 2710;
 				TargetAttributes = {
 					AF9EE061306E46A7000CFE94 = {
+						CreatedOnToolsVersion = 27.1;
+					};
+					AFD8EC4F308028C000DBEA47 = {
 						CreatedOnToolsVersion = 27.1;
 					};
 				};
@@ -104,6 +147,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				AF9EE09B306E93E9000CFE94 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */,
+				AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AF9EE063306E46A7000CFE94 /* Products */;
@@ -111,6 +155,7 @@
 			projectRoot = "";
 			targets = (
 				AF9EE061306E46A7000CFE94 /* FinancialEdgeAI */,
+				AFD8EC4F308028C000DBEA47 /* FinancialEdgeAITests */,
 			);
 		};
 /* End PBXProject section */
@@ -121,10 +166,20 @@
 			files = (
 			);
 		};
+		AFD8EC4E308028C000DBEA47 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AF9EE05E306E46A7000CFE94 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		AFD8EC4C308028C000DBEA47 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
 			);
@@ -317,6 +372,52 @@
 			};
 			name = Release;
 		};
+		AFD8EC55308028C000DBEA47 /* Debug configuration for PBXNativeTarget "FinancialEdgeAITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = GianlucaPascarella.Dev.FinancialEdgeAITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Debug;
+		};
+		AFD8EC56308028C000DBEA47 /* Release configuration for PBXNativeTarget "FinancialEdgeAITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = GianlucaPascarella.Dev.FinancialEdgeAITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -336,6 +437,14 @@
 			);
 			defaultConfigurationName = Release;
 		};
+		AFD8EC54308028C000DBEA47 /* Build configuration list for PBXNativeTarget "FinancialEdgeAITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFD8EC55308028C000DBEA47 /* Debug configuration for PBXNativeTarget "FinancialEdgeAITests" */,
+				AFD8EC56308028C000DBEA47 /* Release configuration for PBXNativeTarget "FinancialEdgeAITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -346,6 +455,16 @@
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.32.3;
 			};
+		};
+		AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/huggingface/swift-transformers";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.4;
+			};
+			traits = (
+			);
 		};
 /* End XCRemoteSwiftPackageReference section */
 
@@ -364,6 +483,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AF9EE09B306E93E9000CFE94 /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
 			productName = MLXLMCommon;
+		};
+		AFE7D36E3071968900417E9E /* Hub */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */;
+			productName = Hub;
+		};
+		AFE7D3703071968900417E9E /* Tokenizers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */;
+			productName = Tokenizers;
+		};
+		AFE7D3723071968900417E9E /* Transformers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFE7D36D3071968900417E9E /* XCRemoteSwiftPackageReference "swift-transformers" */;
+			productName = Transformers;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

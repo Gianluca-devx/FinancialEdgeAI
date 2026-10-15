@@ -41,6 +41,13 @@ def load_statements():
     return statements
 
 
+def load_units():
+    """Unit the statement is written in: b (billions), m (millions) or - (hand-written)."""
+    import csv
+    with open(ROOT / "Dataset" / "index.csv", newline="") as f:
+        return {int(r["line"]): r["unit"] for r in csv.DictReader(f) if r["split"] == "test"}
+
+
 def table(headers, rows):
     out = ["| " + " | ".join(headers) + " |", "|" + "|".join(["---"] * len(headers)) + "|"]
     out += ["| " + " | ".join(str(c) for c in row) + " |" for row in rows]
@@ -59,6 +66,9 @@ def stats(records):
         "schema": sum(r["isSchemaValid"] for r in records),
         "fenced": sum(r["hadFence"] for r in records),
         "full": sum(all(v == "correct" for v in r["fields"].values()) for r in records),
+        # The same, if a number written in the wrong unit (x1000) is accepted.
+        "full_unit_tolerant": sum(all(v in ("correct", "unitError") for v in r["fields"].values()) for r in records),
+        "correct_fields_unit_tolerant": fields["correct"] + fields["unitError"],
         "correct_fields": fields["correct"],
         "fields": n * len(KEYS),
         "outcomes": fields,
@@ -96,6 +106,8 @@ def main(path):
         ["Exactly the 7 keys, number or null", f'{s["schema"]} / {s["n"]}', pct(s["schema"], s["n"])],
         ["All 7 fields correct", f'{s["full"]} / {s["n"]}', pct(s["full"], s["n"])],
         ["Fields correct", f'{s["correct_fields"]} / {s["fields"]}', pct(s["correct_fields"], s["fields"])],
+        ["All 7 fields correct, if a x1000 unit error is accepted", f'{s["full_unit_tolerant"]} / {s["n"]}', pct(s["full_unit_tolerant"], s["n"])],
+        ["Fields correct, if a x1000 unit error is accepted", f'{s["correct_fields_unit_tolerant"]} / {s["fields"]}', pct(s["correct_fields_unit_tolerant"], s["fields"])],
         ["Needed a code fence", f'{s["fenced"]} / {s["n"]}', pct(s["fenced"], s["n"])],
     ]))
 
@@ -128,6 +140,20 @@ def main(path):
             g = stats(groups[name])
             rows.append([name, g["n"], f'{g["full"]} ({pct(g["full"], g["n"])})', pct(g["correct_fields"], g["fields"])])
         print(table([key.capitalize(), "Answers", "All 7 correct", "Fields correct"], rows))
+
+    print("\n## By unit the statement is written in\n")
+    units = load_units()
+    groups = defaultdict(list)
+    for r in records:
+        groups[units.get(r["exampleID"], "?")].append(r)
+    names = {"b": "billions", "m": "millions", "-": "hand-written (mixed)"}
+    rows = []
+    for name in sorted(groups):
+        g = stats(groups[name])
+        unit_errors = g["outcomes"]["unitError"]
+        rows.append([names.get(name, name), g["n"], f'{g["full"]} ({pct(g["full"], g["n"])})',
+                     f'{g["full_unit_tolerant"]} ({pct(g["full_unit_tolerant"], g["n"])})', unit_errors])
+    print(table(["Written in", "Answers", "All 7 correct", "All 7 correct, unit errors accepted", "Unit-error fields"], rows))
 
     print("\n## Stability across the runs\n")
     by_example = defaultdict(list)

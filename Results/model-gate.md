@@ -27,7 +27,7 @@ The model was "too heavy" if any of these happened:
 | Download + load | 463 s (7.7 min), first launch, includes the download | pass |
 
 Other numbers: time to first token 1.8 to 2.1 s (3.7 s for the first statement), 65 to 75 generated
-tokens per answer, MLX active memory 2231 MB, MLX peak memory 2593 MB.
+tokens per answer, MLX active memory 2231 MiB (2.18 GiB), MLX peak memory 2593 MiB (2.53 GiB, the app shows it as "2,53 GB").
 `maxTokens` was 256, temperature 0.2, thinking switched off (`enable_thinking: false`). No reasoning
 text and no Markdown fence appeared in any answer.
 

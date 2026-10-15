@@ -96,3 +96,8 @@ CLAUDE.local.md.bak
 
 # Python cache
 __pycache__/
+
+# Model weights and LoRA adapters (never commit them: GitHub rejects files over 100 MB)
+*.safetensors
+*.gguf
+/adapters/

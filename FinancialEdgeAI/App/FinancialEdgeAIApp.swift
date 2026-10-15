@@ -32,6 +32,7 @@ struct FinancialEdgeAIApp: App {
                 Tab("Evaluate", systemImage: "chart.bar") {
                     EvaluationView(viewModel: evaluationViewModel)
                 }
+                .badge("WIP")
             }
             // iOS does not allow GPU work in the background, and MLX stops the app with a fatal
             // error if it is attempted. A locked screen sends the app to the background, so the

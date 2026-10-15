@@ -1,21 +1,27 @@
 # Baseline: Qwen3-4B (4-bit), no fine-tuning
 
 The unmodified model, the prompt of `Dataset/`, the frozen test split (30 statements), three runs.
-Generated tables: `baseline-tables-mac-20261015.md`. Raw report: `baseline-Qwen3-4B-4bit-mac-20261015T002540.json`
-(every raw answer, every judgement). Reproduce the tables with `python3 Scripts/summarize_results.py <report.json>`.
+Generated tables: `baseline-tables-iphone-20261015.md` and `baseline-tables-mac-20261015.md`. Raw reports (every raw
+answer, every judgement): `baseline-Qwen3-4B-4bit-iphone-20261015T092128.json` and
+`baseline-Qwen3-4B-4bit-mac-20261015T002540.json`. Reproduce the tables with
+`python3 Scripts/summarize_results.py <report.json>`.
 
-## Read this first: what this run is, and is not
+## Read this first: two runs, one result
 
-- **It ran on a Mac, not on the iPhone.** The iPhone dropped its connection during the night, so the
-  evaluation was run on a Mac16,13 (24 GB) as an iOS app ("Designed for iPad") with the same app, model,
-  prompt, seeds and test split. The `device` field of the JSON says `iPad8,6`, because an iOS app on a Mac
-  reports an emulated identifier. The app now labels such runs; the committed file predates that fix.
-- **The accuracy numbers do not depend on the device.** Same weights, same prompts, same seeds.
-- **The speed and memory numbers of this run are not iPhone numbers** (here: 8.0 s per statement median,
-  10.3 tokens/s, 2.7 GB peak, Debug build, an iOS app emulated on a Mac). The iPhone numbers are in
-  `model-gate.md` (about 21.8 tokens/s, 5.4 s per statement, 2.6 GB peak, 7 statements). A run on the
-  iPhone itself is still to be done and will be added next to this one.
-- **Debug build, one model, one prompt, 30 statements.** One statement is 3.3 points.
+- **Two runs, the same answers.** The evaluation ran on the **iPhone** (iPhone 16, iOS 27.0.1) and, first, on a Mac
+  (Mac16,13, 24 GB) as an iOS app, while the phone was disconnected. Same app, model, prompt, seeds and test split (the
+  prompt and test-set hashes in the two reports are equal). **All 90 answers are identical, character for character.**
+  So the accuracy below does not depend on the device. The `device` field of the Mac report says `iPad8,6`, because an
+  iOS app on a Mac reports an emulated identifier; the app now labels such runs, the committed Mac file predates that fix.
+- **What the iPhone costs, over the full run of 90 answers** (Debug build, started from Xcode): 6.0 s per statement
+  (median), 2.37 s to the first token, 21.5 tokens/s, a median of 75 tokens per answer, peak MLX memory 2.57 GiB,
+  9.5 minutes of generation, 2.8 s to load the model from the cache. The thermal state reached "serious" after 8 of the
+  90 answers (3 in run 2, 5 in run 3); every answer started below it. Run 1 was the slowest (6.85 s, 19.6 tokens/s) and
+  run 3 the fastest (5.69 s, 21.7 tokens/s); the reason is not known.
+- For comparison: the Mac run took 8.0 s per statement at 10.3 tokens/s with a 2.68 GiB peak, and the 7-statement gate
+  test on the iPhone gave 5.4 s, 21.8 tokens/s and 2.53 GiB (`model-gate.md`). Memory is in GiB (1024 x 1024 x 1024
+  bytes), as the app shows it.
+- **Debug build, one model, one prompt, one phone, 30 statements.** One statement is 3.3 points.
 - **The three runs are identical.** At temperature 0.2 the model gave exactly the same values for all 30
   statements in all three runs (30 of 30). The effective sample is therefore 30 statements, not 90 answers,
   and the 90 answers are not independent evidence.
@@ -133,8 +139,8 @@ where the model has to choose.
 
 ## Limits
 
-- 30 test statements, effectively one run each. Counts per cause are 3 or 4 statements.
+- 30 test statements, effectively one run each. Each cause comes from 1 to 5 statements.
 - Synthetic, short statements.
-- A Mac run in a Debug build: speed and memory here do not describe the iPhone.
+- Debug build, one iPhone model (iPhone 16). A Release build may be faster.
 - The labelling convention (convert to billions) is stricter than the prompt (see 1).
 - "Valid JSON" accepts what Foundation accepts.

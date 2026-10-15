@@ -22,7 +22,8 @@ The output is seven numbers, as JSON, decoded in Swift into a `FinancialMetrics`
 
 ## Results: the unmodified model
 
-Model `Qwen3-4B` 4-bit (MLX), 30 frozen test statements, three runs, temperature 0.2, thinking off.
+Model `Qwen3-4B` 4-bit (MLX), 30 frozen test statements, three runs, temperature 0.2, thinking off. Measured on an
+iPhone 16 (iOS 27.0.1) and, first, on a Mac: all 90 answers are identical on both.
 Full analysis: [`Results/baseline-analysis.md`](Results/baseline-analysis.md).
 
 | Measure | Result |
@@ -49,30 +50,33 @@ returned seven nulls.
 
 ### What the iPhone costs
 
-A feasibility test on the iPhone (iOS 27.0.1, Debug build, 7 statements, [`Results/model-gate.md`](Results/model-gate.md)):
+Measured on an iPhone 16 (iOS 27.0.1, Debug build, the app was never killed): the full evaluation
+([`Results/baseline-analysis.md`](Results/baseline-analysis.md)) and the first feasibility test
+([`Results/model-gate.md`](Results/model-gate.md)).
 
-| | |
-|---|---|
-| Download + load, first launch | 463 s (7.7 min) for about 2.3 GB; offline afterwards |
-| Time per statement | about 5.4 s (median), 4.9 to 5.5 s |
-| Generation speed | 21.6 to 21.9 tokens/s |
-| Peak MLX memory | 2.6 GB (the app was not killed) |
-| Thermal state | nominal |
+| | Full evaluation, 90 answers | First test, 7 statements |
+|---|---|---|
+| Download + load, first launch | model loaded in 2.8 s (already cached) | 463 s (7.7 min) for about 2.3 GB; offline afterwards |
+| Time per statement (median) | 6.0 s (4.8 to 8.6 s) | 5.4 s (4.9 to 5.5 s) |
+| Time to first token (median) | 2.37 s | 1.8 to 2.1 s |
+| Generation speed (median) | 21.5 tokens/s | 21.6 to 21.9 tokens/s |
+| Peak MLX memory | 2.57 GiB | 2.53 GiB |
+| Thermal state | reached "serious" after 8 of 90 answers (runs 2 and 3) | nominal |
+| Generation time in total | 9.5 min | |
 
 ### Read these caveats before quoting a number
 
-- **The baseline ran on a Mac, not on the iPhone.** The iPhone dropped its connection the night before the
-  deadline, so the 90 answers were produced by the same app, model, prompt and seeds running as an iOS app
-  on an Apple silicon Mac. Accuracy does not depend on the device. The speed and memory of that run are
-  **not** iPhone numbers, so the table above takes them from the iPhone test. A run on the iPhone itself is
-  still to be added.
+- **The accuracy was measured twice, with identical results.** On the iPhone and, first, on a Mac (the iOS app
+  running on Apple silicon) while the phone was disconnected. Same app, model, prompt, seeds and test split, and
+  all 90 answers are identical, character for character. The speed and memory above are the iPhone's. The Mac run
+  was slower (10.3 tokens/s) and is not used for them.
 - **The three runs are identical** (30 / 30 statements gave the same values every time), so the sample is 30
   statements, not 90 answers. One statement is 3.3 points.
 - **Part of the unit result is the experiment's fault.** Rule 8 of the prompt does not ask the model to
   convert millions into billions, but the dataset labels do. The two statements where billions were turned
   into millions are real errors; the two where millions were left as millions arguably are not. The prompt
   has to be fixed, and the baseline repeated, before fine-tuning. A changed prompt is a new experiment.
-- Debug build, one model, one prompt, synthetic short statements.
+- Debug build, one phone model, one model, one prompt, synthetic short statements.
 - "Valid JSON" means "the app's decoder can read it"; Foundation's parsers also accept a trailing comma.
 - A first test with `gemma3_1B_qat_4bit` and an earlier prompt returned a fenced JSON and missed one value.
   That experiment is not comparable with this one.
@@ -195,7 +199,7 @@ already right, and a usable speed. A mixed or negative result is a valid result.
 reads directly: either that tool is used, or the dataset is converted. An adapter only works with the base
 model it was trained on. Weights and adapters must not be committed (`.gitignore` excludes them).
 
-**Other next steps.** A run on the iPhone itself, a Release build for the speed numbers, real reports
+**Other next steps.** A Release build for the speed numbers, real reports
 instead of synthetic statements, a larger test split, a comparison with a smaller model
 (`gemma3_1B_qat_4bit`), and energy measurements.
 

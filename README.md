@@ -126,7 +126,7 @@ FinancialEdgeAI/                 Xcode app target (Swift, SwiftUI, MLX)
 │               MetricsParser                  raw answer to FinancialMetrics
 │               DatasetLoader, EvaluationMetrics, EvaluationRunner
 ├── ViewModel/  ChatViewModel, EvaluationViewModel
-├── Views/      ContentView (Extract), EvaluationView (Evaluate)
+├── Views/      ContentView (Extract), EvaluationView (Evaluate, work in progress)
 └── Resources/  prompt files and test split (bundled copies, checked for drift)
 FinancialEdgeAITests/            Swift Testing, 37 tests
 Dataset/                         300 labelled statements, the prompt, its README
@@ -136,14 +136,15 @@ Results/                         model gate, baseline report, tables and analysi
 
 ## Run it
 
-Requirements: Xcode 27, a **physical iPhone** (the simulator crashes as soon as MLX starts), and a network
-connection on the first launch only.
+Requirements: Xcode 27, a **physical iPhone** (MLX cannot run on the simulator: the app starts there and
+says so, instead of crashing), and a network connection on the first launch only.
 
 1. Open `FinancialEdgeAI.xcodeproj`, select the iPhone, run.
 2. The first launch downloads the model (about 2.3 GB). After that the app works offline.
 3. **Extract** tab: paste a statement, or tap *Sample*, then *Send*. It shows the decoded values, what had to
    be skipped to read the answer, and what the answer cost (tokens/s, time, memory).
-4. **Evaluate** tab: *Start evaluation* runs the 30 test statements three times (about 10 minutes). The
+4. **Evaluate** tab (marked *work in progress*: a development tool that measures the model, not part of the
+   final app): *Start evaluation* runs the 30 test statements three times (about 10 minutes). The
    screen stays on, because iOS does not allow GPU work in the background and MLX stops the app if it is
    attempted. *Share* exports the full JSON report.
 5. `python3 Scripts/summarize_results.py <report.json>` prints the tables and every failing statement.

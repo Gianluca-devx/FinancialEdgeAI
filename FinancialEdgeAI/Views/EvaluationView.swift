@@ -13,6 +13,21 @@ struct EvaluationView: View {
         NavigationStack {
             List {
                 Section {
+                    Label {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Work in progress")
+                                .font(.headline)
+                            Text("A development tool to measure the model on the device. It will not be part of the final app.")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                    } icon: {
+                        Image(systemName: "hammer.fill")
+                            .foregroundStyle(.orange)
+                    }
+                }
+
+                Section {
                     Text(viewModel.modelName)
                     Text("30 test statements, 3 runs each")
                         .foregroundStyle(.secondary)
@@ -68,4 +83,8 @@ struct EvaluationView: View {
             .navigationTitle("Evaluation")
         }
     }
+}
+
+#Preview {
+    EvaluationView(viewModel: EvaluationViewModel(service: LLMService()))
 }

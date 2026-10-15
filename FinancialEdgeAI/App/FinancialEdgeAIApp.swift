@@ -15,7 +15,11 @@ struct FinancialEdgeAIApp: App {
     @State private var evaluationViewModel: EvaluationViewModel
     
     init() {
+        // MLX aborts the app as soon as it starts on the simulator (no usable GPU), so it is
+        // not touched there. LLMService.loadModel() explains this to the user.
+        #if !targetEnvironment(simulator)
         Memory.cacheLimit = 20 * 1024 * 1024
+        #endif
         
         // One service, so the model is in memory once and both screens use it.
         let service = LLMService()
@@ -32,6 +36,7 @@ struct FinancialEdgeAIApp: App {
                 Tab("Evaluate", systemImage: "chart.bar") {
                     EvaluationView(viewModel: evaluationViewModel)
                 }
+                .badge("WIP")
             }
             // iOS does not allow GPU work in the background, and MLX stops the app with a fatal
             // error if it is attempted. A locked screen sends the app to the background, so the

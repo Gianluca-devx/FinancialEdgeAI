@@ -81,9 +81,11 @@ final class EvaluationRunner {
         let metadata = EvaluationReport.Metadata(
             date: ISO8601DateFormatter().string(from: .now),
             model: LLMService.modelName,
-            device: deviceIdentifier,
+            device: ProcessInfo.processInfo.isiOSAppOnMac
+                ? "Mac, iOS app on Mac (reports itself as \(deviceIdentifier))"
+                : deviceIdentifier,
             system: "iOS \(ProcessInfo.processInfo.operatingSystemVersionString)",
-            temperature: Double(GenerationSettings.temperature),
+            temperature: Double(String(GenerationSettings.temperature)) ?? Double(GenerationSettings.temperature),
             maxTokens: GenerationSettings.maxTokens,
             runs: seeds.count,
             seeds: seeds,

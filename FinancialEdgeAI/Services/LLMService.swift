@@ -30,10 +30,12 @@ private let generateParameters = GenerateParameters(
 
 enum LLMServiceError: LocalizedError {
     case modelNotLoaded
+    case unsupportedOnSimulator
 
     var errorDescription: String? {
         switch self {
         case .modelNotLoaded: "Model has not been loaded."
+        case .unsupportedOnSimulator: "MLX needs a physical device: the simulator has no GPU that MLX can use. Run the app on an iPhone."
         }
     }
 }
@@ -63,6 +65,9 @@ final class LLMService {
     private var state = State.idle
 
     func loadModel() async throws {
+        #if targetEnvironment(simulator)
+        throw LLMServiceError.unsupportedOnSimulator
+        #else
         switch self.state {
         case.idle:
             let started = ContinuousClock.now
@@ -96,6 +101,7 @@ final class LLMService {
             return
             
         }
+        #endif
     }
 
     /// Runs one extraction. Every call uses a new session, because a `ChatSession` remembers

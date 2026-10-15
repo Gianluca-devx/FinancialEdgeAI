@@ -15,7 +15,11 @@ struct FinancialEdgeAIApp: App {
     @State private var evaluationViewModel: EvaluationViewModel
     
     init() {
+        // MLX aborts the app as soon as it starts on the simulator (no usable GPU), so it is
+        // not touched there. LLMService.loadModel() explains this to the user.
+        #if !targetEnvironment(simulator)
         Memory.cacheLimit = 20 * 1024 * 1024
+        #endif
         
         // One service, so the model is in memory once and both screens use it.
         let service = LLMService()

@@ -99,8 +99,11 @@ class ChatViewModel {
         errorMessage = nil
         do {
             try await service.loadModel()
+            // Development aid: the console says which model, and which adapter, is on.
+            print("[model] loaded, adapter: \(service.adapter?.summary ?? "none")")
         } catch {
             errorMessage = "An Error Occurred: \(error.localizedDescription)"
+            print("[model] load failed: \(error.localizedDescription)")
         }
     }
     

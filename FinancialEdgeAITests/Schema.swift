@@ -1,0 +1,1 @@
+../FinancialEdgeAI/Models/Schema.swift

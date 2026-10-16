@@ -14,8 +14,10 @@ extension DatasetLoader {
     static func loadTestSplit() throws -> [ExtractionExample] {
         try parse(
             jsonl: bundledText("test", "jsonl"),
+            labelsJSONL: bundledText("test.labels", "jsonl"),
             indexCSV: bundledText("index", "csv"),
             template: ExtractionPrompt.template,
+            schema: Schema.bundled,
             split: "test"
         )
     }

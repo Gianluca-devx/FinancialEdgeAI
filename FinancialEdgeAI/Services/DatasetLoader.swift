@@ -10,46 +10,68 @@ enum DatasetError: LocalizedError, Equatable {
     case missingResource(String)
     case invalidTemplate
     case malformedLine(Int, String)
+    case labelCountMismatch(statements: Int, labels: Int)
 
     var errorDescription: String? {
         switch self {
         case .missingResource(let name): "The bundled file \(name) is missing."
         case .invalidTemplate: "The prompt template must contain \(PromptTemplate.placeholder) exactly once."
         case .malformedLine(let line, let reason): "Line \(line) of the dataset is malformed: \(reason)"
+        case .labelCountMismatch(let statements, let labels):
+            "The split has \(statements) statements but \(labels) label lines."
         }
     }
 }
 
-/// Reads a dataset split (`test.jsonl`) and its `index.csv` into examples.
+/// Reads a dataset split (`test.jsonl`), its sidecar (`test.labels.jsonl`) and its `index.csv`
+/// into examples.
+///
+/// The expected values come from the sidecar: they are the true numbers written by the generator,
+/// not the result of parsing a text. That is what lets the tests check the parser.
 enum DatasetLoader {
 
     /// Pure and testable: no bundle access.
-    static func parse(jsonl: String, indexCSV: String, template: PromptTemplate, split: String) throws
-        -> [ExtractionExample]
-    {
+    static func parse(
+        jsonl: String, labelsJSONL: String, indexCSV: String,
+        template: PromptTemplate, schema: Schema, split: String
+    ) throws -> [ExtractionExample] {
         let index = parseIndex(indexCSV, split: split)
+        let lines = jsonl.split(whereSeparator: \.isNewline)
+        let labelLines = labelsJSONL.split(whereSeparator: \.isNewline)
+        guard lines.count == labelLines.count else {
+            throw DatasetError.labelCountMismatch(statements: lines.count, labels: labelLines.count)
+        }
         var examples: [ExtractionExample] = []
 
-        let lines = jsonl.split(whereSeparator: \.isNewline)
         for (offset, line) in lines.enumerated() {
             let number = offset + 1
             guard let record = try? JSONDecoder().decode(Record.self, from: Data(line.utf8)) else {
                 throw DatasetError.malformedLine(number, "not a chat record")
             }
-            guard let user = record.messages.first(where: { $0.role == "user" })?.content,
-                  let assistant = record.messages.first(where: { $0.role == "assistant" })?.content
-            else {
-                throw DatasetError.malformedLine(number, "missing the user or the assistant message")
+            guard let user = record.messages.first(where: { $0.role == "user" })?.content else {
+                throw DatasetError.malformedLine(number, "missing the user message")
             }
             guard let statement = template.statement(in: user) else {
                 throw DatasetError.malformedLine(number, "the user message does not match the prompt template")
             }
-            guard let expected = try? JSONDecoder().decode(FinancialMetrics.self, from: Data(assistant.utf8)) else {
-                throw DatasetError.malformedLine(number, "the label is not a FinancialMetrics JSON")
+            guard let labels = try? JSONDecoder().decode(Labels.self, from: Data(labelLines[offset].utf8)),
+                  labels.line == number
+            else {
+                throw DatasetError.malformedLine(number, "the label line is not valid or has another number")
+            }
+
+            var texts: [String: String] = [:]
+            var values: [String: Double] = [:]
+            for key in schema.coreKeys {
+                if let entry = labels.fields[key] ?? nil {
+                    texts[key] = entry.text
+                    values[key] = entry.value
+                }
             }
             let meta = index[number]
             examples.append(ExtractionExample(
-                id: number, statement: statement, expected: expected,
+                id: number, statement: statement,
+                expected: FinancialMetrics(texts: texts, values: values),
                 source: meta?.source ?? "unknown",
                 scenario: meta?.scenario ?? "unknown",
                 pool: meta?.pool ?? "unknown"))
@@ -63,6 +85,16 @@ enum DatasetLoader {
             let content: String
         }
         let messages: [Message]
+    }
+
+    /// One line of a sidecar: all 18 fields, each null or the printed text with its true value.
+    private struct Labels: Decodable {
+        struct Entry: Decodable {
+            let text: String
+            let value: Double
+        }
+        let line: Int
+        let fields: [String: Entry?]
     }
 
     private struct IndexRow {

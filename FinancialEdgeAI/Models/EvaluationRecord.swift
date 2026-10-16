@@ -20,6 +20,8 @@ enum FieldOutcome: String, Codable, Sendable, CaseIterable {
     case unitError
     /// Any other wrong number.
     case wrongValue
+    /// The model returned a string that the parser cannot read as a number.
+    case unreadable
     /// The answer could not be read, so there is no value to compare.
     case unparsed
 }
@@ -43,18 +45,23 @@ struct EvaluationRecord: Codable, Sendable {
     let hadThinking: Bool
     /// Why the answer could not be read, if it could not.
     let parseFailure: String?
+    /// What the model returned (the strings) and the numbers read from them.
     let extracted: FinancialMetrics?
+    /// The labels of the dataset: the printed strings and the true numbers.
     let expected: FinancialMetrics
 
-    /// Outcome per key of `FinancialMetrics.keys`.
+    /// Outcome per core key of the schema.
     let fields: [String: FieldOutcome]
+    /// For the keys where the model and the label both have a string: whether the model copied the
+    /// label's string exactly. A diagnostic: the fields are judged on the numbers.
+    let exactCopies: [String: Bool]
 
     /// `ProcessInfo.ThermalState` raw values: 0 nominal, 1 fair, 2 serious, 3 critical.
     let thermalBefore: Int
     let thermalAfter: Int
 
     var isFullyCorrect: Bool {
-        fields.count == FinancialMetrics.keys.count && fields.values.allSatisfy { $0 == .correct }
+        !fields.isEmpty && fields.values.allSatisfy { $0 == .correct }
     }
 }
 
@@ -66,12 +73,15 @@ struct EvaluationSummary: Codable, Sendable {
     let schemaValid: Int
     let fenced: Int
     let thinking: Int
-    /// Records where all seven fields are correct.
+    /// Records where every core field is correct.
     let fullyCorrect: Int
     /// Outcome counts per key.
     let fieldOutcomes: [String: [String: Int]]
-    /// Share of correct fields over all keys and all records.
+    /// Share of correct fields over all core keys and all records.
     let fieldAccuracy: Double
+    /// Strings copied exactly like the label, and how many strings could be compared.
+    let exactCopies: Int
+    let exactCopiesComparable: Int
 
     let medianTotalTime: Double
     let medianFirstTokenTime: Double
@@ -97,9 +107,13 @@ struct EvaluationReport: Codable, Sendable {
         let runs: Int
         let seeds: [UInt64]
         let examples: Int
-        /// SHA-256 of the prompt template, the system prompt and the test split.
+        /// SHA-256 of the system prompt and the prompt template, of the test split with its labels,
+        /// and of the schema.
         let promptHash: String
         let testSetHash: String
+        let schemaHash: String
+        /// The core keys that were asked and judged, in order.
+        let coreKeys: [String]
         /// Seconds the model took to load (the first load includes the download).
         let modelLoadSeconds: Double?
     }

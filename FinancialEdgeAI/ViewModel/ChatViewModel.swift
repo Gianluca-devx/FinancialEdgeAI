@@ -6,13 +6,6 @@
 //
 import SwiftUI
 
-/// One line of the decoded result, ready to show.
-struct MetricRow: Identifiable {
-    let label: String
-    let value: String
-    var id: String { label }
-}
-
 @MainActor @Observable
 class ChatViewModel {
     private let service: LLMService
@@ -46,38 +39,22 @@ class ChatViewModel {
         return "\(result.generatedTokens) tokens - \(speed) tokens/s - first token \(firstToken) s - total \(total) s - peak memory \(peak)"
     }
     
-    /// Whether the answer could be read, and what had to be skipped to read it.
+    /// Whether the answer could be read, and what had to be skipped or flagged to read it.
     var parseStatus: String? {
-        guard let outcome else { return nil }
-        switch outcome.failure {
-        case nil:
-            let skipped = [outcome.hadThinking ? "a reasoning block" : nil,
-                           outcome.hadFence ? "a code fence" : nil].compactMap { $0 }
-            return skipped.isEmpty ? "Decoded" : "Decoded, after skipping \(skipped.joined(separator: " and "))"
-        case .noJSON:
-            return "No JSON found in the answer"
-        case .invalidJSON:
-            return "The answer is not valid JSON"
-        case .wrongSchema(let problem):
-            return "Valid JSON, wrong schema: \(problem)"
-        }
+        outcome.map(MetricsPresenter.status(for:))
     }
     
-    /// The seven decoded values. A missing value is shown as null, not hidden.
+    /// The core fields. A missing value is shown as null, not hidden; a string that cannot be read
+    /// is shown as it is, with a warning.
     var metricRows: [MetricRow] {
         guard let metrics = outcome?.metrics else { return [] }
-        func show(_ value: Double?) -> String {
-            value.map { $0.formatted(.number.precision(.fractionLength(0...3))) } ?? "null"
-        }
-        return [
-            MetricRow(label: "Revenue", value: show(metrics.revenue)),
-            MetricRow(label: "Revenue growth", value: show(metrics.revenueGrowth)),
-            MetricRow(label: "Operating income", value: show(metrics.operatingIncome)),
-            MetricRow(label: "Operating income growth", value: show(metrics.operatingIncomeGrowth)),
-            MetricRow(label: "Net income", value: show(metrics.netIncome)),
-            MetricRow(label: "Net income growth", value: show(metrics.netIncomeGrowth)),
-            MetricRow(label: "Previous-year net income", value: show(metrics.previousYearNetIncome)),
-        ]
+        return MetricsPresenter.coreRows(metrics, schema: Schema.bundled)
+    }
+
+    /// What code calculated from the core fields. The model never writes these.
+    var derivedRows: [MetricRow] {
+        guard let metrics = outcome?.metrics else { return [] }
+        return MetricsPresenter.derivedRows(metrics, schema: Schema.bundled)
     }
     
     init(service: LLMService) {
@@ -107,7 +84,7 @@ class ChatViewModel {
         do {
             let generated = try await service.generate(statement: statement)
             result = generated
-            outcome = MetricsParser.parse(generated.text)
+            outcome = MetricsParser.parse(generated.text, schema: Schema.bundled)
         } catch {
             errorMessage = "An Error Occurred: \(error.localizedDescription)"
         }

@@ -10,16 +10,25 @@ import Foundation
 /// so that file can be compiled and tested without the app.
 extension DatasetLoader {
 
-    /// The test split bundled with the app.
-    static func loadTestSplit() throws -> [ExtractionExample] {
+    /// The test split bundled with the app, for the core call or the extended call.
+    static func loadTestSplit(tier: FieldTier = .core) throws -> [ExtractionExample] {
         try parse(
-            jsonl: bundledText("test", "jsonl"),
+            jsonl: bundledText(testFileName(for: tier), "jsonl"),
             labelsJSONL: bundledText("test.labels", "jsonl"),
             indexCSV: bundledText("index", "csv"),
-            template: ExtractionPrompt.template,
+            template: ExtractionPrompt.template(for: tier),
             schema: Schema.bundled,
-            split: "test"
+            split: "test",
+            tier: tier
         )
+    }
+
+    /// The bundled chat file of a tier (without the extension).
+    static func testFileName(for tier: FieldTier) -> String {
+        switch tier {
+        case .core: "test"
+        case .extended: "test.extended"
+        }
     }
 
     /// The bytes of the bundled files that define an experiment, for the hashes in a report.

@@ -48,7 +48,7 @@ def table(headers, rows):
 def load(path):
     report = json.loads(Path(path).read_text())
     meta, records = report["metadata"], report["records"]
-    keys = meta.get("coreKeys", OLD_FIELDS)
+    keys = meta.get("keys") or meta.get("coreKeys") or OLD_FIELDS
     n = len(records)
     fields = Counter()
     for r in records:
@@ -75,8 +75,10 @@ def load(path):
 
 def main(old_path, new_path):
     old, new = load(old_path), load(new_path)
-    if len(new["keys"]) == len(OLD_FIELDS) and "coreKeys" not in new["meta"]:
-        sys.exit("The second report must be a schema version 1 report (it has no coreKeys).")
+    if "coreKeys" not in new["meta"] and "keys" not in new["meta"]:
+        sys.exit("The second report must be a schema version 1 report (it has no coreKeys or keys).")
+    if new["meta"].get("tier", "core") != "core":
+        sys.exit("The comparison with v1.1.0 is for core reports; read an extended report with summarize_results.py.")
 
     print("## What changed between the two runs\n")
     print(table(["", "v1.1.0", "Schema version 1"], [

@@ -25,6 +25,7 @@ final class EvaluationRunner {
         examples: [ExtractionExample],
         seeds: [UInt64] = EvaluationRunner.seeds,
         schema: Schema = .bundled,
+        tier: FieldTier = .core,
         progress: (Int, Int) -> Void
     ) async -> [EvaluationRecord] {
         var records: [EvaluationRecord] = []
@@ -39,7 +40,7 @@ final class EvaluationRunner {
                 var generation: GenerationResult?
                 var generationError: String?
                 do {
-                    generation = try await service.generate(statement: example.statement, seed: seed)
+                    generation = try await service.generate(statement: example.statement, tier: tier, seed: seed)
                 } catch {
                     generationError = error.localizedDescription
                 }
@@ -48,7 +49,7 @@ final class EvaluationRunner {
                 records.append(EvaluationMetrics.makeRecord(
                     example: example, run: index + 1, seed: seed,
                     generation: generation, generationError: generationError,
-                    thermalBefore: thermalBefore, thermalAfter: thermalAfter, schema: schema))
+                    thermalBefore: thermalBefore, thermalAfter: thermalAfter, schema: schema, tier: tier))
                 if records.count <= 3 {
                     // Development aid: the first raw answers show at once whether the format works.
                     print("[evaluation] raw answer \(records.count): \(generation?.text ?? generationError ?? "")")
@@ -78,12 +79,14 @@ final class EvaluationRunner {
         examples: [ExtractionExample],
         seeds: [UInt64],
         modelLoadSeconds: Double?,
-        schema: Schema = .bundled
+        schema: Schema = .bundled,
+        tier: FieldTier = .core
     ) throws -> EvaluationReport {
+        let promptFile = tier == .core ? "prompt_template" : "prompt_template_extended"
         let prompts = try DatasetLoader.bundledData("system_prompt", "txt")
-            + DatasetLoader.bundledData("prompt_template", "txt")
-        // The test split is the statements together with their labels.
-        let testSet = try DatasetLoader.bundledData("test", "jsonl")
+            + DatasetLoader.bundledData(promptFile, "txt")
+        // The test split is the statements (of the tier's chat file) together with their labels.
+        let testSet = try DatasetLoader.bundledData(DatasetLoader.testFileName(for: tier), "jsonl")
             + DatasetLoader.bundledData("test.labels", "jsonl")
         let schemaFile = try DatasetLoader.bundledData("schema", "json")
 
@@ -102,14 +105,15 @@ final class EvaluationRunner {
             promptHash: sha256(prompts),
             testSetHash: sha256(testSet),
             schemaHash: sha256(schemaFile),
-            coreKeys: schema.coreKeys,
+            tier: tier.rawValue,
+            keys: schema.keys(for: tier),
             modelLoadSeconds: modelLoadSeconds)
 
         return EvaluationReport(
             metadata: metadata,
-            summary: EvaluationMetrics.summarize(records, schema: schema),
-            byScenario: EvaluationMetrics.summarize(records, schema: schema, groupedBy: \.scenario),
-            byPool: EvaluationMetrics.summarize(records, schema: schema, groupedBy: \.pool),
+            summary: EvaluationMetrics.summarize(records, schema: schema, tier: tier),
+            byScenario: EvaluationMetrics.summarize(records, schema: schema, tier: tier, groupedBy: \.scenario),
+            byPool: EvaluationMetrics.summarize(records, schema: schema, tier: tier, groupedBy: \.pool),
             records: records)
     }
 

@@ -112,8 +112,10 @@ struct EvaluationReport: Codable, Sendable {
         let promptHash: String
         let testSetHash: String
         let schemaHash: String
-        /// The core keys that were asked and judged, in order.
-        let coreKeys: [String]
+        /// "core" or "extended": which call was evaluated. (Reports of v2.0.0 have `coreKeys` instead.)
+        let tier: String
+        /// The keys that were asked and judged, in order.
+        let keys: [String]
         /// Seconds the model took to load (the first load includes the download).
         let modelLoadSeconds: Double?
     }

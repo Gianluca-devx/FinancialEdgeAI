@@ -31,9 +31,11 @@ enum DatasetError: LocalizedError, Equatable {
 enum DatasetLoader {
 
     /// Pure and testable: no bundle access.
+    /// `tier` says which call the chat file belongs to (`test.jsonl` or `test.extended.jsonl`, with the
+    /// matching `template`): the expected values are those of the keys of that tier.
     static func parse(
         jsonl: String, labelsJSONL: String, indexCSV: String,
-        template: PromptTemplate, schema: Schema, split: String
+        template: PromptTemplate, schema: Schema, split: String, tier: FieldTier = .core
     ) throws -> [ExtractionExample] {
         let index = parseIndex(indexCSV, split: split)
         let lines = jsonl.split(whereSeparator: \.isNewline)
@@ -62,7 +64,7 @@ enum DatasetLoader {
 
             var texts: [String: String] = [:]
             var values: [String: Double] = [:]
-            for key in schema.coreKeys {
+            for key in schema.keys(for: tier) {
                 if let entry = labels.fields[key] ?? nil {
                     texts[key] = entry.text
                     values[key] = entry.value

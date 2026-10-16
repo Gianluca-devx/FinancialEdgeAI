@@ -75,6 +75,24 @@ struct DatasetLoaderTests {
         #expect(examples.contains { $0.scenario == "none" })
     }
 
+    @Test func loadsTheExtendedTestSplitWithTheExtendedLabels() throws {
+        let schema = try DatasetFiles.schema()
+        let examples = try DatasetFiles.testSplit(tier: .extended)
+        #expect(examples.count == 30)
+        let core = Set(schema.coreKeys)
+        for example in examples {
+            #expect(core.isDisjoint(with: example.expected.values.keys))
+            #expect(Set(example.expected.values.keys).isSubset(of: Set(schema.extendedKeys)))
+        }
+        #expect(examples.contains { !$0.expected.values.isEmpty })
+        // The balance sheet statement written by hand (H23, in the validation split): debt, equity, cash,
+        // current assets and liabilities.
+        let validation = try DatasetFiles.split("valid", tier: .extended)
+        let sample = try #require(validation.first { $0.source == "H23" })
+        #expect(sample.expected.value(forKey: "totalDebt") == 12.5)
+        #expect(sample.expected.value(forKey: "currentLiabilities") == 6.1)
+    }
+
     @Test func loadsAllThreeSplitsWithTheirSizes() throws {
         #expect(try DatasetFiles.split("train").count == 240)
         #expect(try DatasetFiles.split("valid").count == 30)

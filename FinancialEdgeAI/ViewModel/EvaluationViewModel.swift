@@ -11,6 +11,9 @@ final class EvaluationViewModel {
     private let service: LLMService
     private var task: Task<Void, Never>?
 
+    /// Which call is evaluated: the core fields or the balance sheet fields. Fixed while a run is on.
+    var tier: FieldTier = .core
+
     private(set) var isRunning = false
     private(set) var completed = 0
     private(set) var total = 0
@@ -45,13 +48,14 @@ final class EvaluationViewModel {
             task = nil
         }
         do {
-            let examples = try DatasetLoader.loadTestSplit()
+            let tier = self.tier
+            let examples = try DatasetLoader.loadTestSplit(tier: tier)
             let seeds = EvaluationRunner.seeds
             total = examples.count * seeds.count
 
             let runner = EvaluationRunner(service: service)
-            print("[evaluation] started: \(total) answers")
-            let records = await runner.run(examples: examples, seeds: seeds) { [weak self] done, total in
+            print("[evaluation] started: \(total) answers, tier \(tier.rawValue)")
+            let records = await runner.run(examples: examples, seeds: seeds, tier: tier) { [weak self] done, total in
                 self?.completed = done
                 self?.total = total
                 if done % 10 == 0 || done == total { print("[evaluation] \(done) of \(total) answers") }
@@ -60,9 +64,9 @@ final class EvaluationViewModel {
 
             let report = try EvaluationRunner.makeReport(
                 records: records, examples: examples, seeds: seeds,
-                modelLoadSeconds: service.loadDuration)
+                modelLoadSeconds: service.loadDuration, tier: tier)
             self.report = report
-            let url = try write(report)
+            let url = try write(report, tier: tier)
             exportURL = url
             print("[evaluation] finished, report: \(url.lastPathComponent)")
         } catch {
@@ -72,14 +76,15 @@ final class EvaluationViewModel {
     }
 
     /// Saves the report in the app's Documents folder, from where it can be shared.
-    private func write(_ report: EvaluationReport) throws -> URL {
+    private func write(_ report: EvaluationReport, tier: FieldTier) throws -> URL {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
 
         let stamp = Date.now.formatted(.iso8601.year().month().day().time(includingFractionalSeconds: false)
             .timeSeparator(.omitted).dateSeparator(.omitted))
         let model = LLMService.modelName.split(separator: "/").last.map(String.init) ?? "model"
-        let url = URL.documentsDirectory.appending(path: "baseline-\(model)-\(stamp).json")
+        let prefix = tier == .core ? "baseline" : "baseline-\(tier.rawValue)"
+        let url = URL.documentsDirectory.appending(path: "\(prefix)-\(model)-\(stamp).json")
         try encoder.encode(report).write(to: url, options: .atomic)
         return url
     }
@@ -93,7 +98,7 @@ final class EvaluationViewModel {
             "\(count) / \(summary.records)  (\(summary.rate(count).formatted(.percent.precision(.fractionLength(0)))))"
         }
         let seconds = FloatingPointFormatStyle<Double>.number.precision(.fractionLength(1))
-        let fieldCount = Schema.bundled.coreKeys.count
+        let fieldCount = report?.metadata.keys.count ?? Schema.bundled.keys(for: tier).count
         return [
             MetricRow(label: "Answers", value: "\(summary.records)"),
             MetricRow(label: "Valid JSON", value: share(summary.validJSON)),

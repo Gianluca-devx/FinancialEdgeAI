@@ -7,8 +7,9 @@ phrasing pool, how stable the answers are across the runs, and every failing sta
 what was expected and what the model returned. Standard library only.
 
 It reads both report formats:
-  - schema version 1 (Phase 1): `metadata.coreKeys` is there; the model returns strings, and the
-    numbers are read by code. The statements come from Dataset/.
+  - schema version 1 (Phase 1): `metadata.coreKeys` (v2.0.0) or `metadata.keys` and `metadata.tier`
+    (core or extended call) are there; the model returns strings, and the numbers are read by code.
+    The statements come from Dataset/ (the extended call has its own chat file).
   - v1.1.0: seven numeric fields. The statements come from Dataset/archive/v1.1.0/.
 
 Usage: python3 Scripts/summarize_results.py Results/baseline-<model>-<date>.json > tables.md
@@ -60,12 +61,13 @@ def dataset_dir(new_format):
     return ROOT / "Dataset" if new_format else ROOT / "Dataset" / "archive" / "v1.1.0"
 
 
-def load_statements(directory):
-    """Statement text per line of test.jsonl (the report only stores example ids)."""
-    template = (directory / "prompt_template.txt").read_text().rstrip("\n")
+def load_statements(directory, tier="core"):
+    """Statement text per line of the test chat file of the tier (the report only stores example ids)."""
+    extended = tier == "extended"
+    template = (directory / ("prompt_template_extended.txt" if extended else "prompt_template.txt")).read_text().rstrip("\n")
     prefix, suffix = template.split("<<STATEMENT>>")
     statements = {}
-    lines = (directory / "test.jsonl").read_text().splitlines()
+    lines = (directory / ("test.extended.jsonl" if extended else "test.jsonl")).read_text().splitlines()
     for number, line in enumerate(lines, start=1):
         user = json.loads(line)["messages"][1]["content"]
         statements[number] = user[len(prefix):len(user) - len(suffix)]
@@ -108,12 +110,13 @@ def stats(records, keys):
 def main(path):
     report = json.loads(Path(path).read_text())
     meta, records = report["metadata"], report["records"]
-    new_format = "coreKeys" in meta
-    keys = meta["coreKeys"] if new_format else V1_KEYS
+    new_format = "coreKeys" in meta or "keys" in meta
+    tier = meta.get("tier", "core")
+    keys = meta.get("keys") or meta.get("coreKeys") or V1_KEYS
     outcomes = ["correct", "hallucinated", "missed", "wrongValue", "signError", "unitError"]
     outcomes += ["unreadable", "unparsed"] if new_format else ["unparsed"]
     directory = dataset_dir(new_format)
-    statements = load_statements(directory)
+    statements = load_statements(directory, tier)
     s = stats(records, keys)
     generations = [r["generation"] for r in records if "generation" in r]
 
@@ -135,7 +138,8 @@ def main(path):
     ]
     if new_format:
         run_rows.append(["Schema hash (SHA-256)", f'`{meta["schemaHash"][:16]}...`'])
-        run_rows.append(["Core fields asked and judged", len(keys)])
+        run_rows.append(["Core fields asked and judged" if "coreKeys" in meta
+                         else f"Fields asked and judged ({tier} call)", len(keys)])
     run_rows.append(["Model load (first launch includes download)",
                      f'{meta["modelLoadSeconds"]:.1f} s' if meta.get("modelLoadSeconds") else "n/a"])
     print(table(["", ""], run_rows))
@@ -143,7 +147,7 @@ def main(path):
     print("\n## Headline\n")
     headline = [
         ["Valid JSON (the app's decoder can read it)", f'{s["valid"]} / {s["n"]}', pct(s["valid"], s["n"])],
-        ["Exactly the core keys, a string or null each" if new_format else "Exactly the 7 keys, number or null",
+        [f"Exactly the {tier} keys, a string or null each" if new_format else "Exactly the 7 keys, number or null",
          f'{s["schema"]} / {s["n"]}', pct(s["schema"], s["n"])],
         [f"All {len(keys)} fields correct", f'{s["full"]} / {s["n"]}', pct(s["full"], s["n"])],
         ["Fields correct", f'{s["correct_fields"]} / {s["fields"]}', pct(s["correct_fields"], s["fields"])],

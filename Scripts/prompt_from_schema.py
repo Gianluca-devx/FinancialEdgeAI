@@ -13,6 +13,7 @@ Usage:
 `generate_dataset.py` and `validate_dataset.py` import render_prompt() from here.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -26,6 +27,11 @@ EXAMPLE_NEGATIVE = "(2.4) billion"
 EXAMPLE_PERCENT = "8.2%"
 EXAMPLE_DECREASE = "-6.8%"
 EXAMPLE_NUMBERS = ("7.4", "2.4", "8.2", "6.8")
+
+
+def example_leaks(statement):
+    """The numbers of the prompt's own examples that a statement also contains."""
+    return [n for n in EXAMPLE_NUMBERS if re.search(rf"(?<![\d.,]){re.escape(n)}(?!\d)", statement)]
 
 
 def load_schema():

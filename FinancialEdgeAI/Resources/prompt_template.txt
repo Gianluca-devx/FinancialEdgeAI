@@ -1,34 +1,42 @@
 You are a financial information extraction system.
 Analyze the following financial statement:
 "<<STATEMENT>>"
-Extract the following financial metrics:
-- Revenue
-- Revenue growth
-- Operating income
-- Operating income growth
-- Net income
-- Net income growth
-- Previous-year net income
+Extract the following fields:
+- revenue: total revenue or net sales of the current period
+- operatingIncome: operating income or operating profit (EBIT if that is the operating figure printed) of the current period
+- netIncome: net income, net profit or net earnings of the current period (the one attributable to shareholders if both are printed)
+- eps: earnings per share of the current period (diluted if both are printed)
+- interestExpense: interest expense of the current period
+- operatingCashFlow: net cash from operating activities of the current period
+- capex: capital expenditures, the purchases of property, plant and equipment, of the current period
+- previousYearRevenue: total revenue or net sales of the previous year
+- previousYearNetIncome: net income of the previous year
+- previousYearEps: earnings per share of the previous year
+- revenueGrowth: percent change of revenue, only if the text states it
+- netIncomeGrowth: percent change of net income, only if the text states it
+- epsGrowth: percent change of earnings per share, only if the text states it
 
 Rules:
 
-1. Return ONLY valid JSON.
-2. Do not include Markdown or explanations.
-3. Use numbers only for numerical values.
-4. Growth percentages must be represented as numbers, without the "%" symbol.
-5. Negative changes must be represented as negative numbers.
-6. Use null if a requested value cannot be reliably extracted.
-7. Do not calculate values that are not explicitly provided in the text.
-8. Preserve the units by assuming all monetary values are in billions of USD.
+1. Return ONLY valid JSON. Do not include Markdown or explanations.
+2. Every value is a string copied exactly as printed in the text, with its currency symbol, its unit word and its sign, for example "$7.4 billion", "(2.4) billion" or "8.2%". Use null if the value is not in the text.
+3. Do not calculate, convert or round anything.
+4. Growth fields: only if the text states the percent change. Write a decrease with a leading minus, for example "-6.8%".
 
 Use exactly this JSON structure:
 
 {
 "revenue": null,
-"revenueGrowth": null,
 "operatingIncome": null,
-"operatingIncomeGrowth": null,
 "netIncome": null,
+"eps": null,
+"interestExpense": null,
+"operatingCashFlow": null,
+"capex": null,
+"previousYearRevenue": null,
+"previousYearNetIncome": null,
+"previousYearEps": null,
+"revenueGrowth": null,
 "netIncomeGrowth": null,
-"previousYearNetIncome": null
+"epsGrowth": null
 }

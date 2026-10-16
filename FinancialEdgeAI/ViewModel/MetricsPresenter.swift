@@ -1,0 +1,116 @@
+//
+//  MetricsPresenter.swift
+//  FinancialEdgeAI
+//
+//  Created by Gianluca Pascarella on 16/10/2026.
+//
+import Foundation
+
+/// One line of the decoded result, ready to show.
+nonisolated struct MetricRow: Identifiable, Equatable, Sendable {
+    let id: String
+    let label: String
+    let value: String
+    /// A line under the value: what the model printed, or why the value is flagged.
+    let note: String?
+    /// The value could not be read. The row shows the raw text instead of a number.
+    let isWarning: Bool
+
+    init(id: String? = nil, label: String, value: String, note: String? = nil, isWarning: Bool = false) {
+        self.id = id ?? label
+        self.label = label
+        self.value = value
+        self.note = note
+        self.isWarning = isWarning
+    }
+}
+
+/// Turns the decoded metrics into the rows of the Extract tab. Pure, so it is covered by unit tests.
+///
+/// A missing value is shown as "null", not hidden. A value that code calculated is marked as
+/// derived. A string that cannot be read is shown as it is, with a warning, and the other rows
+/// still appear.
+nonisolated enum MetricsPresenter {
+
+    // MARK: - Rows
+
+    /// One row per core field, in the order of the schema.
+    static func coreRows(_ metrics: FinancialMetrics, schema: Schema, locale: Locale = .current) -> [MetricRow] {
+        let resolved = metrics.resolved(in: schema)
+        return schema.coreFields.map { field in
+            let text = metrics.text(forKey: field.key)
+            if let text, let value = metrics.value(forKey: field.key) {
+                return MetricRow(
+                    id: field.key, label: field.label,
+                    value: display(value, kind: field.kind, locale: locale), note: "printed: \(text)")
+            }
+            if let text {
+                return MetricRow(
+                    id: field.key, label: field.label, value: text,
+                    note: "could not read this value", isWarning: true)
+            }
+            if let filled = resolved.filled[field.key] {
+                return MetricRow(
+                    id: field.key, label: field.label,
+                    value: display(filled, kind: field.kind, locale: locale),
+                    note: "derived from the two amounts, not printed in the text")
+            }
+            return MetricRow(id: field.key, label: field.label, value: "null")
+        }
+    }
+
+    /// The derived values whose inputs are all core fields. Those that need the extended tier
+    /// (return on equity, debt to equity, current ratio, net debt) wait until it exists.
+    /// A growth that fills a core field is shown in that field's row, not here.
+    static func derivedRows(_ metrics: FinancialMetrics, schema: Schema, locale: Locale = .current) -> [MetricRow] {
+        let resolved = metrics.resolved(in: schema)
+        return schema.derived
+            .filter { $0.fills == nil && $0.inputs.allSatisfy { schema.field($0)?.tier == .core } }
+            .map { spec in
+                guard let value = resolved.derived[spec.key] else {
+                    return MetricRow(id: spec.key, label: spec.label, value: "null")
+                }
+                return MetricRow(
+                    id: spec.key, label: spec.label,
+                    value: display(value, kind: spec.kind, locale: locale), note: "derived")
+            }
+    }
+
+    // MARK: - Formatting
+
+    static func display(_ value: Double, kind: FieldKind, locale: Locale = .current) -> String {
+        switch kind {
+        case .amount:
+            return "$" + value.formatted(.number.precision(.significantDigits(1...6)).locale(locale)) + " bn"
+        case .percent:
+            return value.formatted(.number.precision(.fractionLength(0...2)).locale(locale)) + "%"
+        case .perShare:
+            return "$" + value.formatted(.number.precision(.fractionLength(2)).locale(locale))
+        case .ratio:
+            return value.formatted(.number.precision(.fractionLength(0...2)).locale(locale))
+        }
+    }
+
+    // MARK: - Status
+
+    /// Whether the answer could be read, and what had to be skipped or flagged to read it.
+    static func status(for outcome: ParseOutcome) -> String {
+        switch outcome.failure {
+        case nil:
+            let skipped = [outcome.hadThinking ? "a reasoning block" : nil,
+                           outcome.hadFence ? "a code fence" : nil].compactMap { $0 }
+            var text = skipped.isEmpty ? "Decoded" : "Decoded, after skipping \(skipped.joined(separator: " and "))"
+            let unreadable = outcome.unreadableKeys.count
+            if unreadable > 0 {
+                text += "; \(unreadable) \(unreadable == 1 ? "value" : "values") could not be read"
+            }
+            return text
+        case .noJSON:
+            return "No JSON found in the answer"
+        case .invalidJSON:
+            return "The answer is not valid JSON"
+        case .wrongSchema(let problem):
+            return "Valid JSON, wrong schema: \(problem)"
+        }
+    }
+}

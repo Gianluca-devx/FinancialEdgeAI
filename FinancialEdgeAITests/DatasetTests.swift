@@ -29,6 +29,20 @@ struct PromptTemplateTests {
     @Test func theRealTemplateHasOnePlaceholder() throws {
         _ = try DatasetFiles.promptTemplate()
     }
+
+    /// The field list of the prompt is generated from the schema. The Python validator checks the whole
+    /// text; this checks, from Swift, that the prompt asks for the core keys, in order, and for nothing else.
+    @Test func thePromptAsksForTheCoreFieldsOfTheSchema() throws {
+        let prompt = try DatasetFiles.text("Dataset/prompt_template.txt")
+        let schema = try DatasetFiles.schema()
+        let bulletKeys = prompt.split(separator: "\n")
+            .filter { $0.hasPrefix("- ") }
+            .compactMap { $0.dropFirst(2).split(separator: ":").first.map(String.init) }
+        #expect(bulletKeys == schema.coreKeys)
+        for key in schema.extendedKeys {
+            #expect(!prompt.contains("\"\(key)\""), "the extended field \(key) must not be in the core prompt")
+        }
+    }
 }
 
 struct DatasetLoaderTests {
@@ -38,8 +52,15 @@ struct DatasetLoaderTests {
         #expect(examples.count == 30)
         #expect(examples.map(\.id) == Array(1...30))
         #expect(examples.allSatisfy { $0.scenario != "unknown" && $0.pool != "unknown" })
-        #expect(examples.filter { $0.pool == "B" }.count == 13)
-        #expect(examples.filter { $0.scenario == "hand" }.count == 3)
+        #expect(examples.filter { $0.pool == "B" }.count == 12)
+        #expect(examples.filter { $0.scenario == "hand" }.count == 5)
+        #expect(examples.contains { $0.scenario == "none" })
+    }
+
+    @Test func loadsAllThreeSplitsWithTheirSizes() throws {
+        #expect(try DatasetFiles.split("train").count == 240)
+        #expect(try DatasetFiles.split("valid").count == 30)
+        #expect(try DatasetFiles.split("test").count == 30)
     }
 
     @Test func theFirstDeviceStatementIsInTheTestSplit() throws {
@@ -47,16 +68,52 @@ struct DatasetLoaderTests {
         let sample = try #require(examples.first {
             $0.statement.hasPrefix("During fiscal year 2025, the company reported revenue of $94 billion")
         })
-        #expect(sample.expected.revenue == 94)
-        #expect(sample.expected.netIncomeGrowth == -4)
-        #expect(sample.expected.previousYearNetIncome == 21.9)
+        #expect(sample.expected.value(forKey: "revenue") == 94)
+        #expect(sample.expected.text(forKey: "revenue") == "$94 billion")
+        #expect(sample.expected.value(forKey: "netIncomeGrowth") == -4)
+        #expect(sample.expected.text(forKey: "netIncomeGrowth") == "-4%")
+        #expect(sample.expected.value(forKey: "previousYearNetIncome") == 21.9)
+        #expect(sample.expected.value(forKey: "eps") == nil)
         #expect(sample.source == "H1")
+    }
+
+    @Test func theExpectedValuesAreTheCoreFieldsOnly() throws {
+        let schema = try DatasetFiles.schema()
+        let extended = Set(schema.extendedKeys)
+        for example in try DatasetFiles.testSplit() {
+            #expect(extended.isDisjoint(with: example.expected.values.keys))
+            #expect(Set(example.expected.values.keys) == Set(example.expected.texts.keys))
+        }
     }
 
     @Test func aMalformedLineIsReported() throws {
         let template = try DatasetFiles.promptTemplate()
+        let schema = try DatasetFiles.schema()
         #expect(throws: DatasetError.malformedLine(1, "not a chat record")) {
-            try DatasetLoader.parse(jsonl: "not json", indexCSV: "", template: template, split: "test")
+            try DatasetLoader.parse(
+                jsonl: "not json", labelsJSONL: "{}", indexCSV: "", template: template, schema: schema, split: "test")
+        }
+    }
+
+    @Test func aMissingLabelLineIsReported() throws {
+        let template = try DatasetFiles.promptTemplate()
+        let schema = try DatasetFiles.schema()
+        let chat = try DatasetFiles.text("Dataset/test.jsonl")
+        #expect(throws: DatasetError.labelCountMismatch(statements: 30, labels: 0)) {
+            try DatasetLoader.parse(
+                jsonl: chat, labelsJSONL: "", indexCSV: "", template: template, schema: schema, split: "test")
+        }
+    }
+
+    @Test func aLabelLineWithAnotherNumberIsReported() throws {
+        let template = try DatasetFiles.promptTemplate()
+        let schema = try DatasetFiles.schema()
+        let chat = try #require(try DatasetFiles.text("Dataset/test.jsonl").split(separator: "\n").first)
+        let labels = try #require(try DatasetFiles.text("Dataset/test.labels.jsonl").split(separator: "\n").first)
+            .replacingOccurrences(of: "\"line\": 1", with: "\"line\": 7")
+        #expect(throws: DatasetError.malformedLine(1, "the label line is not valid or has another number")) {
+            try DatasetLoader.parse(
+                jsonl: String(chat), labelsJSONL: labels, indexCSV: "", template: template, schema: schema, split: "test")
         }
     }
 }

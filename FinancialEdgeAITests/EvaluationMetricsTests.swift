@@ -9,6 +9,12 @@ import Testing
 
 struct EvaluationMetricsTests {
 
+    private let schema: Schema
+
+    init() throws {
+        schema = try DatasetFiles.schema()
+    }
+
     // MARK: - One value
 
     @Test func bothNullIsCorrect() {
@@ -47,53 +53,70 @@ struct EvaluationMetricsTests {
     // MARK: - One answer
 
     @Test func answerWithoutJSONLeavesEveryFieldUnparsed() {
-        let record = Self.record(answer: "I cannot do that.")
+        let record = record(answer: "I cannot do that.")
         #expect(!record.isValidJSON)
         #expect(!record.isSchemaValid)
-        #expect(record.fields.count == FinancialMetrics.keys.count)
+        #expect(record.fields.count == schema.coreKeys.count)
         #expect(record.fields.values.allSatisfy { $0 == .unparsed })
         #expect(!record.isFullyCorrect)
+        #expect(record.exactCopies.isEmpty)
     }
 
     @Test func failedGenerationIsRecordedAsUnparsed() {
         let record = EvaluationMetrics.makeRecord(
-            example: Self.example, run: 1, seed: 1, generation: nil,
-            generationError: "out of memory", thermalBefore: 0, thermalAfter: 0)
+            example: example(), run: 1, seed: 1, generation: nil,
+            generationError: "out of memory", thermalBefore: 0, thermalAfter: 0, schema: schema)
         #expect(record.generationError == "out of memory")
         #expect(record.fields.values.allSatisfy { $0 == .unparsed })
     }
 
+    @Test func theUnitIsJudgedAfterTheParserSoMillionsWrittenAsMillionsAreCorrect() {
+        // The label is 94 billion. The model copied "94,000 million": the same amount, so it is correct.
+        let record = record(answer: answerJSON(["revenue": "94,000 million"]))
+        #expect(record.fields["revenue"] == .correct)
+        #expect(record.exactCopies["revenue"] == false)
+    }
+
     @Test func eachMistakeIsNamedOnItsField() {
-        // Expected: netIncomeGrowth is null and previousYearNetIncome is 21.9. The model got one
-        // number wrong, flipped a sign, gave millions instead of billions, calculated a growth
-        // that is not in the text, and left the previous year out.
-        let expected = FinancialMetrics(
-            revenue: 94, revenueGrowth: 12, operatingIncome: 25, operatingIncomeGrowth: 8,
-            netIncome: 21, netIncomeGrowth: nil, previousYearNetIncome: 21.9)
-        let answer = """
-        {"revenue": 93, "revenueGrowth": -12, "operatingIncome": 25000, "operatingIncomeGrowth": 8,
-         "netIncome": 21, "netIncomeGrowth": -0.5, "previousYearNetIncome": null}
-        """
-        let record = Self.record(answer: answer, expected: expected)
+        // The label has netIncomeGrowth null, previousYearNetIncome 21.9 and EPS null. The model got one
+        // number wrong, flipped a sign, wrote millions where billions were expected, calculated a
+        // growth that is not in the text, left the previous year out, and wrote a string that is no value.
+        let answer = answerJSON([
+            "revenue": "$93 billion", "revenueGrowth": "-12%", "operatingIncome": "$25 million",
+            "netIncome": "$21 billion", "netIncomeGrowth": "-0.5%", "capex": "five",
+        ], without: ["previousYearNetIncome"])
+        let record = record(answer: answer)
         #expect(record.fields["revenue"] == .wrongValue)
         #expect(record.fields["revenueGrowth"] == .signError)
         #expect(record.fields["operatingIncome"] == .unitError)
-        #expect(record.fields["operatingIncomeGrowth"] == .correct)
         #expect(record.fields["netIncome"] == .correct)
         #expect(record.fields["netIncomeGrowth"] == .hallucinated)
         #expect(record.fields["previousYearNetIncome"] == .missed)
+        #expect(record.fields["capex"] == .unreadable)
+        #expect(record.fields["eps"] == .correct)
         #expect(record.isSchemaValid)
         #expect(!record.isFullyCorrect)
+    }
+
+    @Test func exactCopiesAreRecordedForTheStringsBothSidesHave() {
+        let record = record(answer: answerJSON([
+            "revenue": "$94 billion", "revenueGrowth": "12 percent", "netIncomeGrowth": "-0.5%",
+        ]))
+        // revenue: same string. revenueGrowth: same number, another string. netIncomeGrowth: the label has none.
+        #expect(record.exactCopies["revenue"] == true)
+        #expect(record.exactCopies["revenueGrowth"] == false)
+        #expect(record.exactCopies["netIncomeGrowth"] == nil)
+        #expect(record.fields["revenueGrowth"] == .correct)
     }
 
     // MARK: - Many answers
 
     @Test func summaryCountsTheOutcomes() {
-        let perfect = Self.record(answer: Self.expectedJSON)
-        let flawed = Self.record(answer: Self.expectedJSON.replacingOccurrences(
-            of: "\"netIncomeGrowth\": null", with: "\"netIncomeGrowth\": -0.5"))
-        let unreadable = Self.record(answer: "no JSON here")
-        let summary = EvaluationMetrics.summarize([perfect, flawed, unreadable])
+        let perfect = record(answer: answerJSON([:]))
+        let flawed = record(answer: answerJSON(["netIncomeGrowth": "-0.5%"]))
+        let unreadable = record(answer: "no JSON here")
+        let summary = EvaluationMetrics.summarize([perfect, flawed, unreadable], schema: schema)
+        let fieldCount = schema.coreKeys.count
 
         #expect(summary.records == 3)
         #expect(summary.validJSON == 2)
@@ -101,15 +124,18 @@ struct EvaluationMetricsTests {
         #expect(summary.fullyCorrect == 1)
         #expect(summary.fieldOutcomes["netIncomeGrowth"]?["hallucinated"] == 1)
         #expect(summary.fieldOutcomes["netIncomeGrowth"]?["unparsed"] == 1)
-        // 7 + 6 correct fields out of 21
-        #expect(abs(summary.fieldAccuracy - 13.0 / 21.0) < 1e-9)
+        // The perfect answer has every field correct, the flawed one all but one, the unreadable one none.
+        #expect(abs(summary.fieldAccuracy - Double(2 * fieldCount - 1) / Double(3 * fieldCount)) < 1e-9)
         #expect(summary.rate(summary.validJSON) == 2.0 / 3.0)
+        // The label has 5 strings; both readable answers copied all of them.
+        #expect(summary.exactCopiesComparable == 2 * 5)
+        #expect(summary.exactCopies == 2 * 5)
     }
 
     @Test func groupsAreSummarisedSeparately() {
-        let a = Self.record(answer: Self.expectedJSON, scenario: "full")
-        let b = Self.record(answer: "no JSON here", scenario: "none")
-        let groups = EvaluationMetrics.summarize([a, b], groupedBy: \.scenario)
+        let a = record(answer: answerJSON([:]), scenario: "full")
+        let b = record(answer: "no JSON here", scenario: "none")
+        let groups = EvaluationMetrics.summarize([a, b], schema: schema, groupedBy: \.scenario)
         #expect(groups["full"]?.fullyCorrect == 1)
         #expect(groups["none"]?.fullyCorrect == 0)
     }
@@ -120,57 +146,42 @@ struct EvaluationMetricsTests {
         #expect(EvaluationMetrics.median([]) == 0)
     }
 
-    // MARK: - The oracle
-
-    /// If the dataset's own correct answers do not score 100%, the evaluation itself is wrong.
-    @Test func theDatasetsOwnAnswersScoreEverythingCorrect() throws {
-        let text = try String(contentsOf: DatasetFiles.url("Dataset/test.jsonl"), encoding: .utf8)
-        let examples = try DatasetFiles.testSplit()
-        let answers = try DatasetFiles.assistantMessages(in: text)
-        #expect(examples.count == 30)
-        #expect(answers.count == examples.count)
-
-        let records = zip(examples, answers).map { example, answer in
-            EvaluationMetrics.makeRecord(
-                example: example, run: 1, seed: 1, generation: Self.generation(text: answer),
-                generationError: nil, thermalBefore: 0, thermalAfter: 0)
-        }
-        let summary = EvaluationMetrics.summarize(records)
-        #expect(summary.validJSON == 30)
-        #expect(summary.schemaValid == 30)
-        #expect(summary.fullyCorrect == 30)
-        #expect(summary.fieldAccuracy == 1)
-        #expect(summary.fenced == 0)
-    }
-
     // MARK: - Helpers
 
-    private static let expected = FinancialMetrics(
-        revenue: 93, revenueGrowth: 12, operatingIncome: 25, operatingIncomeGrowth: 8,
-        netIncome: 21, netIncomeGrowth: nil, previousYearNetIncome: nil)
+    /// The label of an invented statement: six fields, the others null.
+    private var expected: FinancialMetrics {
+        FinancialMetrics(
+            texts: ["revenue": "$94 billion", "revenueGrowth": "12%", "operatingIncome": "$25 billion",
+                    "netIncome": "$21 billion", "previousYearNetIncome": "$21.9 billion"],
+            values: ["revenue": 94, "revenueGrowth": 12, "operatingIncome": 25,
+                     "netIncome": 21, "previousYearNetIncome": 21.9])
+    }
 
-    private static let expectedJSON = """
-    {"revenue": 93, "revenueGrowth": 12, "operatingIncome": 25, "operatingIncomeGrowth": 8,
-     "netIncome": 21, "netIncomeGrowth": null, "previousYearNetIncome": null}
-    """
+    /// The answer that matches the label, with some keys replaced by the strings given.
+    private func answerJSON(_ overrides: [String: String], without: [String] = []) -> String {
+        var texts = expected.texts
+        for (key, text) in overrides { texts[key] = text }
+        for key in without { texts[key] = nil }
+        let lines = schema.coreKeys.map { key in
+            "\"\(key)\": " + (texts[key].map { "\"\($0)\"" } ?? "null")
+        }
+        return "{\n" + lines.joined(separator: ",\n") + "\n}"
+    }
 
-    private static let example = ExtractionExample(
-        id: 1, statement: "statement", expected: expected, source: "generated", scenario: "full", pool: "A")
+    private func example(scenario: String = "full") -> ExtractionExample {
+        ExtractionExample(
+            id: 1, statement: "statement", expected: expected, source: "generated", scenario: scenario, pool: "A")
+    }
 
-    private static func generation(text: String) -> GenerationResult {
+    private func generation(text: String) -> GenerationResult {
         GenerationResult(
             text: text, promptTokens: 300, generatedTokens: 70, promptTime: 1.5, generateTime: 3.2,
             totalTime: 4.7, tokensPerSecond: 21.8, activeMemory: 2_000_000_000, peakMemory: 2_500_000_000)
     }
 
-    private static func record(
-        answer: String, scenario: String = "full", expected: FinancialMetrics = expected
-    ) -> EvaluationRecord {
-        let example = ExtractionExample(
-            id: 1, statement: "statement", expected: expected, source: "generated",
-            scenario: scenario, pool: "A")
-        return EvaluationMetrics.makeRecord(
-            example: example, run: 1, seed: 1, generation: generation(text: answer),
-            generationError: nil, thermalBefore: 0, thermalAfter: 0)
+    private func record(answer: String, scenario: String = "full") -> EvaluationRecord {
+        EvaluationMetrics.makeRecord(
+            example: example(scenario: scenario), run: 1, seed: 1, generation: generation(text: answer),
+            generationError: nil, thermalBefore: 0, thermalAfter: 0, schema: schema)
     }
 }

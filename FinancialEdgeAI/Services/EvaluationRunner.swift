@@ -11,7 +11,7 @@ import Foundation
 @MainActor
 final class EvaluationRunner {
     /// One run per seed. Fixed seeds make a run reproducible.
-    static let seeds: [UInt64] = [1, 2, 3]
+    nonisolated static let seeds: [UInt64] = [1, 2, 3]
 
     private let service: LLMService
 
@@ -24,6 +24,7 @@ final class EvaluationRunner {
     func run(
         examples: [ExtractionExample],
         seeds: [UInt64] = EvaluationRunner.seeds,
+        schema: Schema = .bundled,
         progress: (Int, Int) -> Void
     ) async -> [EvaluationRecord] {
         var records: [EvaluationRecord] = []
@@ -47,7 +48,7 @@ final class EvaluationRunner {
                 records.append(EvaluationMetrics.makeRecord(
                     example: example, run: index + 1, seed: seed,
                     generation: generation, generationError: generationError,
-                    thermalBefore: thermalBefore, thermalAfter: thermalAfter))
+                    thermalBefore: thermalBefore, thermalAfter: thermalAfter, schema: schema))
                 progress(records.count, total)
             }
         }
@@ -72,11 +73,15 @@ final class EvaluationRunner {
         records: [EvaluationRecord],
         examples: [ExtractionExample],
         seeds: [UInt64],
-        modelLoadSeconds: Double?
+        modelLoadSeconds: Double?,
+        schema: Schema = .bundled
     ) throws -> EvaluationReport {
         let prompts = try DatasetLoader.bundledData("system_prompt", "txt")
             + DatasetLoader.bundledData("prompt_template", "txt")
+        // The test split is the statements together with their labels.
         let testSet = try DatasetLoader.bundledData("test", "jsonl")
+            + DatasetLoader.bundledData("test.labels", "jsonl")
+        let schemaFile = try DatasetLoader.bundledData("schema", "json")
 
         let metadata = EvaluationReport.Metadata(
             date: ISO8601DateFormatter().string(from: .now),
@@ -92,13 +97,15 @@ final class EvaluationRunner {
             examples: examples.count,
             promptHash: sha256(prompts),
             testSetHash: sha256(testSet),
+            schemaHash: sha256(schemaFile),
+            coreKeys: schema.coreKeys,
             modelLoadSeconds: modelLoadSeconds)
 
         return EvaluationReport(
             metadata: metadata,
-            summary: EvaluationMetrics.summarize(records),
-            byScenario: EvaluationMetrics.summarize(records, groupedBy: \.scenario),
-            byPool: EvaluationMetrics.summarize(records, groupedBy: \.pool),
+            summary: EvaluationMetrics.summarize(records, schema: schema),
+            byScenario: EvaluationMetrics.summarize(records, schema: schema, groupedBy: \.scenario),
+            byPool: EvaluationMetrics.summarize(records, schema: schema, groupedBy: \.pool),
             records: records)
     }
 

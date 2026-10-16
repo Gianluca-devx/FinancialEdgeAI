@@ -19,23 +19,37 @@ enum DatasetFiles {
         root.appending(path: path)
     }
 
+    static func text(_ path: String) throws -> String {
+        try String(contentsOf: url(path), encoding: .utf8)
+    }
+
+    static func schema() throws -> Schema {
+        try Schema(data: Data(contentsOf: url("Dataset/schema.json")))
+    }
+
     static func promptTemplate() throws -> PromptTemplate {
-        let text = try String(contentsOf: url("Dataset/prompt_template.txt"), encoding: .utf8)
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let text = try text("Dataset/prompt_template.txt").trimmingCharacters(in: .whitespacesAndNewlines)
         guard let template = PromptTemplate(text: text) else { throw DatasetError.invalidTemplate }
         return template
     }
 
-    static func testSplit() throws -> [ExtractionExample] {
+    /// A whole split with its labels: `train`, `valid` or `test`.
+    static func split(_ name: String) throws -> [ExtractionExample] {
         try DatasetLoader.parse(
-            jsonl: String(contentsOf: url("Dataset/test.jsonl"), encoding: .utf8),
-            indexCSV: String(contentsOf: url("Dataset/index.csv"), encoding: .utf8),
+            jsonl: text("Dataset/\(name).jsonl"),
+            labelsJSONL: text("Dataset/\(name).labels.jsonl"),
+            indexCSV: text("Dataset/index.csv"),
             template: promptTemplate(),
-            split: "test")
+            schema: schema(),
+            split: name)
     }
 
-    /// The raw JSON of every assistant message, one per line of the file.
-    static func assistantMessages(in jsonl: String) throws -> [String] {
+    static func testSplit() throws -> [ExtractionExample] {
+        try split("test")
+    }
+
+    /// The raw JSON of every assistant message of a split, one per line of the file.
+    static func assistantMessages(of split: String) throws -> [String] {
         struct Line: Decodable {
             struct Message: Decodable {
                 let role: String
@@ -43,9 +57,25 @@ enum DatasetFiles {
             }
             let messages: [Message]
         }
-        return try jsonl.split(separator: "\n").map { line in
+        return try text("Dataset/\(split).jsonl").split(separator: "\n").map { line in
             let decoded = try JSONDecoder().decode(Line.self, from: Data(line.utf8))
             return decoded.messages.first { $0.role == "assistant" }?.content ?? ""
+        }
+    }
+
+    /// One line of a sidecar: all 18 fields, each null or the printed text with its true value.
+    struct LabelLine: Decodable {
+        struct Entry: Decodable {
+            let text: String
+            let value: Double
+        }
+        let line: Int
+        let fields: [String: Entry?]
+    }
+
+    static func labelLines(of split: String) throws -> [LabelLine] {
+        try text("Dataset/\(split).labels.jsonl").split(separator: "\n").map {
+            try JSONDecoder().decode(LabelLine.self, from: Data($0.utf8))
         }
     }
 }

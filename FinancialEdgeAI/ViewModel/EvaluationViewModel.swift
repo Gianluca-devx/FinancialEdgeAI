@@ -88,12 +88,16 @@ final class EvaluationViewModel {
             "\(count) / \(summary.records)  (\(summary.rate(count).formatted(.percent.precision(.fractionLength(0)))))"
         }
         let seconds = FloatingPointFormatStyle<Double>.number.precision(.fractionLength(1))
+        let fieldCount = Schema.bundled.coreKeys.count
         return [
             MetricRow(label: "Answers", value: "\(summary.records)"),
             MetricRow(label: "Valid JSON", value: share(summary.validJSON)),
-            MetricRow(label: "Right 7 keys and types", value: share(summary.schemaValid)),
-            MetricRow(label: "All 7 fields correct", value: share(summary.fullyCorrect)),
+            MetricRow(label: "Right keys and types", value: share(summary.schemaValid)),
+            MetricRow(label: "All \(fieldCount) fields correct", value: share(summary.fullyCorrect)),
             MetricRow(label: "Fields correct", value: summary.fieldAccuracy.formatted(.percent.precision(.fractionLength(1)))),
+            MetricRow(
+                label: "Strings copied exactly",
+                value: "\(summary.exactCopies) / \(summary.exactCopiesComparable)"),
             MetricRow(label: "Needed a code fence", value: share(summary.fenced)),
             MetricRow(label: "Median time per statement", value: "\(summary.medianTotalTime.formatted(seconds)) s"),
             MetricRow(label: "Median tokens per second", value: summary.medianTokensPerSecond.formatted(seconds)),
@@ -105,7 +109,7 @@ final class EvaluationViewModel {
     /// How the mistakes are spread: what the model did wrong, over all fields of all answers.
     var mistakeRows: [MetricRow] {
         guard let summary = report?.summary else { return [] }
-        let kinds: [FieldOutcome] = [.hallucinated, .missed, .wrongValue, .signError, .unitError, .unparsed]
+        let kinds: [FieldOutcome] = [.hallucinated, .missed, .wrongValue, .signError, .unitError, .unreadable, .unparsed]
         return kinds.compactMap { kind in
             let count = summary.fieldOutcomes.values.reduce(0) { $0 + ($1[kind.rawValue] ?? 0) }
             return count == 0 ? nil : MetricRow(label: kind.rawValue, value: "\(count)")

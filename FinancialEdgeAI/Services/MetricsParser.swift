@@ -6,23 +6,25 @@
 //
 import Foundation
 
-enum ParseFailure: Error, Equatable, Sendable {
+nonisolated enum ParseFailure: Error, Equatable, Sendable {
     /// There is no `{ ... }` in the answer.
     case noJSON
     /// There is a `{ ... }` but it is not valid JSON.
     case invalidJSON
-    /// Valid JSON, but not the 7 keys with a number or null each.
+    /// Valid JSON, but not exactly the core keys with a string or null each.
     case wrongSchema(String)
 }
 
 /// What came out of one model answer, with the formatting habits that were needed to read it.
-struct ParseOutcome: Equatable, Sendable {
+nonisolated struct ParseOutcome: Equatable, Sendable {
     let metrics: FinancialMetrics?
     let failure: ParseFailure?
     /// The answer was wrapped in a Markdown code fence.
     let hadFence: Bool
     /// The answer started with a `<think>...</think>` block.
     let hadThinking: Bool
+    /// Keys whose string the parser could not read as a number. They are flagged, not guessed.
+    let unreadableKeys: [String]
 
     /// The text contained a JSON object that parsed, even if its schema was wrong.
     var isValidJSON: Bool {
@@ -32,18 +34,19 @@ struct ParseOutcome: Equatable, Sendable {
         }
     }
 
-    /// Valid JSON with exactly the 7 keys, each a number or null.
+    /// Valid JSON with exactly the core keys, each a string or null.
     var isSchemaValid: Bool { metrics != nil }
 }
 
 /// Turns the raw text of a model answer into `FinancialMetrics`.
 ///
 /// It is tolerant about what surrounds the JSON (a reasoning block, a Markdown fence, a sentence)
-/// and strict about the JSON itself. It records the tolerance it needed, so that
-/// "how often does the model break the format" can be measured.
-enum MetricsParser {
+/// and strict about the JSON itself: exactly the core keys of the schema, each a string or null.
+/// It records the tolerance it needed, so that "how often does the model break the format" can be
+/// measured. The strings are turned into numbers by `ValueParser` (see `FinancialMetrics`).
+nonisolated enum MetricsParser {
 
-    static func parse(_ raw: String) -> ParseOutcome {
+    static func parse(_ raw: String, schema: Schema) -> ParseOutcome {
         var text = raw
 
         var hadThinking = false
@@ -54,7 +57,9 @@ enum MetricsParser {
         let hadFence = text.contains("```")
 
         func outcome(_ metrics: FinancialMetrics?, _ failure: ParseFailure?) -> ParseOutcome {
-            ParseOutcome(metrics: metrics, failure: failure, hadFence: hadFence, hadThinking: hadThinking)
+            ParseOutcome(
+                metrics: metrics, failure: failure, hadFence: hadFence, hadThinking: hadThinking,
+                unreadableKeys: metrics?.unreadableKeys(in: schema) ?? [])
         }
 
         guard let open = text.firstIndex(of: "{"),
@@ -70,20 +75,19 @@ enum MetricsParser {
             return outcome(nil, .invalidJSON)
         }
 
-        if let problem = schemaProblem(in: object) {
+        if let problem = schemaProblem(in: object, keys: schema.coreKeys) {
             return outcome(nil, .wrongSchema(problem))
         }
-        do {
-            let metrics = try JSONDecoder().decode(FinancialMetrics.self, from: json)
-            return outcome(metrics, nil)
-        } catch {
-            return outcome(nil, .wrongSchema(error.localizedDescription))
+        var texts: [String: String] = [:]
+        for (key, value) in object {
+            if case .string(let string) = value { texts[key] = string }
         }
+        return outcome(FinancialMetrics(texts: texts, schema: schema), nil)
     }
 
     /// Swift turns a missing optional key into nil, so the keys are checked here.
-    private static func schemaProblem(in object: [String: JSONValue]) -> String? {
-        let expected = Set(FinancialMetrics.keys)
+    private static func schemaProblem(in object: [String: JSONValue], keys: [String]) -> String? {
+        let expected = Set(keys)
         let actual = Set(object.keys)
         let missing = expected.subtracting(actual).sorted()
         let extra = actual.subtracting(expected).sorted()
@@ -93,10 +97,10 @@ enum MetricsParser {
             if !extra.isEmpty { parts.append("unexpected \(extra.joined(separator: ", "))") }
             return parts.joined(separator: "; ")
         }
-        for key in FinancialMetrics.keys {
+        for key in keys {
             switch object[key] {
-            case .null?, .number?: continue
-            default: return "\(key) is not a number or null"
+            case .null?, .string?: continue
+            default: return "\(key) is not a string or null"
             }
         }
         return nil

@@ -33,11 +33,14 @@ struct ContentView: View {
                                 .font(.headline)
                         }
                         ForEach(viewModel.metricRows) { row in
-                            HStack {
-                                Text(row.label)
-                                Spacer()
-                                Text(row.value)
-                                    .monospacedDigit()
+                            MetricRowView(row: row)
+                        }
+                        if viewModel.derivedRows.isEmpty == false {
+                            Text("Derived by code")
+                                .font(.headline)
+                                .padding(.top, 8)
+                            ForEach(viewModel.derivedRows) { row in
+                                MetricRowView(row: row)
                             }
                         }
                         if viewModel.response.isEmpty == false {
@@ -83,6 +86,28 @@ struct ContentView: View {
             Text(viewModel.errorMessage ?? "Unknown error")
         }
         .padding()
+    }
+}
+
+/// One label with its value, and the line under it (what was printed, or why it is flagged).
+private struct MetricRowView: View {
+    let row: MetricRow
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack {
+                Text(row.label)
+                Spacer()
+                Text(row.value)
+                    .monospacedDigit()
+                    .foregroundStyle(row.isWarning ? .orange : .primary)
+            }
+            if let note = row.note {
+                Text(note)
+                    .font(.caption)
+                    .foregroundStyle(row.isWarning ? .orange : .secondary)
+            }
+        }
     }
 }
 

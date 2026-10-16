@@ -118,6 +118,67 @@ struct MetricsParserTests {
         #expect(outcome.metrics?.value(forKey: "netIncome") == 21)
     }
 
+    // MARK: - The extended call
+
+    /// An answer of the extended call: every extended key, null unless a literal is given.
+    private func extendedAnswer(_ literals: [String: String] = [:], extra: String = "") -> String {
+        let lines = schema.extendedKeys.map { "\"\($0)\": \(literals[$0] ?? "null")" }
+        return "{\n" + lines.joined(separator: ",\n") + extra + "\n}"
+    }
+
+    @Test func theExtendedAnswerHasTheExtendedKeys() {
+        let outcome = MetricsParser.parse(
+            extendedAnswer(["totalDebt": string("$12.5 billion"), "shareholdersEquity": string("30 billion dollars"),
+                            "cash": string("$4,200 million")]),
+            schema: schema, tier: .extended)
+        #expect(outcome.isSchemaValid)
+        #expect(outcome.metrics?.value(forKey: "totalDebt") == 12.5)
+        #expect(outcome.metrics?.value(forKey: "shareholdersEquity") == 30)
+        #expect(outcome.metrics?.value(forKey: "cash") == 4.2)
+        #expect(outcome.metrics?.value(forKey: "currentAssets") == nil)
+        #expect(outcome.unreadableKeys.isEmpty)
+    }
+
+    @Test func aCoreAnswerIsNotAnExtendedAnswer() {
+        let outcome = MetricsParser.parse(sampleJSON, schema: schema, tier: .extended)
+        guard case .wrongSchema(let message) = outcome.failure else {
+            Issue.record("expected wrongSchema, got \(String(describing: outcome.failure))")
+            return
+        }
+        // The message lists the missing keys, then the unexpected ones, each sorted.
+        #expect(message.contains("missing cash, currentAssets, currentLiabilities, shareholdersEquity, totalDebt"))
+        #expect(message.contains("unexpected capex, eps,"))
+        #expect(message.contains("revenue"))
+    }
+
+    @Test func anExtendedAnswerIsNotACoreAnswer() {
+        let outcome = MetricsParser.parse(extendedAnswer(), schema: schema, tier: .core)
+        guard case .wrongSchema(let message) = outcome.failure else {
+            Issue.record("expected wrongSchema, got \(String(describing: outcome.failure))")
+            return
+        }
+        #expect(message.contains("unexpected cash, currentAssets, currentLiabilities, shareholdersEquity, totalDebt"))
+    }
+
+    @Test func anUnreadableExtendedStringIsFlagged() {
+        let outcome = MetricsParser.parse(
+            extendedAnswer(["cash": string("a lot"), "currentAssets": string("$9.8 billion")]),
+            schema: schema, tier: .extended)
+        #expect(outcome.unreadableKeys == ["cash"])
+        #expect(outcome.metrics?.value(forKey: "currentAssets") == 9.8)
+    }
+
+    @Test func theAnswersOfTheTwoCallsCanBeMerged() throws {
+        let core = try #require(MetricsParser.parse(sampleJSON, schema: schema).metrics)
+        let extended = try #require(MetricsParser.parse(
+            extendedAnswer(["totalDebt": string("$12.5 billion")]), schema: schema, tier: .extended).metrics)
+        let both = core.merged(with: extended)
+        #expect(both.value(forKey: "revenue") == 94)
+        #expect(both.value(forKey: "totalDebt") == 12.5)
+        #expect(both.texts.count == core.texts.count + extended.texts.count)
+        #expect(both.values.count == core.values.count + extended.values.count)
+    }
+
     // MARK: - Answers that cannot be used
 
     @Test func noJSONAtAll() {

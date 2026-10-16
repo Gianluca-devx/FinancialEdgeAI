@@ -46,7 +46,9 @@ nonisolated struct ParseOutcome: Equatable, Sendable {
 /// measured. The strings are turned into numbers by `ValueParser` (see `FinancialMetrics`).
 nonisolated enum MetricsParser {
 
-    static func parse(_ raw: String, schema: Schema) -> ParseOutcome {
+    /// `tier` says which call the answer belongs to, and so which keys are demanded: the core
+    /// answer has exactly the core keys, the extended answer exactly the extended ones.
+    static func parse(_ raw: String, schema: Schema, tier: FieldTier = .core) -> ParseOutcome {
         var text = raw
 
         var hadThinking = false
@@ -75,7 +77,7 @@ nonisolated enum MetricsParser {
             return outcome(nil, .invalidJSON)
         }
 
-        if let problem = schemaProblem(in: object, keys: schema.coreKeys) {
+        if let problem = schemaProblem(in: object, keys: schema.keys(for: tier)) {
             return outcome(nil, .wrongSchema(problem))
         }
         var texts: [String: String] = [:]

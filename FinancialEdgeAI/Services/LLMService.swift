@@ -107,7 +107,8 @@ final class LLMService {
 
     /// Runs one extraction. Every call uses a new session, because a `ChatSession` remembers
     /// the conversation and the statements must not influence each other.
-    func generate(statement: String, seed: UInt64? = nil) async throws -> GenerationResult {
+    /// `tier` selects the prompt: the core call or the extended call (the balance sheet fields).
+    func generate(statement: String, tier: FieldTier = .core, seed: UInt64? = nil) async throws -> GenerationResult {
         guard case .loaded(let model) = state else {
             throw LLMServiceError.modelNotLoaded
         }
@@ -126,7 +127,7 @@ final class LLMService {
         let started = ContinuousClock.now
         var text = ""
         var info: GenerateCompletionInfo?
-        for try await item in session.streamDetails(to: ExtractionPrompt.userPrompt(for: statement)) {
+        for try await item in session.streamDetails(to: ExtractionPrompt.userPrompt(for: statement, tier: tier)) {
             switch item {
             case .chunk(let chunk): text += chunk
             case .info(let completion): info = completion

@@ -34,6 +34,14 @@ nonisolated struct FinancialMetrics: Codable, Equatable, Sendable {
         self.values = values
     }
 
+    /// The answers of two calls together (the core call and the extended call). The keys do not overlap;
+    /// if they did, `other` would win.
+    func merged(with other: FinancialMetrics) -> FinancialMetrics {
+        FinancialMetrics(
+            texts: texts.merging(other.texts) { _, new in new },
+            values: values.merging(other.values) { _, new in new })
+    }
+
     func text(forKey key: String) -> String? { texts[key] }
 
     func value(forKey key: String) -> Double? { values[key] }

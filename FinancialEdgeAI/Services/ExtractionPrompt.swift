@@ -27,8 +27,23 @@ enum ExtractionPrompt {
         return template
     }()
 
-    static func userPrompt(for statement: String) -> String {
-        template.render(statement)
+    /// The prompt of the extended call (the balance sheet fields), its own file.
+    static let extendedTemplate: PromptTemplate = {
+        guard let template = PromptTemplate(text: load("prompt_template_extended")) else {
+            preconditionFailure("prompt_template_extended.txt must contain \(PromptTemplate.placeholder) exactly once")
+        }
+        return template
+    }()
+
+    static func template(for tier: FieldTier) -> PromptTemplate {
+        switch tier {
+        case .core: template
+        case .extended: extendedTemplate
+        }
+    }
+
+    static func userPrompt(for statement: String, tier: FieldTier = .core) -> String {
+        template(for: tier).render(statement)
     }
 
     private static func load(_ name: String) -> String {

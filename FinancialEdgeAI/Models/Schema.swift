@@ -120,6 +120,11 @@ nonisolated struct Schema: Equatable, Sendable {
     var coreKeys: [String] { coreFields.map(\.key) }
     var extendedKeys: [String] { extendedFields.map(\.key) }
 
+    /// The keys of one call, in schema order.
+    func keys(for tier: FieldTier) -> [String] {
+        fields.filter { $0.tier == tier }.map(\.key)
+    }
+
     func field(_ key: String) -> FieldSpec? {
         fields.first { $0.key == key }
     }

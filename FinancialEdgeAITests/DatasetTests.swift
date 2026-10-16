@@ -45,6 +45,24 @@ struct PromptTemplateTests {
     }
 }
 
+extension PromptTemplateTests {
+
+    /// The extended prompt is rendered from the schema too: it asks the extended keys, in order, and no core key.
+    @Test func theExtendedPromptAsksForTheExtendedFieldsOfTheSchema() throws {
+        let prompt = try DatasetFiles.text("Dataset/prompt_template_extended.txt")
+        let schema = try DatasetFiles.schema()
+        #expect(PromptTemplate(text: prompt.trimmingCharacters(in: .whitespacesAndNewlines)) != nil)
+        let bulletKeys = prompt.split(separator: "\n")
+            .filter { $0.hasPrefix("- ") }
+            .compactMap { $0.dropFirst(2).split(separator: ":").first.map(String.init) }
+        #expect(bulletKeys == schema.extendedKeys)
+        for key in schema.coreKeys {
+            #expect(!prompt.contains("\"\(key)\""), "the core field \(key) must not be in the extended prompt")
+        }
+        #expect(!prompt.localizedStandardContains("growth"), "the extended prompt has no growth rule")
+    }
+}
+
 struct DatasetLoaderTests {
 
     @Test func loadsTheRealTestSplit() throws {

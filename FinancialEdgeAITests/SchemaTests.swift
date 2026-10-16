@@ -73,6 +73,25 @@ struct SchemaTests {
         #expect(schema.derived.count == 11)
     }
 
+    @Test func theKeysOfATierAreInSchemaOrder() throws {
+        let schema = try Self.realSchema()
+        #expect(schema.keys(for: .core) == schema.coreKeys)
+        #expect(schema.keys(for: .extended) == schema.extendedKeys)
+        #expect(Set(schema.keys(for: .core)).isDisjoint(with: schema.keys(for: .extended)))
+        #expect(schema.keys(for: .core).count + schema.keys(for: .extended).count == schema.fields.count)
+    }
+
+    /// The Swift side of the drift check of `validate_dataset.py`: the app bundles copies of these files.
+    @Test(arguments: [
+        "prompt_template.txt", "prompt_template_extended.txt", "system_prompt.txt", "test.jsonl",
+        "test.extended.jsonl", "test.labels.jsonl", "index.csv", "schema.json",
+    ])
+    func everyBundledFileIsIdenticalToTheDatasetFile(name: String) throws {
+        let original = try Data(contentsOf: DatasetFiles.url("Dataset/\(name)"))
+        let copy = try Data(contentsOf: DatasetFiles.url("FinancialEdgeAI/Resources/\(name)"))
+        #expect(original == copy, "\(name) differs from Dataset/\(name)")
+    }
+
     @Test func theBundledCopyIsIdentical() throws {
         let original = try Data(contentsOf: DatasetFiles.url("Dataset/schema.json"))
         let copy = try Data(contentsOf: DatasetFiles.url("FinancialEdgeAI/Resources/schema.json"))

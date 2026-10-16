@@ -35,6 +35,19 @@ struct ContentView: View {
                         ForEach(viewModel.metricRows) { row in
                             MetricRowView(row: row)
                         }
+                        if viewModel.extendedOutcome != nil {
+                            Text("Balance sheet (second call)")
+                                .font(.headline)
+                                .padding(.top, 8)
+                            if let status = viewModel.extendedStatus {
+                                Text(status)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
+                            ForEach(viewModel.extendedRows) { row in
+                                MetricRowView(row: row)
+                            }
+                        }
                         if viewModel.derivedRows.isEmpty == false {
                             Text("Derived by code")
                                 .font(.headline)
@@ -51,10 +64,23 @@ struct ContentView: View {
                                     .textSelection(.enabled)
                             }
                         }
+                        if viewModel.extendedResponse.isEmpty == false {
+                            DisclosureGroup("Raw answer, balance sheet") {
+                                Text(viewModel.extendedResponse)
+                                    .font(.caption.monospaced())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .textSelection(.enabled)
+                            }
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 if let summary = viewModel.performanceSummary {
+                    Text(summary)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                if let summary = viewModel.extendedPerformanceSummary {
                     Text(summary)
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -68,6 +94,15 @@ struct ContentView: View {
                     Button("Sample") {
                         viewModel.useSampleStatement()
                     }
+                    // The second call: debt, equity, current assets and liabilities, cash of the last statement.
+                    Button {
+                        Task { await viewModel.askExtended() }
+                    } label: {
+                        Label("Balance sheet", systemImage: "building.columns")
+                            .labelStyle(.iconOnly)
+                    }
+                    .disabled(!viewModel.canAskExtended)
+                    .accessibilityHint("Asks for debt, equity, current assets, current liabilities and cash of the last statement")
                     Button("Send") {
                         Task { await viewModel.sendMessage(to: viewModel.textInput) }
                     }

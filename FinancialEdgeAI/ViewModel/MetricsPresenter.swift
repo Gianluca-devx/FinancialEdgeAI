@@ -36,8 +36,19 @@ nonisolated enum MetricsPresenter {
 
     /// One row per core field, in the order of the schema.
     static func coreRows(_ metrics: FinancialMetrics, schema: Schema, locale: Locale = .current) -> [MetricRow] {
+        rows(for: schema.coreFields, metrics, schema: schema, locale: locale)
+    }
+
+    /// One row per extended field (the balance sheet), in the order of the schema.
+    static func extendedRows(_ metrics: FinancialMetrics, schema: Schema, locale: Locale = .current) -> [MetricRow] {
+        rows(for: schema.extendedFields, metrics, schema: schema, locale: locale)
+    }
+
+    private static func rows(
+        for fields: [FieldSpec], _ metrics: FinancialMetrics, schema: Schema, locale: Locale
+    ) -> [MetricRow] {
         let resolved = metrics.resolved(in: schema)
-        return schema.coreFields.map { field in
+        return fields.map { field in
             let text = metrics.text(forKey: field.key)
             if let text, let value = metrics.value(forKey: field.key) {
                 return MetricRow(
@@ -60,12 +71,18 @@ nonisolated enum MetricsPresenter {
     }
 
     /// The derived values whose inputs are all core fields. Those that need the extended tier
-    /// (return on equity, debt to equity, current ratio, net debt) wait until it exists.
+    /// (return on equity, debt to equity, current ratio, net debt) wait until the extended call was
+    /// made: with `includeExtended` they are listed too (null if an input is missing).
     /// A growth that fills a core field is shown in that field's row, not here.
-    static func derivedRows(_ metrics: FinancialMetrics, schema: Schema, locale: Locale = .current) -> [MetricRow] {
+    static func derivedRows(
+        _ metrics: FinancialMetrics, schema: Schema, includeExtended: Bool = false, locale: Locale = .current
+    ) -> [MetricRow] {
         let resolved = metrics.resolved(in: schema)
         return schema.derived
-            .filter { $0.fills == nil && $0.inputs.allSatisfy { schema.field($0)?.tier == .core } }
+            .filter {
+                $0.fills == nil
+                    && (includeExtended || $0.inputs.allSatisfy { schema.field($0)?.tier == .core })
+            }
             .map { spec in
                 guard let value = resolved.derived[spec.key] else {
                     return MetricRow(id: spec.key, label: spec.label, value: "null")

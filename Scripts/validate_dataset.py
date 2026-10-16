@@ -21,6 +21,8 @@ from collections import Counter
 from decimal import Decimal
 from pathlib import Path
 
+from prompt_from_schema import EXAMPLE_NUMBERS, render_prompt
+
 ROOT = Path(__file__).resolve().parent.parent
 DATASET = ROOT / "Dataset"
 BUNDLE = ROOT / "FinancialEdgeAI" / "Resources"
@@ -74,11 +76,34 @@ def check_schema():
     return problems, schema
 
 
+SCHEMA_PROMPT_MARKER = "Extract the following fields:"
+
+
+def check_prompt(template, schema):
+    """Once the prompt is the schema-based one, it must be exactly what the schema renders.
+
+    The prompt of v1.1.0 (7 metrics) has no marker and is left alone: Phase 1 step 4 replaces it
+    together with the dataset, and from then on this check is always active.
+    """
+    if schema is None or SCHEMA_PROMPT_MARKER not in template:
+        return []
+    if template != render_prompt(schema).rstrip("\n"):
+        return ["prompt_template.txt differs from what Dataset/schema.json renders "
+                "(python3 Scripts/prompt_from_schema.py --write)"]
+    return []
+
+
+def example_leaks(statement):
+    """The numbers of the prompt's own examples that a statement also contains."""
+    return [n for n in EXAMPLE_NUMBERS if re.search(rf"(?<![\d.,]){re.escape(n)}(?!\d)", statement)]
+
+
 def main():
     template = (DATASET / "prompt_template.txt").read_text().rstrip("\n")
     prefix, suffix = template.split("<<STATEMENT>>")
     system = (DATASET / "system_prompt.txt").read_text().strip()
     errors, schema = check_schema()
+    errors += check_prompt(template, schema)
     seen = {}
     counts = {}
     non_null = Counter()
@@ -109,6 +134,8 @@ def main():
 
             if '"' in statement or not statement.strip():
                 errors.append(f"{where}: statement is empty or contains a double quote")
+            if leaks := example_leaks(statement):
+                errors.append(f"{where}: statement contains {', '.join(leaks)}, a number of the prompt's examples")
             if list(label) != KEYS:
                 errors.append(f"{where}: keys are {list(label)}")
                 continue

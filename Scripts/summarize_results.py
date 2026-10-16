@@ -140,6 +140,11 @@ def main(path):
         run_rows.append(["Schema hash (SHA-256)", f'`{meta["schemaHash"][:16]}...`'])
         run_rows.append(["Core fields asked and judged" if "coreKeys" in meta
                          else f"Fields asked and judged ({tier} call)", len(keys)])
+    adapter = meta.get("adapter")
+    if adapter:
+        run_rows.append(["LoRA adapter", f'{adapter["name"]}: rank {adapter["rank"]}, {adapter["layers"]} layers, scale {adapter["scale"]:g}'])
+        run_rows.append(["Adapter weights hash (SHA-256)", f'`{adapter["weightsHash"][:16]}...`'])
+        run_rows.append(["Adapter config hash (SHA-256)", f'`{adapter["configHash"][:16]}...`'])
     run_rows.append(["Model load (first launch includes download)",
                      f'{meta["modelLoadSeconds"]:.1f} s' if meta.get("modelLoadSeconds") else "n/a"])
     print(table(["", ""], run_rows))

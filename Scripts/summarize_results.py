@@ -165,7 +165,7 @@ def main(path):
         ["Median time to first token", f'{median([g["promptTime"] for g in generations]):.2f} s'],
         ["Median tokens per second", f'{median([g["tokensPerSecond"] for g in generations]):.1f}'],
         ["Median generated tokens", f'{median([g["generatedTokens"] for g in generations]):.0f}'],
-        ["Peak MLX memory", f'{max(g["peakMemory"] for g in generations) / 2**20:.0f} MB'],
+        ["Peak MLX memory", f'{max(g["peakMemory"] for g in generations) / 2**20:.0f} ' + ("MiB" if new_format else "MB")],
         ["Highest thermal state (0 nominal, 3 critical)", max(max(r["thermalBefore"], r["thermalAfter"]) for r in records)],
         ["Generation failures", sum("generation" not in r for r in records)],
     ]))

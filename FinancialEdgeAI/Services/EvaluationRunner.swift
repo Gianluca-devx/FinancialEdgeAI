@@ -80,7 +80,8 @@ final class EvaluationRunner {
         seeds: [UInt64],
         modelLoadSeconds: Double?,
         schema: Schema = .bundled,
-        tier: FieldTier = .core
+        tier: FieldTier = .core,
+        adapter: AdapterInfo? = nil
     ) throws -> EvaluationReport {
         let promptFile = tier == .core ? "prompt_template" : "prompt_template_extended"
         let prompts = try DatasetLoader.bundledData("system_prompt", "txt")
@@ -107,6 +108,7 @@ final class EvaluationRunner {
             schemaHash: sha256(schemaFile),
             tier: tier.rawValue,
             keys: schema.keys(for: tier),
+            adapter: adapter,
             modelLoadSeconds: modelLoadSeconds)
 
         return EvaluationReport(

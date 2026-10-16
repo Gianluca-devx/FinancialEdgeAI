@@ -31,8 +31,9 @@ class ChatViewModel {
     
     /// Which model is running and how long it took to load.
     var modelInfo: String {
-        guard let seconds = service.loadDuration else { return LLMService.modelName }
-        return "\(LLMService.modelName) - loaded in \(seconds.formatted(.number.precision(.fractionLength(1)))) s"
+        let model = service.adapter.map { "\(LLMService.modelName) + adapter \($0.summary)" } ?? LLMService.modelName
+        guard let seconds = service.loadDuration else { return model }
+        return "\(model) - loaded in \(seconds.formatted(.number.precision(.fractionLength(1)))) s"
     }
     
     /// What the last answer cost: tokens, speed, time to first token, total time, memory.

@@ -54,6 +54,11 @@ struct SchemaTests {
         }
     }
 
+    @Test func onlyInterestExpenseAndCapexAreStoredAsMagnitudes() throws {
+        let schema = try Self.realSchema()
+        #expect(schema.fields.filter(\.isMagnitude).map(\.key) == ["interestExpense", "capex"])
+    }
+
     @Test func theThreeGrowthsCanBeFilledByCode() throws {
         let schema = try Self.realSchema()
         let filled = schema.derived.compactMap(\.fills)

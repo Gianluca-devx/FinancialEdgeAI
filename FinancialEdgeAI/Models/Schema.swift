@@ -6,14 +6,14 @@
 //
 import Foundation
 
-enum FieldTier: String, Codable, Sendable {
+nonisolated enum FieldTier: String, Codable, Sendable {
     /// Returned in every answer.
     case core
     /// Returned only when the user asks for it (a second call).
     case extended
 }
 
-enum FieldKind: String, Codable, Sendable {
+nonisolated enum FieldKind: String, Codable, Sendable {
     /// Money, in billions of USD once parsed.
     case amount
     /// A percentage, without the "%".
@@ -25,19 +25,23 @@ enum FieldKind: String, Codable, Sendable {
 }
 
 /// One value the model must copy from the text.
-struct FieldSpec: Codable, Equatable, Sendable, Identifiable {
+nonisolated struct FieldSpec: Codable, Equatable, Sendable, Identifiable {
     let key: String
     let tier: FieldTier
     let kind: FieldKind
+    /// If true the value is stored as a positive magnitude, whatever sign is printed
+    /// (an expense is written as a negative number in some reports).
+    let magnitude: Bool?
     let label: String
     /// The words of the prompt that define the field.
     let description: String
 
     var id: String { key }
+    var isMagnitude: Bool { magnitude ?? false }
 }
 
 /// One value that code calculates from extracted fields. The model never writes it.
-struct DerivedSpec: Codable, Equatable, Sendable, Identifiable {
+nonisolated struct DerivedSpec: Codable, Equatable, Sendable, Identifiable {
     let key: String
     let kind: FieldKind
     let label: String
@@ -49,7 +53,7 @@ struct DerivedSpec: Codable, Equatable, Sendable, Identifiable {
     var id: String { key }
 }
 
-enum SchemaError: Error, Equatable, LocalizedError {
+nonisolated enum SchemaError: Error, Equatable, LocalizedError {
     case malformed(String)
     case unsupportedVersion(Int)
     case noCoreFields
@@ -72,7 +76,7 @@ enum SchemaError: Error, Equatable, LocalizedError {
 /// The only list of fields. The prompt, the parser, the evaluation and the UI read it, so a field
 /// can be added in `Dataset/schema.json` without touching the code that loops over the fields.
 /// The app bundles a copy and `Scripts/validate_dataset.py` fails if the copy differs.
-struct Schema: Equatable, Sendable {
+nonisolated struct Schema: Equatable, Sendable {
     static let supportedVersion = 1
 
     let fields: [FieldSpec]

@@ -9,10 +9,13 @@ The fields come from Dataset/schema.json (13 core, 5 extended). The prompt is re
 schema by prompt_from_schema.py and written to Dataset/prompt_template.txt.
 
 Outputs (in Dataset/):
-  prompt_template.txt           the user prompt, rendered from the schema
+  prompt_template.txt           the user prompt of the core call, rendered from the schema
+  prompt_template_extended.txt  the user prompt of the extended call (the 5 balance sheet fields)
   train.jsonl valid.jsonl test.jsonl
                                 chat format for mlx-lm. The assistant message holds the 13 core
                                 fields, each a string copied as printed in the statement, or null.
+  train.extended.jsonl ...      the same statements with the extended prompt; the assistant message
+                                holds the 5 extended fields (strings as printed, or null)
   train.labels.jsonl ...        the sidecar: for every line, all 18 fields as {"text", "value"} or
                                 null. "text" is the string as printed, "value" the true number
                                 (billions of USD, percent, or USD per share). The parser is tested
@@ -36,6 +39,7 @@ SEED = 2025
 SCHEMA = load_schema()
 FIELDS = [f["key"] for f in SCHEMA["fields"]]
 CORE = [f["key"] for f in SCHEMA["fields"] if f["tier"] == "core"]
+EXTENDED = [f["key"] for f in SCHEMA["fields"] if f["tier"] == "extended"]
 SYSTEM = (DATASET / "system_prompt.txt").read_text().strip()
 
 # Generated statements per split. Hand-written ones are added on top: 240 / 30 / 30 in total.
@@ -536,12 +540,13 @@ def full_label(label):
     return {key: label.get(key) for key in FIELDS}
 
 
-def render(statement, label, template):
-    core = {key: (label[key]["text"] if label.get(key) else None) for key in CORE}
+def render(statement, label, template, keys=CORE):
+    """One chat example. The assistant message holds the keys of the tier: a string as printed, or null."""
+    answer = {key: (label[key]["text"] if label.get(key) else None) for key in keys}
     return {"messages": [
         {"role": "system", "content": SYSTEM},
         {"role": "user", "content": template.replace("<<STATEMENT>>", statement)},
-        {"role": "assistant", "content": json.dumps(core, indent=2, ensure_ascii=False)},
+        {"role": "assistant", "content": json.dumps(answer, indent=2, ensure_ascii=False)},
     ]}
 
 
@@ -549,6 +554,9 @@ def main():
     prompt = render_prompt(SCHEMA)
     (DATASET / "prompt_template.txt").write_text(prompt)
     template = prompt.rstrip("\n")
+    extended_prompt = render_prompt(SCHEMA, "extended")
+    (DATASET / "prompt_template_extended.txt").write_text(extended_prompt)
+    extended_template = extended_prompt.rstrip("\n")
     rng = random.Random(SEED)
     seen = set()
     rows = {}
@@ -581,9 +589,13 @@ def main():
 
     index = []
     for split, items in rows.items():
-        with open(DATASET / f"{split}.jsonl", "w") as chat, open(DATASET / f"{split}.labels.jsonl", "w") as side:
+        with (open(DATASET / f"{split}.jsonl", "w") as chat,
+              open(DATASET / f"{split}.extended.jsonl", "w") as extended,
+              open(DATASET / f"{split}.labels.jsonl", "w") as side):
             for line, (statement, label, meta) in enumerate(items, start=1):
                 chat.write(json.dumps(render(statement, label, template), ensure_ascii=False) + "\n")
+                extended.write(json.dumps(render(statement, label, extended_template, EXTENDED),
+                                          ensure_ascii=False) + "\n")
                 side.write(json.dumps({"line": line, "fields": full_label(label)}, ensure_ascii=False) + "\n")
                 index.append([split, line, meta["source"], meta["scenario"], meta["pool"],
                               meta["unit"], meta["distractors"]])

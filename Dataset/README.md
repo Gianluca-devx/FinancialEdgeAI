@@ -13,14 +13,17 @@ in [`archive/v1.1.0/`](archive/v1.1.0): the baseline reports of v1.1.0 can only 
 | `train.jsonl` | 240 | Fine-tuning |
 | `valid.jsonl` | 30 | Validation loss while fine-tuning |
 | `test.jsonl` | 30 | Frozen. Used only for the baseline and the final comparison. Never edit it. |
+| `*.extended.jsonl` | same size as each split | The same statements with the extended prompt: the assistant message holds the 5 balance sheet fields. For the second call; the core files are not affected. |
 | `*.labels.jsonl` | one line per example | The sidecar: all 18 fields, each `{"text", "value"}` or `null`. `text` is the string as printed, `value` the true number. |
-| `prompt_template.txt` | | The exact user prompt, rendered from the schema. `<<STATEMENT>>` is replaced by the statement. |
+| `prompt_template.txt` | | The exact user prompt of the core call, rendered from the schema. `<<STATEMENT>>` is replaced by the statement. |
+| `prompt_template_extended.txt` | | The prompt of the extended call (the 5 balance sheet fields, no growth rule), rendered from the schema. |
 | `system_prompt.txt` | | The system message. |
 | `index.csv` | 300 rows | Split, line, source, scenario, phrasing pool, unit, distractors. For error analysis. |
 
 Each line of a `.jsonl` file is `{"messages": [system, user, assistant]}`. The assistant message is the
-target JSON with the 13 core keys, no Markdown fence. The 5 extended fields are labelled only in the
-sidecar: they belong to a second call with its own prompt, built later.
+target JSON with the 13 core keys, no Markdown fence. The 5 extended fields are asked in a second call with
+its own prompt: their chat files are `*.extended.jsonl` (the same statements, so every core file is
+unchanged by them), and they are labelled in the sidecar as well.
 
 ## Labelling rules
 

@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATASET = ROOT / "Dataset"
 BUNDLE = ROOT / "FinancialEdgeAI" / "Resources"
 # Files that the app bundles; the copy must never drift from Dataset/.
-BUNDLED = ["prompt_template.txt", "system_prompt.txt", "test.jsonl", "index.csv"]
+BUNDLED = ["prompt_template.txt", "system_prompt.txt", "test.jsonl", "index.csv", "schema.json"]
 KEYS = [
     "revenue", "revenueGrowth", "operatingIncome", "operatingIncomeGrowth",
     "netIncome", "netIncomeGrowth", "previousYearNetIncome",
@@ -42,11 +42,43 @@ def grounded(value, nums):
     return d in nums or (d * 1000).normalize() in nums
 
 
+def check_schema():
+    """Dataset/schema.json is the only field list: check it is consistent. Returns (problems, schema)."""
+    problems = []
+    try:
+        schema = json.loads((DATASET / "schema.json").read_text())
+    except (OSError, ValueError) as e:
+        return [f"schema.json is unreadable ({e})"], None
+    if schema.get("version") != 1:
+        problems.append(f"schema.json: unsupported version {schema.get('version')!r}")
+    fields, derived = schema.get("fields", []), schema.get("derived", [])
+    kinds = {"amount", "percent", "perShare", "ratio"}
+    keys = [f["key"] for f in fields] + [d["key"] for d in derived]
+    for key in sorted({k for k in keys if keys.count(k) > 1}):
+        problems.append(f"schema.json: the key {key} is used twice")
+    if not any(f["tier"] == "core" for f in fields):
+        problems.append("schema.json: no core field")
+    by_key = {f["key"]: f for f in fields}
+    for f in fields:
+        if f["tier"] not in ("core", "extended") or f["kind"] not in kinds - {"ratio"}:
+            problems.append(f"schema.json: {f['key']} has a bad tier or kind")
+    for d in derived:
+        if d["kind"] not in kinds:
+            problems.append(f"schema.json: {d['key']} has a bad kind")
+        for i in d["inputs"]:
+            if i not in by_key:
+                problems.append(f"schema.json: {d['key']} reads {i}, which is not an extracted field")
+        target = d.get("fills")
+        if target is not None and by_key.get(target, {}).get("kind") != d["kind"]:
+            problems.append(f"schema.json: {d['key']} cannot fill {target}")
+    return problems, schema
+
+
 def main():
     template = (DATASET / "prompt_template.txt").read_text().rstrip("\n")
     prefix, suffix = template.split("<<STATEMENT>>")
     system = (DATASET / "system_prompt.txt").read_text().strip()
-    errors = []
+    errors, schema = check_schema()
     seen = {}
     counts = {}
     non_null = Counter()
@@ -101,6 +133,9 @@ def main():
         elif copy.read_bytes() != (DATASET / name).read_bytes():
             errors.append(f"FinancialEdgeAI/Resources/{name} differs from Dataset/{name}")
 
+    if schema:
+        core = sum(f["tier"] == "core" for f in schema["fields"])
+        print(f"schema: {core} core, {len(schema['fields']) - core} extended, {len(schema['derived'])} derived")
     print("lines per split:", counts)
     print("non-null labels per field (all splits):")
     for key in KEYS:

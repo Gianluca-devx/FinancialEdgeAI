@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "fields": [
+    {"key": "revenue", "tier": "core", "kind": "amount", "label": "Revenue", "description": "total revenue or net sales of the current period"},
+    {"key": "operatingIncome", "tier": "core", "kind": "amount", "label": "Operating income", "description": "operating income or operating profit (EBIT if that is the operating figure printed) of the current period"},
+    {"key": "netIncome", "tier": "core", "kind": "amount", "label": "Net income", "description": "net income, net profit or net earnings of the current period (the one attributable to shareholders if both are printed)"},
+    {"key": "eps", "tier": "core", "kind": "perShare", "label": "EPS", "description": "earnings per share of the current period (diluted if both are printed)"},
+    {"key": "interestExpense", "tier": "core", "kind": "amount", "label": "Interest expense", "description": "interest expense of the current period"},
+    {"key": "operatingCashFlow", "tier": "core", "kind": "amount", "label": "Operating cash flow", "description": "net cash from operating activities of the current period"},
+    {"key": "capex", "tier": "core", "kind": "amount", "label": "Capex", "description": "capital expenditures, the purchases of property, plant and equipment, of the current period"},
+    {"key": "previousYearRevenue", "tier": "core", "kind": "amount", "label": "Previous-year revenue", "description": "total revenue or net sales of the previous year"},
+    {"key": "previousYearNetIncome", "tier": "core", "kind": "amount", "label": "Previous-year net income", "description": "net income of the previous year"},
+    {"key": "previousYearEps", "tier": "core", "kind": "perShare", "label": "Previous-year EPS", "description": "earnings per share of the previous year"},
+    {"key": "revenueGrowth", "tier": "core", "kind": "percent", "label": "Revenue growth", "description": "percent change of revenue, only if the text states it"},
+    {"key": "netIncomeGrowth", "tier": "core", "kind": "percent", "label": "Net income growth", "description": "percent change of net income, only if the text states it"},
+    {"key": "epsGrowth", "tier": "core", "kind": "percent", "label": "EPS growth", "description": "percent change of earnings per share, only if the text states it"},
+    {"key": "totalDebt", "tier": "extended", "kind": "amount", "label": "Total debt", "description": "total borrowings as printed on the balance sheet"},
+    {"key": "shareholdersEquity", "tier": "extended", "kind": "amount", "label": "Shareholders' equity", "description": "total shareholders' equity"},
+    {"key": "currentAssets", "tier": "extended", "kind": "amount", "label": "Current assets", "description": "total current assets"},
+    {"key": "currentLiabilities", "tier": "extended", "kind": "amount", "label": "Current liabilities", "description": "total current liabilities"},
+    {"key": "cash", "tier": "extended", "kind": "amount", "label": "Cash", "description": "cash and cash equivalents"}
+  ],
+  "derived": [
+    {"key": "revenueGrowthDerived", "kind": "percent", "label": "Revenue growth", "inputs": ["revenue", "previousYearRevenue"], "fills": "revenueGrowth"},
+    {"key": "netIncomeGrowthDerived", "kind": "percent", "label": "Net income growth", "inputs": ["netIncome", "previousYearNetIncome"], "fills": "netIncomeGrowth"},
+    {"key": "epsGrowthDerived", "kind": "percent", "label": "EPS growth", "inputs": ["eps", "previousYearEps"], "fills": "epsGrowth"},
+    {"key": "operatingMargin", "kind": "percent", "label": "Operating margin", "inputs": ["operatingIncome", "revenue"]},
+    {"key": "netMargin", "kind": "percent", "label": "Net margin", "inputs": ["netIncome", "revenue"]},
+    {"key": "freeCashFlow", "kind": "amount", "label": "Free cash flow", "inputs": ["operatingCashFlow", "capex"]},
+    {"key": "interestCoverage", "kind": "ratio", "label": "Interest coverage", "inputs": ["operatingIncome", "interestExpense"]},
+    {"key": "roe", "kind": "percent", "label": "Return on equity", "inputs": ["netIncome", "shareholdersEquity"]},
+    {"key": "debtToEquity", "kind": "ratio", "label": "Debt to equity", "inputs": ["totalDebt", "shareholdersEquity"]},
+    {"key": "currentRatio", "kind": "ratio", "label": "Current ratio", "inputs": ["currentAssets", "currentLiabilities"]},
+    {"key": "netDebt", "kind": "amount", "label": "Net debt", "inputs": ["totalDebt", "cash"]}
+  ]
+}

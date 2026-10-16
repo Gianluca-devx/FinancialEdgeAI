@@ -45,6 +45,16 @@ struct FinancialEdgeAIApp: App {
             .onChange(of: evaluationViewModel.isRunning) { _, isRunning in
                 UIApplication.shared.isIdleTimerDisabled = isRunning
             }
+            // Development only: launched with `-autoRunEvaluation YES` (a launch argument, so
+            // `xcrun devicectl device process launch ... -autoRunEvaluation YES`), the app starts the
+            // evaluation by itself once the model is loaded. Without the argument nothing happens.
+            .task {
+                guard UserDefaults.standard.bool(forKey: "autoRunEvaluation") else { return }
+                while !chatViewModel.modelLoaded {
+                    try? await Task.sleep(for: .seconds(1))
+                }
+                evaluationViewModel.start()
+            }
         }
     }
 }

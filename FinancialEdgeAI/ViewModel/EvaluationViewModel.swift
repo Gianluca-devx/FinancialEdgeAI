@@ -50,9 +50,11 @@ final class EvaluationViewModel {
             total = examples.count * seeds.count
 
             let runner = EvaluationRunner(service: service)
+            print("[evaluation] started: \(total) answers")
             let records = await runner.run(examples: examples, seeds: seeds) { [weak self] done, total in
                 self?.completed = done
                 self?.total = total
+                if done % 10 == 0 || done == total { print("[evaluation] \(done) of \(total) answers") }
             }
             guard !records.isEmpty else { return }
 
@@ -60,9 +62,12 @@ final class EvaluationViewModel {
                 records: records, examples: examples, seeds: seeds,
                 modelLoadSeconds: service.loadDuration)
             self.report = report
-            exportURL = try write(report)
+            let url = try write(report)
+            exportURL = url
+            print("[evaluation] finished, report: \(url.lastPathComponent)")
         } catch {
             errorMessage = error.localizedDescription
+            print("[evaluation] failed: \(error.localizedDescription)")
         }
     }
 

@@ -49,6 +49,10 @@ final class EvaluationRunner {
                     example: example, run: index + 1, seed: seed,
                     generation: generation, generationError: generationError,
                     thermalBefore: thermalBefore, thermalAfter: thermalAfter, schema: schema))
+                if records.count <= 3 {
+                    // Development aid: the first raw answers show at once whether the format works.
+                    print("[evaluation] raw answer \(records.count): \(generation?.text ?? generationError ?? "")")
+                }
                 progress(records.count, total)
             }
         }

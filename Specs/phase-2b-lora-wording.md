@@ -76,7 +76,7 @@ A mixed or negative result is a valid result.
   `test2.jsonl` (30, pool C), their sidecars (`*.labels.jsonl`, all 18 fields, true values written by the
   generator) and an index. Same chat format, same system and core user prompt. The extended chat files are not
   generated (out of scope). Every label is correct by construction (generated) or checked by hand (hand-written).
-- **Validator (`Scripts/validate_dataset.py`, v2 checks):** every `Dataset/` file byte-identical to `v2.2.0`; every
+- **Validator (`Scripts/validate_dataset_v2.py`, called by `Scripts/validate_dataset.py`):** every `Dataset/` file byte-identical to `v2.2.0`; every
   label verbatim in its statement (as today); **no phrase of pool B, C or V in train**; no statement shared between
   splits (train, valid, test, test 2); no prompt example number in a statement; every core field stated in at least
   25% of the training statements and in at least 4 different wordings; a count table per field and per wording

@@ -199,6 +199,11 @@ def main():
     print(f"non-null labels per field {'':14s}" + "".join(f"{s:>7s}" for s in SPLITS))
     for key in all_keys:
         print(f"  {key:30s}" + "".join(f"{non_null[s][key]:7d}" for s in SPLITS))
+    if (DATASET / "v2").exists():
+        # Phase 2b: the second dataset has its own checks (held-out wording, coverage, Dataset/ frozen).
+        import validate_dataset_v2
+        print("\n--- Dataset/v2 (Phase 2b) ---")
+        validate_dataset_v2.check(DATASET / "v2", errors)
     if errors:
         print(f"\n{len(errors)} problem(s):")
         for e in errors[:50]:

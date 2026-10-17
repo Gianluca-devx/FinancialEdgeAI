@@ -190,3 +190,18 @@ committed (`/RealSet/` is git-ignored); this rule and `Scripts/real_set.py` are.
    pure, the answers are in the report).
 9. **What is committed:** counts, hashes and rates only; no passage, no failing-statement listing, no per-statement
    table of the real-style set.
+
+**Amendment 2, 2026-10-17, after reading the 21 passages of the first draw and before running any model on them.**
+Every one of the 21 passages (16 with keywords, 5 without) turned out to hold no company-level current-period figure
+as the dataset defines it: they explain changes (segment growth, cost lines, deferred revenue, dividends, amounts that
+are only a difference). Labelled strictly from the text, the first draw has one stated field (an ambiguous one) in 21
+passages, so it measures hallucination on real text and nothing about extraction. The first draw is **kept as it is**
+and becomes the set **`real1`** (a real-text test of not inventing values). A second set, **`real2`**, uses rule 2: the
+same seed, one paragraph per filing, but the paragraph must contain a headline statement, a sentence of the form
+`<metric> ... was/were/of/to $<amount>` for one of revenue, net sales, net income, net earnings, operating income, income
+from operations, operating profit, diluted earnings per share, cash provided by operating activities, capital expenditures
+or interest expense, where the metric is not preceded by "cost of", "deferred", "unearned", "segment", "intersegment" or
+"other". The labels follow rule 7 above (strictly from the text, as printed; a segment figure that the text does not call a
+segment is labelled as printed, and flagged as ambiguous for the spot-check). Both sets are measured for the same models;
+rule 2 was written knowing what rule 1 returned, which is disclosed here: it is a repair of the test's validity, made
+before any model saw either set, and it cannot favour a model.

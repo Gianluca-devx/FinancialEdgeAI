@@ -4,18 +4,20 @@ needs `pdftotext` (poppler).
 
 Nothing this script reads or writes from the reports is committed: its outputs are in /RealSet/ (git-ignored).
 
-  python3 Scripts/real_set.py select --reports ~/Downloads/Reports --out RealSet
-      Extracts the text of every PDF, applies the selection rule of the spec (never by reading: a seeded draw) and
-      writes RealSet/passages.json: [{"id", "filing", "kind", "text"}]. Nothing is labelled here.
+  python3 Scripts/real_set.py select --rule 1|2 --reports ~/Downloads/Reports --out RealSet
+      Extracts the text of every PDF, applies a selection rule of the spec (never by reading: a seeded draw) and
+      writes RealSet/passages<rule>.json: [{"id", "filing", "kind", "text"}]. Nothing is labelled here.
+      Rule 1: paragraphs that mention a core keyword and an amount (set real1). Rule 2: paragraphs with a headline
+      statement, "<metric> was $<amount>" (set real2).
 
-  python3 Scripts/real_set.py build --out RealSet
-      Reads RealSet/labels.json ({"<id>": {"<core key>": "<string as printed>" | null, ...}}) written by hand from the
-      passages, checks every label appears in its passage and is read by the parser rules to a number, and writes the
-      three files of an external evaluation set: RealSet/real/real.jsonl, real.labels.jsonl, index.csv. The folder
-      is what is copied to the phone: Documents/EvalSets/real/.
+  python3 Scripts/real_set.py build --rule 1|2 --out RealSet
+      Reads RealSet/labels<rule>.json ({"<id>": {"<core key>": "<string as printed>" | null, ...}}) written by hand
+      from the passages, checks every label appears in its passage and is read by the parser rules to a number, and
+      writes the three files of an external evaluation set: RealSet/real<rule>/real<rule>.jsonl, .labels.jsonl,
+      index.csv. The folder is what is copied to the phone: Documents/EvalSets/real<rule>/.
 
-  python3 Scripts/real_set.py check --out RealSet
-      Prints the counts of the frozen set (statements, fields stated, hashes). Nothing from the text.
+  python3 Scripts/real_set.py check --rule 1|2 --out RealSet
+      Prints the counts of the frozen set (statements, fields stated, hash). Nothing from the text.
 """
 import argparse
 import hashlib
@@ -100,9 +102,52 @@ def candidates(text):
     return fields, nones
 
 
+# Rule 2: a sentence of the form "<metric> ... was/were/of/to $<amount>", not a cost, a deferred item or a change in amount.
+METRIC = (r"(?:net sales|net revenues?|total revenues?|revenues?|net income|net earnings|operating income|"
+          r"income from operations|operating profit|diluted earnings per share|earnings per (?:diluted )?share|"
+          r"diluted eps|(?:net )?cash provided by operating activities|capital expenditures|interest expense)")
+HEADLINE = re.compile(r"\b" + METRIC + r"\b[^.;:]{0,60}?\b(?:was|were|of|totaled|totalled|to|reached)\s+\$\s?\d[\d,.]*"
+                      r"(?:\s?(?:million|billion))?", re.I)
+NOT_HEADLINE_BEFORE = ("cost of ", "deferred ", "unearned ", "segment ", "intersegment ", "other ")
+
+
+def headline(paragraph):
+    for m in HEADLINE.finditer(paragraph):
+        before = paragraph[max(0, m.start() - 14):m.start()].lower()
+        if not before.endswith(NOT_HEADLINE_BEFORE):
+            return True
+    return False
+
+
+def candidates2(text):
+    """Rule 2: paragraphs of the right shape with a headline statement; the whole text if the region has none."""
+    def of(body):
+        return [p for p in paragraphs(body) if shape(p) and headline(p)]
+    found = of(region(text))
+    return found or of(text)
+
+
 def cut(paragraph):
     parts = sentences(paragraph)
     return " ".join(parts[:6])
+
+
+def select2(reports: Path, out: Path):
+    """Rule 2: one paragraph per filing, drawn with the same seeded generator; nothing for a filing without one."""
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "text").mkdir(exist_ok=True)
+    rng = random.Random(SEED)
+    passages = []
+    for pdf in sorted(reports.glob("*.pdf")):
+        m = re.search(r"_(\d+)-", pdf.name)
+        filing = m.group(1) if m else pdf.stem
+        found = candidates2(extract(pdf, out / "text" / f"{filing}.txt"))
+        if found:
+            passages.append({"id": len(passages) + 1, "filing": filing, "kind": "headline", "text": cut(rng.choice(found))})
+        else:
+            print(f"filing {filing}: no candidate paragraph with a headline statement", file=sys.stderr)
+    (out / "passages2.json").write_text(json.dumps(passages, indent=1, ensure_ascii=False))
+    print(f"{len(passages)} passages (headline statements) -> {out / 'passages2.json'}")
 
 
 def select(reports: Path, out: Path):
@@ -131,9 +176,9 @@ def select(reports: Path, out: Path):
         if nones:
             chosen.append((filing, "nofield", cut(rng.choice(nones))))
     passages = [{"id": i + 1, "filing": f, "kind": k, "text": t} for i, (f, k, t) in enumerate(chosen)]
-    (out / "passages.json").write_text(json.dumps(passages, indent=1, ensure_ascii=False))
-    print(f"{len(passages)} passages ({sum(p['kind'] == 'fields' for p in passages)} with fields, "
-          f"{sum(p['kind'] == 'nofield' for p in passages)} without) from {len(ids)} filings -> {out / 'passages.json'}")
+    (out / "passages1.json").write_text(json.dumps(passages, indent=1, ensure_ascii=False))
+    print(f"{len(passages)} passages ({sum(p['kind'] == 'fields' for p in passages)} with keywords, "
+          f"{sum(p['kind'] == 'nofield' for p in passages)} without) from {len(ids)} filings -> {out / 'passages1.json'}")
 
 
 # --- the parser rules, as in ValueParser.swift (checked against the Swift tests on the dataset) -------------------
@@ -183,14 +228,15 @@ def parse_value(text, kind):
     return -value if negative else value
 
 
-def build(out: Path):
+def build(out: Path, rule: int):
+    name = f"real{rule}"
     schema = g.SCHEMA
     kinds = {f["key"]: f["kind"] for f in schema["fields"]}
     magnitude = {f["key"] for f in schema["fields"] if f.get("magnitude")}
-    passages = {p["id"]: p for p in json.loads((out / "passages.json").read_text())}
-    labels = json.loads((out / "labels.json").read_text())
+    passages = {p["id"]: p for p in json.loads((out / f"passages{rule}.json").read_text())}
+    labels = json.loads((out / f"labels{rule}.json").read_text())
     template = (g.DATASET / "prompt_template.txt").read_text().rstrip("\n")
-    folder = out / "real"
+    folder = out / name
     folder.mkdir(exist_ok=True)
     errors = []
     chat, side, index = [], [], ["split,line,source,scenario,pool,unit,distractors"]
@@ -220,24 +266,25 @@ def build(out: Path):
         label = {k: v for k, v in fields.items() if v}
         chat.append(json.dumps(g.render(passage["text"], label, template), ensure_ascii=False))
         side.append(json.dumps({"line": line, "fields": g.full_label(label)}, ensure_ascii=False))
-        index.append(f"real,{line},filing-{passage['filing']},{'filing' if passage['kind'] == 'fields' else 'nofield'},real,-,-")
+        index.append(f"{name},{line},filing-{passage['filing']},{passage['kind']},real,-,-")
     if errors:
         print("\n".join(errors), file=sys.stderr)
         sys.exit(1)
-    (folder / "real.jsonl").write_text("\n".join(chat) + "\n")
-    (folder / "real.labels.jsonl").write_text("\n".join(side) + "\n")
+    (folder / f"{name}.jsonl").write_text("\n".join(chat) + "\n")
+    (folder / f"{name}.labels.jsonl").write_text("\n".join(side) + "\n")
     (folder / "index.csv").write_text("\n".join(index) + "\n")
-    check(out)
+    check(out, rule)
 
 
 def schema_keys():
     return CORE
 
 
-def check(out: Path):
-    folder = out / "real"
-    chat = (folder / "real.jsonl").read_bytes()
-    labels = (folder / "real.labels.jsonl").read_bytes()
+def check(out: Path, rule: int):
+    name = f"real{rule}"
+    folder = out / name
+    chat = (folder / f"{name}.jsonl").read_bytes()
+    labels = (folder / f"{name}.labels.jsonl").read_bytes()
     rows = [json.loads(l)["fields"] for l in labels.decode().splitlines()]
     print(f"statements: {len(rows)}")
     for key in CORE:
@@ -250,15 +297,16 @@ def main():
     parser.add_argument("command", choices=["select", "build", "check"])
     parser.add_argument("--reports", type=Path)
     parser.add_argument("--out", type=Path, default=Path("RealSet"))
+    parser.add_argument("--rule", type=int, choices=[1, 2], default=1)
     args = parser.parse_args()
     if args.command == "select":
         if not args.reports:
             parser.error("select needs --reports")
-        select(args.reports, args.out)
+        (select if args.rule == 1 else select2)(args.reports, args.out)
     elif args.command == "build":
-        build(args.out)
+        build(args.out, args.rule)
     else:
-        check(args.out)
+        check(args.out, args.rule)
 
 
 if __name__ == "__main__":

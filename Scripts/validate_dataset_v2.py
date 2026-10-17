@@ -33,6 +33,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DATASET = ROOT / "Dataset"
 FROZEN_TAG = "v2.2.0"
 SPLITS = ("train", "valid", "test2")
+BUNDLE = ROOT / "FinancialEdgeAI" / "Resources"
+# Files of Dataset/v2 that the app bundles (published name in Resources, source in Dataset/v2).
+BUNDLED = {"test2.jsonl": "test2.jsonl", "test2.labels.jsonl": "test2.labels.jsonl", "index.v2.csv": "index.csv"}
 MIN_COVERAGE = 0.25
 MIN_WORDINGS, MIN_SEEN = 4, 5
 
@@ -171,6 +174,13 @@ def check(v2_dir, errors):
                 errors.append(f"v2/{split}.jsonl:{n}: statement is in the old valid or test split")
             if split != "train" and statement in old["train"]:
                 errors.append(f"v2/{split}.jsonl:{n}: statement is in the old train split")
+
+    for published, source in BUNDLED.items():
+        copy = BUNDLE / published
+        if not copy.exists():
+            errors.append(f"FinancialEdgeAI/Resources/{published} is missing")
+        elif copy.read_bytes() != (v2_dir / source).read_bytes():
+            errors.append(f"FinancialEdgeAI/Resources/{published} differs from Dataset/v2/{source}")
 
     # Coverage and wordings.
     train_n = len(statements.get("train", []))

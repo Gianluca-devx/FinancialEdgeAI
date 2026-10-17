@@ -90,10 +90,15 @@ def same_schema(old, new, old_path, new_path):
     if old["keys"] != new["keys"]:
         sys.exit("The two reports ask different fields: compare reports of the same tier.")
     keys = new["keys"]
+    sets = [r["meta"].get("evaluationSet", "test") for r in (old, new)]
+    if sets[0] != sets[1]:
+        sys.exit(f"The two reports ran on different statements ({sets[0]} and {sets[1]}): compare reports of the same set.")
+    set_rows = [["Evaluation set", sets[0], sets[1]]] if any("evaluationSet" in r["meta"] for r in (old, new)) else []
     print("## What changed between the two runs\n")
     print(table(["", "Before", "After"], [
         ["Report", f"`{Path(old_path).name}`", f"`{Path(new_path).name}`"],
         ["Adapter", adapter_text(old["meta"]), adapter_text(new["meta"])],
+        *set_rows,
         ["Device", f'{old["meta"]["device"]}, {old["meta"]["system"]}', f'{new["meta"]["device"]}, {new["meta"]["system"]}'],
         ["Statements x runs", f'{old["meta"]["examples"]} x {old["meta"]["runs"]}', f'{new["meta"]["examples"]} x {new["meta"]["runs"]}'],
         ["Temperature / max tokens / seeds", f'{old["meta"]["temperature"]} / {old["meta"]["maxTokens"]} / {old["meta"]["seeds"]}',

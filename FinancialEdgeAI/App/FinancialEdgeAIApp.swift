@@ -57,6 +57,10 @@ struct FinancialEdgeAIApp: App {
                 if UserDefaults.standard.string(forKey: "evaluationTier") == FieldTier.extended.rawValue {
                     evaluationViewModel.tier = .extended
                 }
+                // `-evaluationSet test2` (or the name of a set copied to Documents/EvalSets) chooses the statements.
+                if let name = UserDefaults.standard.string(forKey: "evaluationSet") {
+                    evaluationViewModel.evaluationSet = EvaluationSet(name: name)
+                }
                 evaluationViewModel.start()
             }
         }

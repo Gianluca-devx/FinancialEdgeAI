@@ -1,0 +1,24 @@
+# LoRA adapter v1 (Specs/phase-2-lora.md, D15 to D17). Run from the repository root:
+#   python3 Scripts/lora/prepare_data.py --out adapters/data
+#   mlx_lm.lora -c Scripts/lora/lora-v1.yaml
+# The test split is not in adapters/data and the tool's --test option is not used.
+model: "mlx-community/Qwen3-4B-4bit"
+train: true
+data: "adapters/data"
+adapter_path: "adapters/lora-v1"
+fine_tune_type: lora
+mask_prompt: true          # the loss is on the answer, not on the prompt
+num_layers: 16
+lora_parameters:
+  rank: 8
+  scale: 20.0
+  dropout: 0.0
+batch_size: 4
+iters: 300                 # 5 epochs of 240 examples
+learning_rate: 1.0e-4
+val_batches: -1            # the whole validation set (30 examples)
+steps_per_report: 10
+steps_per_eval: 50
+save_every: 50
+max_seq_length: 1024       # the longest example has 785 tokens
+seed: 1

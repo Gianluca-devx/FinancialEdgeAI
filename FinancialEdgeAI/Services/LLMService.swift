@@ -62,6 +62,16 @@ final class LLMService {
     
     /// Seconds the last successful load took. It includes the download the first time.
     private(set) var loadDuration: TimeInterval?
+
+    /// The LoRA adapter that is on the loaded model, or nil. It is only set once the adapter was really
+    /// applied: the app never says "adapter" while it runs the base model.
+    private(set) var adapter: AdapterInfo?
+
+    /// The adapter asked for with the launch argument `-adapterName <name>` (the folder
+    /// `Documents/Adapters/<name>`), if any.
+    static var requestedAdapterName: String? {
+        UserDefaults.standard.string(forKey: "adapterName").flatMap { $0.isEmpty ? nil : $0 }
+    }
     
     private var state = State.idle
 
@@ -86,12 +96,17 @@ final class LLMService {
             self.state = .loading(task)
             do {
                 let model = try await task.value
+                if let name = Self.requestedAdapterName {
+                    try await applyAdapter(named: name, to: model)
+                }
                 self.loadDuration = seconds(since: started)
                 self.state = .loaded(model)
             } catch {
                 // Back to idle, otherwise Retry would await the same failed task forever.
+                // An adapter that was asked for and cannot be applied is a failed load, not a silent base model.
                 self.state = .idle
                 self.progress = 0
+                self.adapter = nil
                 throw error
             }
 
@@ -103,6 +118,18 @@ final class LLMService {
             
         }
         #endif
+    }
+
+    /// Puts the LoRA adapter of `Documents/Adapters/<name>` on the model (unfused: the base weights stay as
+    /// they are). The adapter is described first, so a missing or unreadable folder fails with a clear message.
+    private func applyAdapter(named name: String, to model: ModelContainer) async throws {
+        let directory = URL.documentsDirectory.appending(path: "Adapters").appending(path: name)
+        let info = try AdapterInfo.read(directory: directory, name: name)
+        let container = try LoRAContainer.from(directory: directory)
+        try await model.perform { context in
+            try context.model.load(adapter: container)
+        }
+        adapter = info
     }
 
     /// Runs one extraction. Every call uses a new session, because a `ChatSession` remembers

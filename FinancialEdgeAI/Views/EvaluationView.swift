@@ -29,6 +29,9 @@ struct EvaluationView: View {
 
                 Section {
                     Text(viewModel.modelName)
+                    Text(viewModel.adapterDescription)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                     Picker("Call", selection: $viewModel.tier) {
                         Text("Core fields").tag(FieldTier.core)
                         Text("Balance sheet").tag(FieldTier.extended)

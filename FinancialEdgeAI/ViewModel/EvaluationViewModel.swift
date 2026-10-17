@@ -24,6 +24,11 @@ final class EvaluationViewModel {
     var modelLoaded: Bool { service.isLoaded }
     var modelName: String { LLMService.modelName }
 
+    /// Which adapter is on the model: the screen says it, because a result belongs to the exact weights.
+    var adapterDescription: String {
+        service.adapter.map { "Adapter: \($0.summary)" } ?? "Adapter: none (the base model)"
+    }
+
     init(service: LLMService) {
         self.service = service
     }
@@ -64,7 +69,7 @@ final class EvaluationViewModel {
 
             let report = try EvaluationRunner.makeReport(
                 records: records, examples: examples, seeds: seeds,
-                modelLoadSeconds: service.loadDuration, tier: tier)
+                modelLoadSeconds: service.loadDuration, tier: tier, adapter: service.adapter)
             self.report = report
             let url = try write(report, tier: tier)
             exportURL = url

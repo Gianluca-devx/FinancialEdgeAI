@@ -47,11 +47,11 @@ enum EvaluationMetrics {
 
     /// Outcome per core key. Without a readable answer every key is `unparsed`. A string the parser
     /// cannot read is `unreadable`, whatever was expected.
-    static func compare(expected: FinancialMetrics, actual: FinancialMetrics?, schema: Schema)
-        -> [String: FieldOutcome]
-    {
+    static func compare(
+        expected: FinancialMetrics, actual: FinancialMetrics?, schema: Schema, tier: FieldTier = .core
+    ) -> [String: FieldOutcome] {
         var outcomes: [String: FieldOutcome] = [:]
-        for key in schema.coreKeys {
+        for key in schema.keys(for: tier) {
             guard let actual else {
                 outcomes[key] = .unparsed
                 continue
@@ -66,10 +66,12 @@ enum EvaluationMetrics {
     }
 
     /// For the keys where the model and the label both have a string: was it copied exactly?
-    static func exactCopies(expected: FinancialMetrics, actual: FinancialMetrics?, schema: Schema) -> [String: Bool] {
+    static func exactCopies(
+        expected: FinancialMetrics, actual: FinancialMetrics?, schema: Schema, tier: FieldTier = .core
+    ) -> [String: Bool] {
         guard let actual else { return [:] }
         var copies: [String: Bool] = [:]
-        for key in schema.coreKeys {
+        for key in schema.keys(for: tier) {
             if let given = actual.text(forKey: key), let wanted = expected.text(forKey: key) {
                 copies[key] = given == wanted
             }
@@ -86,9 +88,10 @@ enum EvaluationMetrics {
         generationError: String?,
         thermalBefore: Int,
         thermalAfter: Int,
-        schema: Schema
+        schema: Schema,
+        tier: FieldTier = .core
     ) -> EvaluationRecord {
-        let outcome = generation.map { MetricsParser.parse($0.text, schema: schema) }
+        let outcome = generation.map { MetricsParser.parse($0.text, schema: schema, tier: tier) }
         return EvaluationRecord(
             exampleID: example.id,
             scenario: example.scenario,
@@ -104,8 +107,8 @@ enum EvaluationMetrics {
             parseFailure: outcome?.failure.map(describe),
             extracted: outcome?.metrics,
             expected: example.expected,
-            fields: compare(expected: example.expected, actual: outcome?.metrics, schema: schema),
-            exactCopies: exactCopies(expected: example.expected, actual: outcome?.metrics, schema: schema),
+            fields: compare(expected: example.expected, actual: outcome?.metrics, schema: schema, tier: tier),
+            exactCopies: exactCopies(expected: example.expected, actual: outcome?.metrics, schema: schema, tier: tier),
             thermalBefore: thermalBefore,
             thermalAfter: thermalAfter
         )
@@ -121,9 +124,12 @@ enum EvaluationMetrics {
 
     // MARK: - Many answers
 
-    static func summarize(_ records: [EvaluationRecord], schema: Schema) -> EvaluationSummary {
+    static func summarize(
+        _ records: [EvaluationRecord], schema: Schema, tier: FieldTier = .core
+    ) -> EvaluationSummary {
+        let keys = schema.keys(for: tier)
         var outcomes: [String: [String: Int]] = [:]
-        for key in schema.coreKeys {
+        for key in keys {
             outcomes[key] = Dictionary(uniqueKeysWithValues: FieldOutcome.allCases.map { ($0.rawValue, 0) })
         }
         for record in records {
@@ -132,7 +138,7 @@ enum EvaluationMetrics {
             }
         }
         let correctFields = outcomes.values.reduce(0) { $0 + ($1[FieldOutcome.correct.rawValue] ?? 0) }
-        let totalFields = records.count * schema.coreKeys.count
+        let totalFields = records.count * keys.count
         let generations = records.compactMap(\.generation)
         let copies = records.flatMap { $0.exactCopies.values }
 
@@ -157,9 +163,10 @@ enum EvaluationMetrics {
     }
 
     static func summarize(
-        _ records: [EvaluationRecord], schema: Schema, groupedBy key: (EvaluationRecord) -> String
+        _ records: [EvaluationRecord], schema: Schema, tier: FieldTier = .core,
+        groupedBy key: (EvaluationRecord) -> String
     ) -> [String: EvaluationSummary] {
-        Dictionary(grouping: records, by: key).mapValues { summarize($0, schema: schema) }
+        Dictionary(grouping: records, by: key).mapValues { summarize($0, schema: schema, tier: tier) }
     }
 
     static func median(_ values: [Double]) -> Double {

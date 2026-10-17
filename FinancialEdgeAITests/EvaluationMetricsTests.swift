@@ -109,6 +109,67 @@ struct EvaluationMetricsTests {
         #expect(record.fields["revenueGrowth"] == .correct)
     }
 
+    // MARK: - The extended call
+
+    private var expectedExtended: FinancialMetrics {
+        FinancialMetrics(
+            texts: ["totalDebt": "$12.5 billion", "shareholdersEquity": "$30 billion", "cash": "4,200 million dollars"],
+            values: ["totalDebt": 12.5, "shareholdersEquity": 30, "cash": 4.2])
+    }
+
+    private func extendedRecord(_ overrides: [String: String?] = [:], rawAnswer: String? = nil) -> EvaluationRecord {
+        var texts = expectedExtended.texts as [String: String?]
+        for (key, text) in overrides { texts[key] = text }
+        let lines = schema.extendedKeys.map { key in
+            "\"\(key)\": " + ((texts[key] ?? nil).map { "\"\($0)\"" } ?? "null")
+        }
+        let answer = rawAnswer ?? "{\n" + lines.joined(separator: ",\n") + "\n}"
+        let example = ExtractionExample(
+            id: 1, statement: "statement", expected: expectedExtended, source: "generated", scenario: "balance_sheet", pool: "A")
+        return EvaluationMetrics.makeRecord(
+            example: example, run: 1, seed: 1, generation: generation(text: answer),
+            generationError: nil, thermalBefore: 0, thermalAfter: 0, schema: schema, tier: .extended)
+    }
+
+    @Test func anExtendedAnswerIsJudgedOnTheExtendedKeysOnly() {
+        let record = extendedRecord()
+        #expect(Set(record.fields.keys) == Set(schema.extendedKeys))
+        #expect(record.fields.values.allSatisfy { $0 == .correct })
+        #expect(record.isFullyCorrect)
+        #expect(record.isSchemaValid)
+    }
+
+    @Test func theExtendedMistakesAreNamedOnTheirFields() {
+        // Wrong equity, an invented current assets value, cash left out, a string that is no value.
+        let record = extendedRecord([
+            "shareholdersEquity": "$31 billion", "currentAssets": "$9.8 billion", "cash": nil,
+            "currentLiabilities": "plenty",
+        ])
+        #expect(record.fields["totalDebt"] == .correct)
+        #expect(record.fields["shareholdersEquity"] == .wrongValue)
+        #expect(record.fields["currentAssets"] == .hallucinated)
+        #expect(record.fields["cash"] == .missed)
+        #expect(record.fields["currentLiabilities"] == .unreadable)
+        #expect(!record.isFullyCorrect)
+    }
+
+    @Test func aCoreAnswerGivenToTheExtendedCallIsUnparsed() {
+        let core = answerJSON([:])
+        let record = extendedRecord(rawAnswer: core)
+        #expect(!record.isSchemaValid)
+        #expect(record.fields.count == schema.extendedKeys.count)
+        #expect(record.fields.values.allSatisfy { $0 == .unparsed })
+    }
+
+    @Test func theSummaryOfAnExtendedRunCountsTheExtendedFields() {
+        let summary = EvaluationMetrics.summarize([extendedRecord(), extendedRecord(["cash": nil])], schema: schema, tier: .extended)
+        #expect(summary.records == 2)
+        #expect(summary.fullyCorrect == 1)
+        #expect(Set(summary.fieldOutcomes.keys) == Set(schema.extendedKeys))
+        // 5 fields in 2 answers; one field is missed once.
+        #expect(abs(summary.fieldAccuracy - 9.0 / 10.0) < 1e-9)
+    }
+
     // MARK: - Many answers
 
     @Test func summaryCountsTheOutcomes() {

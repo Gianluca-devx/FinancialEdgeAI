@@ -53,6 +53,10 @@ struct FinancialEdgeAIApp: App {
                 while !chatViewModel.modelLoaded {
                     try? await Task.sleep(for: .seconds(1))
                 }
+                // `-evaluationTier extended` evaluates the balance sheet call instead of the core call.
+                if UserDefaults.standard.string(forKey: "evaluationTier") == FieldTier.extended.rawValue {
+                    evaluationViewModel.tier = .extended
+                }
                 evaluationViewModel.start()
             }
         }

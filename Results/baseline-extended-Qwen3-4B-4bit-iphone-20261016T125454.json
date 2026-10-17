@@ -1,0 +1,5762 @@
+{
+  "byPool" : {
+    "A" : {
+      "exactCopies" : 15,
+      "exactCopiesComparable" : 18,
+      "fenced" : 0,
+      "fieldAccuracy" : 0.9777777777777777,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 48,
+          "hallucinated" : 6,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 54,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 54,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 54,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 54,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 48,
+      "generationFailures" : 0,
+      "maxThermalState" : 2,
+      "medianFirstTokenTime" : 2.223214566707611,
+      "medianTokensPerSecond" : 21.663315545272,
+      "medianTotalTime" : 3.9528045835,
+      "peakMemory" : 2780386428,
+      "records" : 54,
+      "schemaValid" : 54,
+      "thinking" : 0,
+      "validJSON" : 54
+    },
+    "B" : {
+      "exactCopies" : 27,
+      "exactCopiesComparable" : 39,
+      "fenced" : 0,
+      "fieldAccuracy" : 0.9666666666666667,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 30,
+          "hallucinated" : 3,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 3,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 36,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 36,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 36,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 36,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 30,
+      "generationFailures" : 0,
+      "maxThermalState" : 2,
+      "medianFirstTokenTime" : 2.122476041316986,
+      "medianTokensPerSecond" : 21.731761786140122,
+      "medianTotalTime" : 4.0439845205000005,
+      "peakMemory" : 2780386428,
+      "records" : 36,
+      "schemaValid" : 36,
+      "thinking" : 0,
+      "validJSON" : 36
+    }
+  },
+  "byScenario" : {
+    "amounts_only" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 3,
+      "generationFailures" : 0,
+      "maxThermalState" : 2,
+      "medianFirstTokenTime" : 2.497230887413025,
+      "medianTokensPerSecond" : 21.615023966363164,
+      "medianTotalTime" : 4.13773725,
+      "peakMemory" : 2780386428,
+      "records" : 3,
+      "schemaValid" : 3,
+      "thinking" : 0,
+      "validJSON" : 3
+    },
+    "balance_sheet" : {
+      "exactCopies" : 33,
+      "exactCopiesComparable" : 45,
+      "fenced" : 0,
+      "fieldAccuracy" : 0.9333333333333333,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 3,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 6,
+      "generationFailures" : 0,
+      "maxThermalState" : 2,
+      "medianFirstTokenTime" : 2.265557050704956,
+      "medianTokensPerSecond" : 21.699383831831366,
+      "medianTotalTime" : 5.437018291,
+      "peakMemory" : 2780386428,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "cash_flow" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 0.8,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 0,
+          "hallucinated" : 6,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 0,
+      "generationFailures" : 0,
+      "maxThermalState" : 1,
+      "medianFirstTokenTime" : 1.9942654371261597,
+      "medianTokensPerSecond" : 21.591841539180148,
+      "medianTotalTime" : 3.9104287290000004,
+      "peakMemory" : 2780386428,
+      "records" : 6,
+      "schemaValid" : 6,
+      "thinking" : 0,
+      "validJSON" : 6
+    },
+    "eps_only" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 9,
+      "generationFailures" : 0,
+      "maxThermalState" : 2,
+      "medianFirstTokenTime" : 1.9819940328598022,
+      "medianTokensPerSecond" : 21.689434070761028,
+      "medianTotalTime" : 3.6160718750000003,
+      "peakMemory" : 2780386428,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "full" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 12,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 12,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 12,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 12,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 12,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 12,
+      "generationFailures" : 0,
+      "maxThermalState" : 1,
+      "medianFirstTokenTime" : 2.5440990328788757,
+      "medianTokensPerSecond" : 21.655699996816047,
+      "medianTotalTime" : 4.181181645500001,
+      "peakMemory" : 2780386428,
+      "records" : 12,
+      "schemaValid" : 12,
+      "thinking" : 0,
+      "validJSON" : 12
+    },
+    "growth_only" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 3,
+      "generationFailures" : 0,
+      "maxThermalState" : 1,
+      "medianFirstTokenTime" : 1.7436959743499756,
+      "medianTokensPerSecond" : 21.71785887403305,
+      "medianTotalTime" : 3.366982667,
+      "peakMemory" : 2780386428,
+      "records" : 3,
+      "schemaValid" : 3,
+      "thinking" : 0,
+      "validJSON" : 3
+    },
+    "hand" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 0.96,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 12,
+          "hallucinated" : 3,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 15,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 15,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 15,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 15,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 12,
+      "generationFailures" : 0,
+      "maxThermalState" : 1,
+      "medianFirstTokenTime" : 2.052575945854187,
+      "medianTokensPerSecond" : 21.74020920208479,
+      "medianTotalTime" : 3.674281459,
+      "peakMemory" : 2780386428,
+      "records" : 15,
+      "schemaValid" : 15,
+      "thinking" : 0,
+      "validJSON" : 15
+    },
+    "income_basic" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 6,
+      "generationFailures" : 0,
+      "maxThermalState" : 1,
+      "medianFirstTokenTime" : 2.1912814378738403,
+      "medianTokensPerSecond" : 21.721154038657236,
+      "medianTotalTime" : 3.818886687,
+      "peakMemory" : 2780386428,
+      "records" : 6,
+      "schemaValid" : 6,
+      "thinking" : 0,
+      "validJSON" : 6
+    },
+    "interest" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 6,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 6,
+      "generationFailures" : 0,
+      "maxThermalState" : 2,
+      "medianFirstTokenTime" : 2.1146985292434692,
+      "medianTokensPerSecond" : 21.824826924315058,
+      "medianTotalTime" : 3.739528896,
+      "peakMemory" : 2780386428,
+      "records" : 6,
+      "schemaValid" : 6,
+      "thinking" : 0,
+      "validJSON" : 6
+    },
+    "mixed" : {
+      "exactCopies" : 9,
+      "exactCopiesComparable" : 12,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 9,
+      "generationFailures" : 0,
+      "maxThermalState" : 2,
+      "medianFirstTokenTime" : 2.291059970855713,
+      "medianTokensPerSecond" : 21.678806881988216,
+      "medianTotalTime" : 4.195218625,
+      "peakMemory" : 2780386428,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    },
+    "none" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 3,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 3,
+      "generationFailures" : 0,
+      "maxThermalState" : 1,
+      "medianFirstTokenTime" : 1.9521100521087646,
+      "medianTokensPerSecond" : 21.542624200097823,
+      "medianTotalTime" : 3.586610917,
+      "peakMemory" : 2780386428,
+      "records" : 3,
+      "schemaValid" : 3,
+      "thinking" : 0,
+      "validJSON" : 3
+    },
+    "prior_no_growth" : {
+      "exactCopies" : 0,
+      "exactCopiesComparable" : 0,
+      "fenced" : 0,
+      "fieldAccuracy" : 1,
+      "fieldOutcomes" : {
+        "cash" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentAssets" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "currentLiabilities" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "shareholdersEquity" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        },
+        "totalDebt" : {
+          "correct" : 9,
+          "hallucinated" : 0,
+          "missed" : 0,
+          "signError" : 0,
+          "unitError" : 0,
+          "unparsed" : 0,
+          "unreadable" : 0,
+          "wrongValue" : 0
+        }
+      },
+      "fullyCorrect" : 9,
+      "generationFailures" : 0,
+      "maxThermalState" : 2,
+      "medianFirstTokenTime" : 2.435618042945862,
+      "medianTokensPerSecond" : 21.549415287496643,
+      "medianTotalTime" : 4.083546125,
+      "peakMemory" : 2780386428,
+      "records" : 9,
+      "schemaValid" : 9,
+      "thinking" : 0,
+      "validJSON" : 9
+    }
+  },
+  "metadata" : {
+    "date" : "2026-10-16T12:54:54Z",
+    "device" : "iPhone17,3",
+    "examples" : 30,
+    "keys" : [
+      "totalDebt",
+      "shareholdersEquity",
+      "currentAssets",
+      "currentLiabilities",
+      "cash"
+    ],
+    "maxTokens" : 384,
+    "model" : "mlx-community\/Qwen3-4B-4bit",
+    "modelLoadSeconds" : 1.8263866659999999,
+    "promptHash" : "61209df1d910b9686a190ca57863ff75346154ade3b8a2865c185da1b96f7e4f",
+    "runs" : 3,
+    "schemaHash" : "f70490659aa380bb4b6b3ba42a074bb3b142d20c9fe523fc006372469372b5e4",
+    "seeds" : [
+      1,
+      2,
+      3
+    ],
+    "system" : "iOS Version 27.0.1 (Build 24A446)",
+    "temperature" : 0.2,
+    "testSetHash" : "a61e26457d6ae18f95eb40bdca1c7a3a23efdc80eec20ae23f9518777bf43157",
+    "tier" : "extended"
+  },
+  "records" : [
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 1,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6241739988327026,
+        "generatedTokens" : 35,
+        "peakMemory" : 2723516768,
+        "promptTime" : 1.9387810230255127,
+        "promptTokens" : 313,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.549415287496643,
+        "totalTime" : 3.624460709
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "prior_no_growth",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 2,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6107509136199951,
+        "generatedTokens" : 35,
+        "peakMemory" : 2723516768,
+        "promptTime" : 1.8936219215393066,
+        "promptTokens" : 310,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.728995901260202,
+        "totalTime" : 3.528546541
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "income_basic",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 3,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.61034095287323,
+        "generatedTokens" : 35,
+        "peakMemory" : 2723516768,
+        "promptTime" : 1.9205580949783325,
+        "promptTokens" : 311,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.734527671020043,
+        "totalTime" : 3.552807916
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "prior_no_growth",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 4,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6071560382843018,
+        "generatedTokens" : 35,
+        "peakMemory" : 2723516768,
+        "promptTime" : 1.5982450246810913,
+        "promptTokens" : 236,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.777599166639593,
+        "totalTime" : 3.226469583
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "eps_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 5,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6090079545974731,
+        "generatedTokens" : 35,
+        "peakMemory" : 2777977980,
+        "promptTime" : 2.4953850507736206,
+        "promptTokens" : 358,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.75253385167756,
+        "totalTime" : 4.127226708
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+        "cash" : true,
+        "currentAssets" : false,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : false
+      },
+      "exampleID" : 6,
+      "expected" : {
+        "texts" : {
+          "cash" : "$21.3bn",
+          "currentAssets" : "60.4 billion dollars",
+          "currentLiabilities" : "$43.1bn",
+          "shareholdersEquity" : "$165.1bn",
+          "totalDebt" : "103.3 billion dollars"
+        },
+        "values" : {
+          "cash" : 21.3,
+          "currentAssets" : 60.4,
+          "currentLiabilities" : 43.1,
+          "shareholdersEquity" : 165.1,
+          "totalDebt" : 103.3
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$21.3bn",
+          "currentAssets" : "$60.4 billion",
+          "currentLiabilities" : "$43.1bn",
+          "shareholdersEquity" : "$165.1bn",
+          "totalDebt" : "$103.3 billion"
+        },
+        "values" : {
+          "cash" : 21.3,
+          "currentAssets" : 60.4,
+          "currentLiabilities" : 43.1,
+          "shareholdersEquity" : 165.1,
+          "totalDebt" : 103.3
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.8572239875793457,
+        "generatedTokens" : 62,
+        "peakMemory" : 2777977980,
+        "promptTime" : 2.5760231018066406,
+        "promptTokens" : 355,
+        "text" : "{\n\"totalDebt\": \"$103.3 billion\",\n\"shareholdersEquity\": \"$165.1bn\",\n\"currentAssets\": \"$60.4 billion\",\n\"currentLiabilities\": \"$43.1bn\",\n\"cash\": \"$21.3bn\"\n}",
+        "tokensPerSecond" : 21.699383831831366,
+        "totalTime" : 5.456078666
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "balance_sheet",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 7,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6047849655151367,
+        "generatedTokens" : 35,
+        "peakMemory" : 2777977980,
+        "promptTime" : 2.0573350191116333,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.809775609883648,
+        "totalTime" : 3.683439625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "interest",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 8,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "46.9 billion dollars"
+        },
+        "values" : {
+          "cash" : 46.9
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.8843950033187866,
+        "generatedTokens" : 41,
+        "peakMemory" : 2777977980,
+        "promptTime" : 2.1028199195861816,
+        "promptTokens" : 276,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"46.9 billion dollars\"\n}",
+        "tokensPerSecond" : 21.757646315019418,
+        "totalTime" : 4.008721083
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "cash_flow",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 9,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6066759824752808,
+        "generatedTokens" : 35,
+        "peakMemory" : 2777977980,
+        "promptTime" : 2.1309590339660645,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.784106056081214,
+        "totalTime" : 3.758490666
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "eps_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 10,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6192940473556519,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.860335111618042,
+        "promptTokens" : 360,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.614357230026187,
+        "totalTime" : 4.501818542
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 11,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.613581895828247,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9521100521087646,
+        "promptTokens" : 246,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.6908730139381,
+        "totalTime" : 3.586610917
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "none",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 12,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.622572898864746,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.4506900310516357,
+        "promptTokens" : 301,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.570679520462964,
+        "totalTime" : 4.094458167
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "prior_no_growth",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+        "shareholdersEquity" : true
+      },
+      "exampleID" : 13,
+      "expected" : {
+        "texts" : {
+          "shareholdersEquity" : "$140.4 billion"
+        },
+        "values" : {
+          "shareholdersEquity" : 140.4
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "shareholdersEquity" : "$140.4 billion"
+        },
+        "values" : {
+          "shareholdersEquity" : 140.4
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.9028890132904053,
+        "generatedTokens" : 41,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.728716015815735,
+        "promptTokens" : 349,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": \"$140.4 billion\",\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.546185675382254,
+        "totalTime" : 4.654249833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "mixed",
+      "seed" : 1,
+      "thermalAfter" : 1,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 14,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.61924409866333,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.497230887413025,
+        "promptTokens" : 304,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.615023966363164,
+        "totalTime" : 4.13773725
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "amounts_only",
+      "seed" : 1,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 15,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6184409856796265,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.4101619720458984,
+        "promptTokens" : 271,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.625749909751924,
+        "totalTime" : 4.049449375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "hand",
+      "seed" : 1,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 16,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "USD 77.6 billion"
+        },
+        "values" : {
+          "cash" : 77.6
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.9523459672927856,
+        "generatedTokens" : 42,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.592610001564026,
+        "promptTokens" : 258,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"USD 77.6 billion\"\n}",
+        "tokensPerSecond" : 21.51258061000283,
+        "totalTime" : 4.5661394170000005
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "cash_flow",
+      "seed" : 1,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 17,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6431009769439697,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.545770049095154,
+        "promptTokens" : 249,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.30118628807407,
+        "totalTime" : 4.21002525
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "hand",
+      "seed" : 1,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "cash" : false,
+        "currentAssets" : true,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : true
+      },
+      "exampleID" : 18,
+      "expected" : {
+        "texts" : {
+          "cash" : "$412 million",
+          "currentAssets" : "USD 1,574 million",
+          "currentLiabilities" : "USD 1,072 million",
+          "shareholdersEquity" : "USD 11,390 million",
+          "totalDebt" : "USD 4,909 million"
+        },
+        "values" : {
+          "cash" : 0.412,
+          "currentAssets" : 1.574,
+          "currentLiabilities" : 1.072,
+          "shareholdersEquity" : 11.39,
+          "totalDebt" : 4.909
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "USD 412 million",
+          "currentAssets" : "USD 1,574 million",
+          "currentLiabilities" : "USD 1,072 million",
+          "shareholdersEquity" : "USD 11,390 million",
+          "totalDebt" : "USD 4,909 million"
+        },
+        "values" : {
+          "cash" : 0.41200000000000003,
+          "currentAssets" : 1.574,
+          "currentLiabilities" : 1.072,
+          "shareholdersEquity" : 11.39,
+          "totalDebt" : 4.909
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 3.6060489416122437,
+        "generatedTokens" : 74,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.079904079437256,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": \"USD 4,909 million\",\n\"shareholdersEquity\": \"USD 11,390 million\",\n\"currentAssets\": \"USD 1,574 million\",\n\"currentLiabilities\": \"USD 1,072 million\",\n\"cash\": \"USD 412 million\"\n}",
+        "tokensPerSecond" : 20.521074782450132,
+        "totalTime" : 6.7109575
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "balance_sheet",
+      "seed" : 1,
+      "thermalAfter" : 2,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 19,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6115769147872925,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.5508699417114258,
+        "promptTokens" : 250,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.71785887403305,
+        "totalTime" : 3.197560416
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "growth_only",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 20,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6102529764175415,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.0831509828567505,
+        "promptTokens" : 339,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.735715140777007,
+        "totalTime" : 3.716267208
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 21,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6091840267181396,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.901331901550293,
+        "promptTokens" : 295,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.750153754248338,
+        "totalTime" : 3.532510666
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "hand",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 22,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6007310152053833,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.005977988243103,
+        "promptTokens" : 293,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.865010215666555,
+        "totalTime" : 3.628504541
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "income_basic",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 23,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6114720106124878,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.3135180473327637,
+        "promptTokens" : 337,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.71927267089002,
+        "totalTime" : 3.947301625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "full",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 24,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.602517008781433,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.172062039375305,
+        "promptTokens" : 292,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.840641820466097,
+        "totalTime" : 3.7956181669999998
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "interest",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+        "cash" : true
+      },
+      "exampleID" : 25,
+      "expected" : {
+        "texts" : {
+          "cash" : "13.1 billion dollars"
+        },
+        "values" : {
+          "cash" : 13.1
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "13.1 billion dollars"
+        },
+        "values" : {
+          "cash" : 13.1
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.8826029300689697,
+        "generatedTokens" : 41,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.291059970855713,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"13.1 billion dollars\"\n}",
+        "tokensPerSecond" : 21.778357690380282,
+        "totalTime" : 4.195218625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "mixed",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 26,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$3.1 billion"
+        },
+        "values" : {
+          "cash" : 3.1
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.7939109802246094,
+        "generatedTokens" : 39,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.110564112663269,
+        "promptTokens" : 266,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"$3.1 billion\"\n}",
+        "tokensPerSecond" : 21.74020920208479,
+        "totalTime" : 3.926346916
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "hand",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+        "currentLiabilities" : false,
+        "totalDebt" : true
+      },
+      "exampleID" : 27,
+      "expected" : {
+        "texts" : {
+          "currentLiabilities" : "$2,051m",
+          "totalDebt" : "7,441 million dollars"
+        },
+        "values" : {
+          "currentLiabilities" : 2.051,
+          "totalDebt" : 7.441
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "currentLiabilities" : "2,051m",
+          "totalDebt" : "7,441 million dollars"
+        },
+        "values" : {
+          "currentLiabilities" : 2.0509999999999997,
+          "totalDebt" : 7.441
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.2211750745773315,
+        "generatedTokens" : 48,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.404598832130432,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": \"7,441 million dollars\",\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": \"2,051m\",\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.61018307354,
+        "totalTime" : 4.647279833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "mixed",
+      "seed" : 1,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+        "cash" : false,
+        "currentAssets" : true,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : true
+      },
+      "exampleID" : 28,
+      "expected" : {
+        "texts" : {
+          "cash" : "924 million dollars",
+          "currentAssets" : "$2,203m",
+          "currentLiabilities" : "$1,345m",
+          "shareholdersEquity" : "$6,037m",
+          "totalDebt" : "$6,028m"
+        },
+        "values" : {
+          "cash" : 0.924,
+          "currentAssets" : 2.203,
+          "currentLiabilities" : 1.345,
+          "shareholdersEquity" : 6.037,
+          "totalDebt" : 6.028
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$924 million dollars",
+          "currentAssets" : "$2,203m",
+          "currentLiabilities" : "$1,345m",
+          "shareholdersEquity" : "$6,037m",
+          "totalDebt" : "$6,028m"
+        },
+        "values" : {
+          "currentAssets" : 2.2030000000000003,
+          "currentLiabilities" : 1.345,
+          "shareholdersEquity" : 6.037000000000001,
+          "totalDebt" : 6.028
+        }
+      },
+      "fields" : {
+        "cash" : "unreadable",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.9706900119781494,
+        "generatedTokens" : 64,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.4552351236343384,
+        "promptTokens" : 313,
+        "text" : "{\n\"totalDebt\": \"$6,028m\",\n\"shareholdersEquity\": \"$6,037m\",\n\"currentAssets\": \"$2,203m\",\n\"currentLiabilities\": \"$1,345m\",\n\"cash\": \"$924 million dollars\"\n}",
+        "tokensPerSecond" : 21.543816332887292,
+        "totalTime" : 5.447825875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 1,
+      "scenario" : "balance_sheet",
+      "seed" : 1,
+      "thermalAfter" : 1,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 29,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6152000427246094,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.3713459968566895,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.66914256698511,
+        "totalTime" : 4.008075166
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "eps_only",
+      "seed" : 1,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 30,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6435010433197021,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.714145064353943,
+        "promptTokens" : 265,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.296001083944322,
+        "totalTime" : 4.379145625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 1,
+      "scenario" : "hand",
+      "seed" : 1,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 1,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.644639015197754,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.1125869750976562,
+        "promptTokens" : 313,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.281265783295034,
+        "totalTime" : 4.779484167
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "prior_no_growth",
+      "seed" : 2,
+      "thermalAfter" : 2,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 2,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6487150192260742,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.916498064994812,
+        "promptTokens" : 310,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.228653582854726,
+        "totalTime" : 3.602777792
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "income_basic",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 3,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.608093023300171,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.896338939666748,
+        "promptTokens" : 311,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.764910047412602,
+        "totalTime" : 3.525972792
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "prior_no_growth",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 4,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6270819902420044,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.5276820659637451,
+        "promptTokens" : 236,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.51090123909138,
+        "totalTime" : 3.175260625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "eps_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 5,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6100540161132812,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.423090934753418,
+        "promptTokens" : 358,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.738401103145005,
+        "totalTime" : 4.056313916
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+        "cash" : true,
+        "currentAssets" : false,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : false
+      },
+      "exampleID" : 6,
+      "expected" : {
+        "texts" : {
+          "cash" : "$21.3bn",
+          "currentAssets" : "60.4 billion dollars",
+          "currentLiabilities" : "$43.1bn",
+          "shareholdersEquity" : "$165.1bn",
+          "totalDebt" : "103.3 billion dollars"
+        },
+        "values" : {
+          "cash" : 21.3,
+          "currentAssets" : 60.4,
+          "currentLiabilities" : 43.1,
+          "shareholdersEquity" : 165.1,
+          "totalDebt" : 103.3
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$21.3bn",
+          "currentAssets" : "$60.4 billion",
+          "currentLiabilities" : "$43.1bn",
+          "shareholdersEquity" : "$165.1bn",
+          "totalDebt" : "$103.3 billion"
+        },
+        "values" : {
+          "cash" : 21.3,
+          "currentAssets" : 60.4,
+          "currentLiabilities" : 43.1,
+          "shareholdersEquity" : 165.1,
+          "totalDebt" : 103.3
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.8460980653762817,
+        "generatedTokens" : 62,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.535878896713257,
+        "promptTokens" : 355,
+        "text" : "{\n\"totalDebt\": \"$103.3 billion\",\n\"shareholdersEquity\": \"$165.1bn\",\n\"currentAssets\": \"$60.4 billion\",\n\"currentLiabilities\": \"$43.1bn\",\n\"cash\": \"$21.3bn\"\n}",
+        "tokensPerSecond" : 21.784210724939655,
+        "totalTime" : 5.404870958
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "balance_sheet",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 7,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.602573037147522,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.043843984603882,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.83987823874647,
+        "totalTime" : 3.667546875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "interest",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 8,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "46.9 billion dollars"
+        },
+        "values" : {
+          "cash" : 46.9
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.885577917098999,
+        "generatedTokens" : 41,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.1139930486679077,
+        "promptTokens" : 276,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"46.9 billion dollars\"\n}",
+        "tokensPerSecond" : 21.743996696291052,
+        "totalTime" : 4.021031083
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "cash_flow",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 9,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6158829927444458,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.1498639583587646,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.659984143131148,
+        "totalTime" : 3.786600125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "eps_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 10,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.619884967803955,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.8926509618759155,
+        "promptTokens" : 360,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.60647249381466,
+        "totalTime" : 4.534695834
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 11,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6276479959487915,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.274367094039917,
+        "promptTokens" : 246,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.503420940593323,
+        "totalTime" : 3.923275875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "none",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 12,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6358890533447266,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.107806921005249,
+        "promptTokens" : 301,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.39509395728229,
+        "totalTime" : 4.766015584
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "prior_no_growth",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "shareholdersEquity" : true
+      },
+      "exampleID" : 13,
+      "expected" : {
+        "texts" : {
+          "shareholdersEquity" : "$140.4 billion"
+        },
+        "values" : {
+          "shareholdersEquity" : 140.4
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "shareholdersEquity" : "$140.4 billion"
+        },
+        "values" : {
+          "shareholdersEquity" : 140.4
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.9198269844055176,
+        "generatedTokens" : 41,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.4672340154647827,
+        "promptTokens" : 349,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": \"$140.4 billion\",\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.356091112916523,
+        "totalTime" : 5.410142125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "mixed",
+      "seed" : 2,
+      "thermalAfter" : 2,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 14,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6061469316482544,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9171700477600098,
+        "promptTokens" : 304,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.79128155111091,
+        "totalTime" : 3.561476834
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "amounts_only",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 15,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6024249792099,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.7026311159133911,
+        "promptTokens" : 271,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.84189615994209,
+        "totalTime" : 3.326384375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "hand",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 16,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "USD 77.6 billion"
+        },
+        "values" : {
+          "cash" : 77.6
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.9800620079040527,
+        "generatedTokens" : 42,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.7076430320739746,
+        "promptTokens" : 258,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"USD 77.6 billion\"\n}",
+        "tokensPerSecond" : 21.211456930310025,
+        "totalTime" : 3.709345958
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "cash_flow",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 17,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6442300081253052,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.623155951499939,
+        "promptTokens" : 249,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.286559561034775,
+        "totalTime" : 3.2889255
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "hand",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+        "cash" : false,
+        "currentAssets" : true,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : true
+      },
+      "exampleID" : 18,
+      "expected" : {
+        "texts" : {
+          "cash" : "$412 million",
+          "currentAssets" : "USD 1,574 million",
+          "currentLiabilities" : "USD 1,072 million",
+          "shareholdersEquity" : "USD 11,390 million",
+          "totalDebt" : "USD 4,909 million"
+        },
+        "values" : {
+          "cash" : 0.412,
+          "currentAssets" : 1.574,
+          "currentLiabilities" : 1.072,
+          "shareholdersEquity" : 11.39,
+          "totalDebt" : 4.909
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "USD 412 million",
+          "currentAssets" : "USD 1,574 million",
+          "currentLiabilities" : "USD 1,072 million",
+          "shareholdersEquity" : "USD 11,390 million",
+          "totalDebt" : "USD 4,909 million"
+        },
+        "values" : {
+          "cash" : 0.41200000000000003,
+          "currentAssets" : 1.574,
+          "currentLiabilities" : 1.072,
+          "shareholdersEquity" : 11.39,
+          "totalDebt" : 4.909
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 3.4273170232772827,
+        "generatedTokens" : 74,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.14493989944458,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": \"USD 4,909 million\",\n\"shareholdersEquity\": \"USD 11,390 million\",\n\"currentAssets\": \"USD 1,574 million\",\n\"currentLiabilities\": \"USD 1,072 million\",\n\"cash\": \"USD 412 million\"\n}",
+        "tokensPerSecond" : 21.591232879075605,
+        "totalTime" : 5.59444925
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "balance_sheet",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 19,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6152890920639038,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.8630790710449219,
+        "promptTokens" : 250,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.66794796792656,
+        "totalTime" : 3.499496583
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "growth_only",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 20,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.619657039642334,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.5897340774536133,
+        "promptTokens" : 339,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.609513090332374,
+        "totalTime" : 4.231210625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 21,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6156280040740967,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.3820860385894775,
+        "promptTokens" : 295,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.663402659362923,
+        "totalTime" : 4.01945175
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "hand",
+      "seed" : 2,
+      "thermalAfter" : 0,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 22,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6156409978866577,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.4211790561676025,
+        "promptTokens" : 293,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.66322843118107,
+        "totalTime" : 4.058864875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "income_basic",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 0
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 23,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.636922001838684,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.2295409440994263,
+        "promptTokens" : 337,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.381592990188906,
+        "totalTime" : 4.888927708
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "full",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 24,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6477199792861938,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.207793951034546,
+        "promptTokens" : 292,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.241473332842812,
+        "totalTime" : 4.877227667
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "interest",
+      "seed" : 2,
+      "thermalAfter" : 2,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "cash" : true
+      },
+      "exampleID" : 25,
+      "expected" : {
+        "texts" : {
+          "cash" : "13.1 billion dollars"
+        },
+        "values" : {
+          "cash" : 13.1
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "13.1 billion dollars"
+        },
+        "values" : {
+          "cash" : 13.1
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.883552074432373,
+        "generatedTokens" : 41,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.922055959701538,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"13.1 billion dollars\"\n}",
+        "tokensPerSecond" : 21.76738331609746,
+        "totalTime" : 3.844208375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "mixed",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 26,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$3.1 billion"
+        },
+        "values" : {
+          "cash" : 3.1
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.79464590549469,
+        "generatedTokens" : 39,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.7019490003585815,
+        "promptTokens" : 266,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"$3.1 billion\"\n}",
+        "tokensPerSecond" : 21.73130637113049,
+        "totalTime" : 3.5183646250000002
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "hand",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "currentLiabilities" : false,
+        "totalDebt" : true
+      },
+      "exampleID" : 27,
+      "expected" : {
+        "texts" : {
+          "currentLiabilities" : "$2,051m",
+          "totalDebt" : "7,441 million dollars"
+        },
+        "values" : {
+          "currentLiabilities" : 2.051,
+          "totalDebt" : 7.441
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "currentLiabilities" : "2,051m",
+          "totalDebt" : "7,441 million dollars"
+        },
+        "values" : {
+          "currentLiabilities" : 2.0509999999999997,
+          "totalDebt" : 7.441
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.214143991470337,
+        "generatedTokens" : 48,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9353790283203125,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": \"7,441 million dollars\",\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": \"2,051m\",\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.678806881988216,
+        "totalTime" : 4.171390833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "mixed",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "cash" : false,
+        "currentAssets" : true,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : true
+      },
+      "exampleID" : 28,
+      "expected" : {
+        "texts" : {
+          "cash" : "924 million dollars",
+          "currentAssets" : "$2,203m",
+          "currentLiabilities" : "$1,345m",
+          "shareholdersEquity" : "$6,037m",
+          "totalDebt" : "$6,028m"
+        },
+        "values" : {
+          "cash" : 0.924,
+          "currentAssets" : 2.203,
+          "currentLiabilities" : 1.345,
+          "shareholdersEquity" : 6.037,
+          "totalDebt" : 6.028
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$924 million dollars",
+          "currentAssets" : "$2,203m",
+          "currentLiabilities" : "$1,345m",
+          "shareholdersEquity" : "$6,037m",
+          "totalDebt" : "$6,028m"
+        },
+        "values" : {
+          "currentAssets" : 2.2030000000000003,
+          "currentLiabilities" : 1.345,
+          "shareholdersEquity" : 6.037000000000001,
+          "totalDebt" : 6.028
+        }
+      },
+      "fields" : {
+        "cash" : "unreadable",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.937741994857788,
+        "generatedTokens" : 64,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.0631319284439087,
+        "promptTokens" : 313,
+        "text" : "{\n\"totalDebt\": \"$6,028m\",\n\"shareholdersEquity\": \"$6,037m\",\n\"currentAssets\": \"$2,203m\",\n\"currentLiabilities\": \"$1,345m\",\n\"cash\": \"$924 million dollars\"\n}",
+        "tokensPerSecond" : 21.78543933130457,
+        "totalTime" : 5.022755334
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 2,
+      "scenario" : "balance_sheet",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 29,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.603456974029541,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9723010063171387,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.82783858056623,
+        "totalTime" : 3.597479375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "eps_only",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 30,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6007729768753052,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.052575945854187,
+        "promptTokens" : 265,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.864437059850733,
+        "totalTime" : 3.674281459
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 2,
+      "scenario" : "hand",
+      "seed" : 2,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 1,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.617287039756775,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.3591129779815674,
+        "promptTokens" : 313,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.641180037690575,
+        "totalTime" : 3.998170708
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "prior_no_growth",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 2,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6115939617156982,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.398263931274414,
+        "promptTokens" : 310,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.71762914942862,
+        "totalTime" : 4.031655125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "income_basic",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 3,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6376210451126099,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.6484910249710083,
+        "promptTokens" : 311,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.372465934323195,
+        "totalTime" : 4.307785208
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "prior_no_growth",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 4,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.634294033050537,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.615023970603943,
+        "promptTokens" : 236,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.415974905488564,
+        "totalTime" : 4.270865709
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "eps_only",
+      "seed" : 3,
+      "thermalAfter" : 2,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 5,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6131230592727661,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.2934519052505493,
+        "promptTokens" : 358,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.69704276360591,
+        "totalTime" : 3.9441351669999998
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "cash" : true,
+        "currentAssets" : false,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : false
+      },
+      "exampleID" : 6,
+      "expected" : {
+        "texts" : {
+          "cash" : "$21.3bn",
+          "currentAssets" : "60.4 billion dollars",
+          "currentLiabilities" : "$43.1bn",
+          "shareholdersEquity" : "$165.1bn",
+          "totalDebt" : "103.3 billion dollars"
+        },
+        "values" : {
+          "cash" : 21.3,
+          "currentAssets" : 60.4,
+          "currentLiabilities" : 43.1,
+          "shareholdersEquity" : 165.1,
+          "totalDebt" : 103.3
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$21.3bn",
+          "currentAssets" : "$60.4 billion",
+          "currentLiabilities" : "$43.1bn",
+          "shareholdersEquity" : "$165.1bn",
+          "totalDebt" : "$103.3 billion"
+        },
+        "values" : {
+          "cash" : 21.3,
+          "currentAssets" : 60.4,
+          "currentLiabilities" : 43.1,
+          "shareholdersEquity" : 165.1,
+          "totalDebt" : 103.3
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.8614360094070435,
+        "generatedTokens" : 62,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.265557050704956,
+        "promptTokens" : 355,
+        "text" : "{\n\"totalDebt\": \"$103.3 billion\",\n\"shareholdersEquity\": \"$165.1bn\",\n\"currentAssets\": \"$60.4 billion\",\n\"currentLiabilities\": \"$43.1bn\",\n\"cash\": \"$21.3bn\"\n}",
+        "tokensPerSecond" : 21.667442429665883,
+        "totalTime" : 5.15000775
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "balance_sheet",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 7,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.5964460372924805,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.7752609252929688,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.92369750208334,
+        "totalTime" : 3.39288925
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "interest",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 8,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "46.9 billion dollars"
+        },
+        "values" : {
+          "cash" : 46.9
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.9052029848098755,
+        "generatedTokens" : 41,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.8857109546661377,
+        "promptTokens" : 276,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"46.9 billion dollars\"\n}",
+        "tokensPerSecond" : 21.520016673756935,
+        "totalTime" : 3.812136375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "cash_flow",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 9,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6136889457702637,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9814330339431763,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.689434070761028,
+        "totalTime" : 3.6160718750000003
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "eps_only",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 10,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6555579900741577,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.796049118041992,
+        "promptTokens" : 360,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.14090850930099,
+        "totalTime" : 4.473693625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 11,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6246860027313232,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9378010034561157,
+        "promptTokens" : 246,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.542624200097823,
+        "totalTime" : 3.58353775
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "none",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 12,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.626349925994873,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.435618042945862,
+        "promptTokens" : 301,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.520583879628333,
+        "totalTime" : 4.083546125
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "prior_no_growth",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "shareholdersEquity" : true
+      },
+      "exampleID" : 13,
+      "expected" : {
+        "texts" : {
+          "shareholdersEquity" : "$140.4 billion"
+        },
+        "values" : {
+          "shareholdersEquity" : 140.4
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "shareholdersEquity" : "$140.4 billion"
+        },
+        "values" : {
+          "shareholdersEquity" : 140.4
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.9427770376205444,
+        "generatedTokens" : 41,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.439950942993164,
+        "promptTokens" : 349,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": \"$140.4 billion\",\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.103811300042736,
+        "totalTime" : 5.405722375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "mixed",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 14,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6572260856628418,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.5791338682174683,
+        "promptTokens" : 304,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.119628940671078,
+        "totalTime" : 5.258921208
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "amounts_only",
+      "seed" : 3,
+      "thermalAfter" : 2,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 15,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6024550199508667,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.7312101125717163,
+        "promptTokens" : 271,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.841486696502187,
+        "totalTime" : 3.370609875
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "hand",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 16,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "USD 77.6 billion"
+        },
+        "values" : {
+          "cash" : 77.6
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.938730001449585,
+        "generatedTokens" : 42,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.6978760957717896,
+        "promptTokens" : 258,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"USD 77.6 billion\"\n}",
+        "tokensPerSecond" : 21.66366640460336,
+        "totalTime" : 3.657225166
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "cash_flow",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 17,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6084609031677246,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.5335760116577148,
+        "promptTokens" : 249,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.75993207610488,
+        "totalTime" : 3.16262775
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "hand",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "cash" : false,
+        "currentAssets" : true,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : true
+      },
+      "exampleID" : 18,
+      "expected" : {
+        "texts" : {
+          "cash" : "$412 million",
+          "currentAssets" : "USD 1,574 million",
+          "currentLiabilities" : "USD 1,072 million",
+          "shareholdersEquity" : "USD 11,390 million",
+          "totalDebt" : "USD 4,909 million"
+        },
+        "values" : {
+          "cash" : 0.412,
+          "currentAssets" : 1.574,
+          "currentLiabilities" : 1.072,
+          "shareholdersEquity" : 11.39,
+          "totalDebt" : 4.909
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "USD 412 million",
+          "currentAssets" : "USD 1,574 million",
+          "currentLiabilities" : "USD 1,072 million",
+          "shareholdersEquity" : "USD 11,390 million",
+          "totalDebt" : "USD 4,909 million"
+        },
+        "values" : {
+          "cash" : 0.41200000000000003,
+          "currentAssets" : 1.574,
+          "currentLiabilities" : 1.072,
+          "shareholdersEquity" : 11.39,
+          "totalDebt" : 4.909
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 3.391758918762207,
+        "generatedTokens" : 74,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.0230960845947266,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": \"USD 4,909 million\",\n\"shareholdersEquity\": \"USD 11,390 million\",\n\"currentAssets\": \"USD 1,574 million\",\n\"currentLiabilities\": \"USD 1,072 million\",\n\"cash\": \"USD 412 million\"\n}",
+        "tokensPerSecond" : 21.817588387740027,
+        "totalTime" : 5.437018291
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "balance_sheet",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 19,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6028040647506714,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.7436959743499756,
+        "promptTokens" : 250,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.836730246528617,
+        "totalTime" : 3.366982667
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "growth_only",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 20,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6112979650497437,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.498463988304138,
+        "promptTokens" : 339,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.7216186944787,
+        "totalTime" : 4.131152666
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 21,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6065480709075928,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.330359101295471,
+        "promptTokens" : 295,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.785840482337594,
+        "totalTime" : 3.958307542
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "hand",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 22,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.611070990562439,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.3765848875045776,
+        "promptTokens" : 293,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.72467892788585,
+        "totalTime" : 4.009268833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "income_basic",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 23,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6463940143585205,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.2188528776168823,
+        "promptTokens" : 337,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.25858068892272,
+        "totalTime" : 4.8868308339999995
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "full",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 24,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.639407992362976,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 3.3125070333480835,
+        "promptTokens" : 292,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.349170043725614,
+        "totalTime" : 4.974262959
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "interest",
+      "seed" : 3,
+      "thermalAfter" : 2,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "cash" : true
+      },
+      "exampleID" : 25,
+      "expected" : {
+        "texts" : {
+          "cash" : "13.1 billion dollars"
+        },
+        "values" : {
+          "cash" : 13.1
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "13.1 billion dollars"
+        },
+        "values" : {
+          "cash" : 13.1
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.8850148916244507,
+        "generatedTokens" : 41,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9245610237121582,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"13.1 billion dollars\"\n}",
+        "tokensPerSecond" : 21.750491299656204,
+        "totalTime" : 3.8470965
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "mixed",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 26,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$3.1 billion"
+        },
+        "values" : {
+          "cash" : 3.1
+        }
+      },
+      "fields" : {
+        "cash" : "hallucinated",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.795287013053894,
+        "generatedTokens" : 39,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.701611042022705,
+        "promptTokens" : 266,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": \"$3.1 billion\"\n}",
+        "tokensPerSecond" : 21.72354599371751,
+        "totalTime" : 3.518320625
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "hand",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "currentLiabilities" : false,
+        "totalDebt" : true
+      },
+      "exampleID" : 27,
+      "expected" : {
+        "texts" : {
+          "currentLiabilities" : "$2,051m",
+          "totalDebt" : "7,441 million dollars"
+        },
+        "values" : {
+          "currentLiabilities" : 2.051,
+          "totalDebt" : 7.441
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "currentLiabilities" : "2,051m",
+          "totalDebt" : "7,441 million dollars"
+        },
+        "values" : {
+          "currentLiabilities" : 2.0509999999999997,
+          "totalDebt" : 7.441
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.203824996948242,
+        "generatedTokens" : 48,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9387589693069458,
+        "promptTokens" : 317,
+        "text" : "{\n\"totalDebt\": \"7,441 million dollars\",\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": \"2,051m\",\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.780313802805686,
+        "totalTime" : 4.164489292
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "mixed",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+        "cash" : false,
+        "currentAssets" : true,
+        "currentLiabilities" : true,
+        "shareholdersEquity" : true,
+        "totalDebt" : true
+      },
+      "exampleID" : 28,
+      "expected" : {
+        "texts" : {
+          "cash" : "924 million dollars",
+          "currentAssets" : "$2,203m",
+          "currentLiabilities" : "$1,345m",
+          "shareholdersEquity" : "$6,037m",
+          "totalDebt" : "$6,028m"
+        },
+        "values" : {
+          "cash" : 0.924,
+          "currentAssets" : 2.203,
+          "currentLiabilities" : 1.345,
+          "shareholdersEquity" : 6.037,
+          "totalDebt" : 6.028
+        }
+      },
+      "extracted" : {
+        "texts" : {
+          "cash" : "$924 million dollars",
+          "currentAssets" : "$2,203m",
+          "currentLiabilities" : "$1,345m",
+          "shareholdersEquity" : "$6,037m",
+          "totalDebt" : "$6,028m"
+        },
+        "values" : {
+          "currentAssets" : 2.2030000000000003,
+          "currentLiabilities" : 1.345,
+          "shareholdersEquity" : 6.037000000000001,
+          "totalDebt" : 6.028
+        }
+      },
+      "fields" : {
+        "cash" : "unreadable",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 2.930292010307312,
+        "generatedTokens" : 64,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.0699158906936646,
+        "promptTokens" : 313,
+        "text" : "{\n\"totalDebt\": \"$6,028m\",\n\"shareholdersEquity\": \"$6,037m\",\n\"currentAssets\": \"$2,203m\",\n\"currentLiabilities\": \"$1,345m\",\n\"cash\": \"$924 million dollars\"\n}",
+        "tokensPerSecond" : 21.840826707672747,
+        "totalTime" : 5.021608833
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "B",
+      "run" : 3,
+      "scenario" : "balance_sheet",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 29,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.5996159315109253,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 1.9819940328598022,
+        "promptTokens" : 263,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.880252197126204,
+        "totalTime" : 3.603164666
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "eps_only",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    },
+    {
+      "exactCopies" : {
+
+      },
+      "exampleID" : 30,
+      "expected" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "extracted" : {
+        "texts" : {
+
+        },
+        "values" : {
+
+        }
+      },
+      "fields" : {
+        "cash" : "correct",
+        "currentAssets" : "correct",
+        "currentLiabilities" : "correct",
+        "shareholdersEquity" : "correct",
+        "totalDebt" : "correct"
+      },
+      "generation" : {
+        "activeMemory" : 2340195296,
+        "generateTime" : 1.6027730703353882,
+        "generatedTokens" : 35,
+        "peakMemory" : 2780386428,
+        "promptTime" : 2.060794949531555,
+        "promptTokens" : 265,
+        "text" : "{\n\"totalDebt\": null,\n\"shareholdersEquity\": null,\n\"currentAssets\": null,\n\"currentLiabilities\": null,\n\"cash\": null\n}",
+        "tokensPerSecond" : 21.8371525250771,
+        "totalTime" : 3.684531375
+      },
+      "hadFence" : false,
+      "hadThinking" : false,
+      "isSchemaValid" : true,
+      "isValidJSON" : true,
+      "pool" : "A",
+      "run" : 3,
+      "scenario" : "hand",
+      "seed" : 3,
+      "thermalAfter" : 1,
+      "thermalBefore" : 1
+    }
+  ],
+  "summary" : {
+    "exactCopies" : 42,
+    "exactCopiesComparable" : 57,
+    "fenced" : 0,
+    "fieldAccuracy" : 0.9733333333333334,
+    "fieldOutcomes" : {
+      "cash" : {
+        "correct" : 78,
+        "hallucinated" : 9,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 0,
+        "unparsed" : 0,
+        "unreadable" : 3,
+        "wrongValue" : 0
+      },
+      "currentAssets" : {
+        "correct" : 90,
+        "hallucinated" : 0,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 0,
+        "unparsed" : 0,
+        "unreadable" : 0,
+        "wrongValue" : 0
+      },
+      "currentLiabilities" : {
+        "correct" : 90,
+        "hallucinated" : 0,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 0,
+        "unparsed" : 0,
+        "unreadable" : 0,
+        "wrongValue" : 0
+      },
+      "shareholdersEquity" : {
+        "correct" : 90,
+        "hallucinated" : 0,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 0,
+        "unparsed" : 0,
+        "unreadable" : 0,
+        "wrongValue" : 0
+      },
+      "totalDebt" : {
+        "correct" : 90,
+        "hallucinated" : 0,
+        "missed" : 0,
+        "signError" : 0,
+        "unitError" : 0,
+        "unparsed" : 0,
+        "unreadable" : 0,
+        "wrongValue" : 0
+      }
+    },
+    "fullyCorrect" : 78,
+    "generationFailures" : 0,
+    "maxThermalState" : 2,
+    "medianFirstTokenTime" : 2.1474019289016724,
+    "medianTokensPerSecond" : 21.690153542349563,
+    "medianTotalTime" : 4.0083981245,
+    "peakMemory" : 2780386428,
+    "records" : 90,
+    "schemaValid" : 90,
+    "thinking" : 0,
+    "validJSON" : 90
+  }
+}

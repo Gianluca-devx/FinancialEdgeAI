@@ -45,6 +45,24 @@ struct PromptTemplateTests {
     }
 }
 
+extension PromptTemplateTests {
+
+    /// The extended prompt is rendered from the schema too: it asks the extended keys, in order, and no core key.
+    @Test func theExtendedPromptAsksForTheExtendedFieldsOfTheSchema() throws {
+        let prompt = try DatasetFiles.text("Dataset/prompt_template_extended.txt")
+        let schema = try DatasetFiles.schema()
+        #expect(PromptTemplate(text: prompt.trimmingCharacters(in: .whitespacesAndNewlines)) != nil)
+        let bulletKeys = prompt.split(separator: "\n")
+            .filter { $0.hasPrefix("- ") }
+            .compactMap { $0.dropFirst(2).split(separator: ":").first.map(String.init) }
+        #expect(bulletKeys == schema.extendedKeys)
+        for key in schema.coreKeys {
+            #expect(!prompt.contains("\"\(key)\""), "the core field \(key) must not be in the extended prompt")
+        }
+        #expect(!prompt.localizedStandardContains("growth"), "the extended prompt has no growth rule")
+    }
+}
+
 struct DatasetLoaderTests {
 
     @Test func loadsTheRealTestSplit() throws {
@@ -55,6 +73,24 @@ struct DatasetLoaderTests {
         #expect(examples.filter { $0.pool == "B" }.count == 12)
         #expect(examples.filter { $0.scenario == "hand" }.count == 5)
         #expect(examples.contains { $0.scenario == "none" })
+    }
+
+    @Test func loadsTheExtendedTestSplitWithTheExtendedLabels() throws {
+        let schema = try DatasetFiles.schema()
+        let examples = try DatasetFiles.testSplit(tier: .extended)
+        #expect(examples.count == 30)
+        let core = Set(schema.coreKeys)
+        for example in examples {
+            #expect(core.isDisjoint(with: example.expected.values.keys))
+            #expect(Set(example.expected.values.keys).isSubset(of: Set(schema.extendedKeys)))
+        }
+        #expect(examples.contains { !$0.expected.values.isEmpty })
+        // The balance sheet statement written by hand (H23, in the validation split): debt, equity, cash,
+        // current assets and liabilities.
+        let validation = try DatasetFiles.split("valid", tier: .extended)
+        let sample = try #require(validation.first { $0.source == "H23" })
+        #expect(sample.expected.value(forKey: "totalDebt") == 12.5)
+        #expect(sample.expected.value(forKey: "currentLiabilities") == 6.1)
     }
 
     @Test func loadsAllThreeSplitsWithTheirSizes() throws {

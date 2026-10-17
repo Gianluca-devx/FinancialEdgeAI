@@ -11,10 +11,11 @@ import Testing
 ///
 /// The labels carry the true value of every printed string, written by the generator without the
 /// parser. So `ValueParser(text) == value` is a check of the parser against ground truth, for every
-/// field of every statement of every split.
+/// field of every statement of every split. The same holds for the extended call.
 struct OracleTests {
 
     private static let splits = ["train", "valid", "test"]
+    private static let tiers: [FieldTier] = [.core, .extended]
 
     @Test(arguments: OracleTests.splits)
     func everyPrintedStringParsesToItsTrueValue(split: String) throws {
@@ -38,19 +39,19 @@ struct OracleTests {
         #expect(failures.isEmpty, "\(failures.count) of \(checked): \(failures.prefix(8))")
     }
 
-    @Test(arguments: OracleTests.splits)
-    func theDatasetsOwnAnswersScoreEverythingCorrect(split: String) throws {
+    @Test(arguments: OracleTests.splits, OracleTests.tiers)
+    func theDatasetsOwnAnswersScoreEverythingCorrect(split: String, tier: FieldTier) throws {
         let schema = try DatasetFiles.schema()
-        let examples = try DatasetFiles.split(split)
-        let answers = try DatasetFiles.assistantMessages(of: split)
+        let examples = try DatasetFiles.split(split, tier: tier)
+        let answers = try DatasetFiles.assistantMessages(of: split, tier: tier)
         #expect(answers.count == examples.count)
 
         let records = zip(examples, answers).map { example, answer in
             EvaluationMetrics.makeRecord(
                 example: example, run: 1, seed: 1, generation: Self.generation(text: answer),
-                generationError: nil, thermalBefore: 0, thermalAfter: 0, schema: schema)
+                generationError: nil, thermalBefore: 0, thermalAfter: 0, schema: schema, tier: tier)
         }
-        let summary = EvaluationMetrics.summarize(records, schema: schema)
+        let summary = EvaluationMetrics.summarize(records, schema: schema, tier: tier)
         #expect(summary.validJSON == examples.count)
         #expect(summary.schemaValid == examples.count)
         #expect(summary.fullyCorrect == examples.count)
@@ -58,30 +59,41 @@ struct OracleTests {
         #expect(summary.fenced == 0)
         #expect(summary.exactCopies == summary.exactCopiesComparable)
         #expect(summary.exactCopiesComparable > 0)
+        #expect(records.allSatisfy { $0.fields.count == schema.keys(for: tier).count })
     }
 
-    @Test(arguments: OracleTests.splits)
-    func theAssistantMessageIsTheCoreOfTheSidecar(split: String) throws {
+    @Test(arguments: OracleTests.splits, OracleTests.tiers)
+    func theAssistantMessageIsTheTierOfTheSidecar(split: String, tier: FieldTier) throws {
         let schema = try DatasetFiles.schema()
-        let answers = try DatasetFiles.assistantMessages(of: split)
+        let answers = try DatasetFiles.assistantMessages(of: split, tier: tier)
         let labels = try DatasetFiles.labelLines(of: split)
         #expect(answers.count == labels.count)
         for (answer, label) in zip(answers, labels) {
-            let outcome = MetricsParser.parse(answer, schema: schema)
+            let outcome = MetricsParser.parse(answer, schema: schema, tier: tier)
             let metrics = try #require(outcome.metrics, "line \(label.line)")
-            for key in schema.coreKeys {
+            for key in schema.keys(for: tier) {
                 #expect(metrics.text(forKey: key) == (label.fields[key] ?? nil)?.text, "line \(label.line) \(key)")
             }
         }
     }
 
-    @Test func everyCoreFieldIsInEveryTestSplitAtLeastThreeTimes() throws {
+    @Test(arguments: OracleTests.tiers)
+    func everyFieldOfATierIsInTheTestSplitAtLeastThreeTimes(tier: FieldTier) throws {
         let schema = try DatasetFiles.schema()
-        let examples = try DatasetFiles.testSplit()
-        for key in schema.coreKeys {
+        let examples = try DatasetFiles.testSplit(tier: tier)
+        for key in schema.keys(for: tier) {
             let count = examples.filter { $0.expected.text(forKey: key) != nil }.count
             #expect(count >= 3, "\(key) is in only \(count) test statements")
         }
+    }
+
+    /// The two chat files of a split hold the same statements: only the prompt and the answer differ.
+    @Test(arguments: OracleTests.splits)
+    func theExtendedFileHasTheSameStatementsAsTheCoreFile(split: String) throws {
+        let core = try DatasetFiles.split(split, tier: .core)
+        let extended = try DatasetFiles.split(split, tier: .extended)
+        #expect(core.map(\.statement) == extended.map(\.statement))
+        #expect(core.map(\.scenario) == extended.map(\.scenario))
     }
 
     @Test func magnitudeFieldsAreLabelledPositive() throws {

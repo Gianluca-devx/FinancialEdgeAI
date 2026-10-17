@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct EvaluationView: View {
-    let viewModel: EvaluationViewModel
+    @Bindable var viewModel: EvaluationViewModel
 
     var body: some View {
         NavigationStack {
@@ -29,6 +29,12 @@ struct EvaluationView: View {
 
                 Section {
                     Text(viewModel.modelName)
+                    Picker("Call", selection: $viewModel.tier) {
+                        Text("Core fields").tag(FieldTier.core)
+                        Text("Balance sheet").tag(FieldTier.extended)
+                    }
+                    .pickerStyle(.segmented)
+                    .disabled(viewModel.isRunning)
                     Text("30 test statements, 3 runs each")
                         .foregroundStyle(.secondary)
 

@@ -15,11 +15,11 @@ derives from them (growth, margins, free cash flow, ratios).
 **This repository answers the first half and prepares the second.** It is a personal project without a
 deadline; it began as an academic challenge.
 
-- Done: the app, a 300-statement labelled dataset, a measuring harness that runs on the device, and two
-  **baselines of the unmodified model**: v1.1.0 (7 numeric fields) and the current schema (13 fields copied
-  as printed).
-- Next (not implemented): the second call for the balance sheet fields, then **LoRA fine-tuning** and the
-  same evaluation on the same frozen test split. See [Next steps](#next-steps).
+- Done: the app, a 300-statement labelled dataset, a measuring harness that runs on the device, the **baselines
+  of the unmodified model** (v1.1.0 with 7 numeric fields; the current schema with 13 fields copied as printed,
+  and the second call for the 5 balance sheet fields).
+- Next: **LoRA fine-tuning** and the same evaluation on the same frozen test split. See
+  [Next steps](#next-steps).
 - **The hypothesis (specialisation helps) is untested.** Nothing here shows that fine-tuning improves the
   result. It shows what there is to improve.
 
@@ -42,7 +42,7 @@ The model **copies, code calculates.** This came out of the first baseline, wher
 | Tier | Fields | When |
 |---|---|---|
 | Core (13) | `revenue`, `operatingIncome`, `netIncome`, `eps`, `interestExpense`, `operatingCashFlow`, `capex`, `previousYearRevenue`, `previousYearNetIncome`, `previousYearEps`, `revenueGrowth`, `netIncomeGrowth`, `epsGrowth` | every answer (this is what is built and measured) |
-| Extended (5) | `totalDebt`, `shareholdersEquity`, `currentAssets`, `currentLiabilities`, `cash` | a second call, on the user's request (defined in the schema and the dataset, not built yet) |
+| Extended (5) | `totalDebt`, `shareholdersEquity`, `currentAssets`, `currentLiabilities`, `cash` | a second call with its own prompt, started by the button next to the text field; it adds return on equity, debt to equity, current ratio and net debt |
 
 The decisions and their reasons are in [`Specs/`](Specs/phase-0-metrics.md).
 
@@ -71,6 +71,19 @@ statements, in four groups:
 | A previous-year field filled in although the text prints none | 19 | the previous-year *operating profit* returned as the previous-year revenue |
 | A current-period field from another period or a distractor | 12 | the free cash flow of a distractor returned as the operating cash flow |
 | A correct number written in a form the parser refuses | 3 | `$10.3 billion dollars` |
+
+### Results: the extended call (balance sheet)
+
+The second call has its own prompt and its own baseline, on the same 30 statements
+([`Results/baseline-analysis-extended.md`](Results/baseline-analysis-extended.md)):
+
+| Measure | Result |
+|---|---|
+| Answers the app can decode | **90 / 90 (100%)** |
+| **All 5 fields correct** | **78 / 90 (86.7%)** |
+| Fields correct | 438 / 450 (97.3%); four fields are 100%, `cash` is 86.7% |
+| Wrong fields | 12, all `cash`: the operating cash flow written as `cash` (9), a correct number the parser refuses (3) |
+| Time per statement / peak memory | 4.0 s / 2.59 GiB (both calls together: about 14.5 s) |
 
 ### What the iPhone costs
 
@@ -176,14 +189,18 @@ says so, instead of crashing), and a network connection on the first launch only
 2. The first launch downloads the model (about 2.3 GB). After that the app works offline.
 3. **Extract** tab: paste a statement, or tap *Sample*, then *Send*. It shows the 13 core fields (null is
    shown, a string that cannot be read is shown with a warning), what was printed under each number, the
-   values derived by code, what had to be skipped to read the answer, and what the answer cost.
+   values derived by code, what had to be skipped to read the answer, and what the answer cost. The
+   *balance sheet* button next to the text field makes the second call on the last statement and adds the five
+   balance sheet fields and the ratios that need them.
 4. **Evaluate** tab (marked *work in progress*: a development tool that measures the model, not part of the
-   final app): *Start evaluation* runs the 30 test statements three times (about an hour on the phone: 16
-   minutes of generation, the rest is cooling). The screen stays on, because iOS does not allow GPU work in
+   final app): a picker chooses the core call or the balance sheet call, and *Start evaluation* runs the 30
+   test statements three times (about an hour on the phone for the core call, 16 minutes of generation, the
+   rest is cooling; about 17 minutes for the balance sheet call). The screen stays on, because iOS does not allow GPU work in
    the background and MLX stops the app if it is attempted. *Share* exports the full JSON report.
 5. Without touching the phone (it must be unlocked when the app starts): launch the installed app from the
    command line with `xcrun devicectl device process launch --device <id> --console
-   GianlucaPascarella.Dev.FinancialEdgeAI -- -autoRunEvaluation YES`, then copy the report from the app's
+   GianlucaPascarella.Dev.FinancialEdgeAI -- -autoRunEvaluation YES` (add `-evaluationTier extended` for the
+   balance sheet call), then copy the report from the app's
    `Documents` folder with `xcrun devicectl device copy from --domain-type appDataContainer ...`.
 6. `python3 Scripts/summarize_results.py <report.json>` prints the tables and every failing statement.
    `python3 Scripts/compare_baselines.py <old.json> <new.json>` puts two reports side by side.
@@ -210,23 +227,21 @@ the prompt, of the test split with its labels, and of the schema. The schema 1 b
 The research question is about a **specialised** model. This work measures the unmodified model and builds
 everything needed to measure a specialised one.
 
-1. **The extended call.** A second call with its own prompt for the five balance sheet fields, started by a
-   button next to the text field; with it, return on equity, debt to equity, current ratio and net debt can be
-   shown. It gets its own baseline.
-2. **LoRA.** Instead of changing all the weights, LoRA freezes them and learns a small correction next to some
+1. **LoRA.** Instead of changing all the weights, LoRA freezes them and learns a small correction next to some
    of the weight matrices: two thin matrices `A` and `B` whose product has the shape of the original matrix,
    so `output = W x + scale * B (A x)`. For a 2048 x 2048 matrix, rank 8 is 32,768 trained numbers instead of
    4,194,304 (0.8%). Train on `Dataset/train.jsonl`, watch the loss on `Dataset/valid.jsonl`, load the adapted
    model in the app, and run the **same** evaluation on the **same** frozen test split with the same seeds.
    Report the cost too: adapter size, memory, speed on the iPhone.
-3. **The targets are concrete** and come from the baseline above: do not calculate a growth, do not fill a
+2. **The targets are concrete** and come from the baselines above: do not calculate a growth, do not fill a
    previous-year field that the text does not state, do not take a value of the wrong period or from a
-   distractor. Success criteria are set before training: fewer of these errors, no loss on the fields that
+   distractor, do not take a cash flow for the cash balance. Success criteria are set before training
+   ([`Specs/phase-2-lora.md`](Specs/phase-2-lora.md)): fewer of these errors, no loss on the fields that
    are already right, and a usable speed. A mixed or negative result is a valid result.
-4. **Before that, three small things to look at,** each a new experiment with its own baseline: the parser
-   could accept `$10.3 billion dollars`, a growth returned by the model could be checked against the two
+3. **Three small things to look at,** each a new experiment with its own baseline: the parser
+   could accept `$10.3 billion dollars` (seen in both calls), a growth returned by the model could be checked against the two
    amounts, and the prompt could say in words that a previous-year field stays null when only the current
-   value is given.
+   value is given, and a sentence of the balance sheet prompt could say that a cash flow is not the cash.
 
 **Practical points.** `mlx-swift-lm` has a Swift LoRA trainer (`LoRATrain`), but its data loader reads
 `{"text": ...}` lines, while the dataset uses the chat `messages` format that the Python tool `mlx_lm.lora`

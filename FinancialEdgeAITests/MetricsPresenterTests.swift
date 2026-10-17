@@ -93,6 +93,59 @@ struct MetricsPresenterTests {
         #expect(row("interestCoverage")?.value == "null")
     }
 
+    // MARK: - The balance sheet (extended call)
+
+    @Test func everyExtendedKeyHasARowInTheOrderOfTheSchema() {
+        let rows = MetricsPresenter.extendedRows(metrics([:]), schema: schema, locale: english)
+        #expect(rows.map(\.id) == schema.extendedKeys)
+        #expect(rows.map(\.label) == schema.extendedFields.map(\.label))
+        #expect(rows.allSatisfy { $0.value == "null" && $0.note == nil && !$0.isWarning })
+    }
+
+    @Test func anExtendedRowShowsTheNumberAndWhatWasPrinted() {
+        let rows = MetricsPresenter.extendedRows(
+            metrics(["totalDebt": "$12.5 billion", "cash": "4,200 million dollars"]), schema: schema, locale: english)
+        #expect(rows.first { $0.id == "totalDebt" }?.value == "$12.5 bn")
+        #expect(rows.first { $0.id == "totalDebt" }?.note == "printed: $12.5 billion")
+        #expect(rows.first { $0.id == "cash" }?.value == "$4.2 bn")
+        #expect(rows.first { $0.id == "currentAssets" }?.value == "null")
+    }
+
+    @Test func anUnreadableExtendedStringIsShownWithAWarning() {
+        let rows = MetricsPresenter.extendedRows(
+            metrics(["cash": "a lot", "shareholdersEquity": "$30 billion"]), schema: schema, locale: english)
+        let cash = rows.first { $0.id == "cash" }
+        #expect(cash?.value == "a lot")
+        #expect(cash?.isWarning == true)
+        #expect(rows.first { $0.id == "shareholdersEquity" }?.value == "$30 bn")
+        #expect(rows.count == schema.extendedKeys.count)
+    }
+
+    @Test func theRatiosThatNeedTheBalanceSheetAppearWhenTheExtendedCallWasMade() throws {
+        let both = metrics(["netIncome": "$5 billion", "totalDebt": "$30 billion", "shareholdersEquity": "$40 billion",
+                            "currentAssets": "$15 billion", "currentLiabilities": "$10 billion", "cash": "$12 billion"])
+        let rows = MetricsPresenter.derivedRows(both, schema: schema, includeExtended: true, locale: english)
+        func row(_ id: String) -> MetricRow? { rows.first { $0.id == id } }
+        for id in ["roe", "debtToEquity", "currentRatio", "netDebt"] {
+            #expect(row(id) != nil, "\(id) must be listed")
+        }
+        #expect(row("roe")?.value == "12.5%")
+        #expect(row("debtToEquity")?.value == "0.75")
+        #expect(row("currentRatio")?.value == "1.5")
+        #expect(row("netDebt")?.value == "$18 bn")
+        #expect(row("netDebt")?.note == "derived")
+        // Without the flag the same metrics still hide them.
+        let without = MetricsPresenter.derivedRows(both, schema: schema, locale: english)
+        #expect(without.map(\.id).contains("roe") == false)
+    }
+
+    @Test func aRatioWithAMissingInputIsNullNotHiddenOnceTheBalanceSheetWasAsked() {
+        let onlyDebt = metrics(["totalDebt": "$30 billion"])
+        let rows = MetricsPresenter.derivedRows(onlyDebt, schema: schema, includeExtended: true, locale: english)
+        #expect(rows.first { $0.id == "debtToEquity" }?.value == "null")
+        #expect(rows.first { $0.id == "netDebt" }?.value == "null")
+    }
+
     // MARK: - Formatting
 
     @Test func valuesAreFormattedByTheirKind() {

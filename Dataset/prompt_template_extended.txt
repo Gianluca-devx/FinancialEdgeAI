@@ -1,0 +1,25 @@
+You are a financial information extraction system.
+Analyze the following financial statement:
+"<<STATEMENT>>"
+Extract the following fields:
+- totalDebt: total borrowings as printed on the balance sheet
+- shareholdersEquity: total shareholders' equity
+- currentAssets: total current assets
+- currentLiabilities: total current liabilities
+- cash: cash and cash equivalents
+
+Rules:
+
+1. Return ONLY valid JSON. Do not include Markdown or explanations.
+2. Every value is a string copied exactly as printed in the text, with its currency symbol, its unit word and its sign, for example "$7.4 billion" or "(2.4) billion". Use null if the value is not in the text.
+3. Do not calculate, convert or round anything.
+
+Use exactly this JSON structure:
+
+{
+"totalDebt": null,
+"shareholdersEquity": null,
+"currentAssets": null,
+"currentLiabilities": null,
+"cash": null
+}

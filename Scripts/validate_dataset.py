@@ -6,6 +6,8 @@ schema renders, and, for every line of train/valid/test.jsonl:
   - valid JSON with a system, user and assistant message
   - the user message is the prompt template around one statement
   - the assistant message is JSON with exactly the core keys of the schema, each a string or null
+  - the same line of <split>.extended.jsonl has the same statement in the extended prompt, and an
+    assistant message with exactly the extended keys, equal to the sidecar
   - the sidecar line in <split>.labels.jsonl has all 18 fields, each null or {"text", "value"},
     and the core texts are the ones of the assistant message
   - every non-null text is grounded: it appears verbatim in the statement (a decrease may add a
@@ -30,7 +32,8 @@ ROOT = Path(__file__).resolve().parent.parent
 DATASET = ROOT / "Dataset"
 BUNDLE = ROOT / "FinancialEdgeAI" / "Resources"
 # Files that the app bundles; the copy must never drift from Dataset/.
-BUNDLED = ["prompt_template.txt", "system_prompt.txt", "test.jsonl", "test.labels.jsonl", "index.csv", "schema.json"]
+BUNDLED = ["prompt_template.txt", "prompt_template_extended.txt", "system_prompt.txt", "test.jsonl",
+           "test.extended.jsonl", "test.labels.jsonl", "index.csv", "schema.json"]
 SPLITS = ("train", "valid", "test")
 
 
@@ -66,10 +69,10 @@ def check_schema():
     return problems, schema
 
 
-def check_prompt(template, schema):
+def check_prompt(template, schema, tier="core", name="prompt_template.txt"):
     """The prompt must be exactly what the schema renders, so the field list cannot drift."""
-    if template != render_prompt(schema).rstrip("\n"):
-        return ["prompt_template.txt differs from what Dataset/schema.json renders "
+    if template != render_prompt(schema, tier).rstrip("\n"):
+        return [f"{name} differs from what Dataset/schema.json renders "
                 "(python3 Scripts/prompt_from_schema.py --write)"]
     return []
 
@@ -85,11 +88,15 @@ def main():
         sys.exit(1)
     template = (DATASET / "prompt_template.txt").read_text().rstrip("\n")
     errors += check_prompt(template, schema)
+    extended_template = (DATASET / "prompt_template_extended.txt").read_text().rstrip("\n")
+    errors += check_prompt(extended_template, schema, "extended", "prompt_template_extended.txt")
     prefix, suffix = template.split("<<STATEMENT>>")
+    ext_prefix, ext_suffix = extended_template.split("<<STATEMENT>>")
     system = (DATASET / "system_prompt.txt").read_text().strip()
     kinds = {f["key"]: f["kind"] for f in schema["fields"]}
     all_keys = list(kinds)
     core_keys = [f["key"] for f in schema["fields"] if f["tier"] == "core"]
+    extended_keys = [f["key"] for f in schema["fields"] if f["tier"] == "extended"]
     seen = {}
     counts = {}
     non_null = {split: Counter() for split in SPLITS}
@@ -97,11 +104,13 @@ def main():
     for split in SPLITS:
         chat_lines = (DATASET / f"{split}.jsonl").read_text().splitlines()
         side_lines = (DATASET / f"{split}.labels.jsonl").read_text().splitlines()
+        ext_lines = (DATASET / f"{split}.extended.jsonl").read_text().splitlines()
         counts[split] = len(chat_lines)
-        if len(side_lines) != len(chat_lines):
-            errors.append(f"{split}.labels.jsonl has {len(side_lines)} lines, {split}.jsonl has {len(chat_lines)}")
+        if len(side_lines) != len(chat_lines) or len(ext_lines) != len(chat_lines):
+            errors.append(f"{split}: {len(chat_lines)} statements, {len(side_lines)} label lines, "
+                          f"{len(ext_lines)} extended lines")
             continue
-        for n, (raw, side_raw) in enumerate(zip(chat_lines, side_lines), start=1):
+        for n, (raw, side_raw, ext_raw) in enumerate(zip(chat_lines, side_lines, ext_lines), start=1):
             where = f"{split}.jsonl:{n}"
             try:
                 messages = json.loads(raw)["messages"]
@@ -154,6 +163,28 @@ def main():
                     errors.append(f"{where}: {key}={text!r} does not appear in the statement")
                 if key not in label and key in core_keys:
                     errors.append(f"{where}: {key} is missing from the assistant message")
+
+            # The extended file: the same statement, the extended prompt, the extended fields.
+            ext_where = f"{split}.extended.jsonl:{n}"
+            try:
+                ext_messages = json.loads(ext_raw)["messages"]
+                ext_user, ext_assistant = ext_messages[1]["content"], ext_messages[2]["content"]
+                ext_label = json.loads(ext_assistant)
+            except (ValueError, KeyError, TypeError, IndexError) as e:
+                errors.append(f"{ext_where}: unreadable ({e})")
+                continue
+            if [m["role"] for m in ext_messages] != ["system", "user", "assistant"] or ext_messages[0]["content"] != system:
+                errors.append(f"{ext_where}: roles or system message are wrong")
+            if not (ext_user.startswith(ext_prefix) and ext_user.endswith(ext_suffix)) \
+                    or ext_user[len(ext_prefix):len(ext_user) - len(ext_suffix)] != statement:
+                errors.append(f"{ext_where}: not the extended prompt around the statement of {where}")
+            if list(ext_label) != extended_keys:
+                errors.append(f"{ext_where}: assistant keys are {list(ext_label)}")
+            else:
+                for key in extended_keys:
+                    entry = side["fields"][key]
+                    if ext_label[key] != (entry["text"] if entry else None):
+                        errors.append(f"{ext_where}: {key} is {ext_label[key]!r}, the sidecar has {entry!r}")
 
     for name in BUNDLED:
         copy = BUNDLE / name

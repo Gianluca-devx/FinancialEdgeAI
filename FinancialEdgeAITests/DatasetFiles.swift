@@ -27,29 +27,37 @@ enum DatasetFiles {
         try Schema(data: Data(contentsOf: url("Dataset/schema.json")))
     }
 
-    static func promptTemplate() throws -> PromptTemplate {
-        let text = try text("Dataset/prompt_template.txt").trimmingCharacters(in: .whitespacesAndNewlines)
+    /// The prompt of the core call or of the extended call.
+    static func promptTemplate(tier: FieldTier = .core) throws -> PromptTemplate {
+        let file = tier == .core ? "prompt_template.txt" : "prompt_template_extended.txt"
+        let text = try text("Dataset/\(file)").trimmingCharacters(in: .whitespacesAndNewlines)
         guard let template = PromptTemplate(text: text) else { throw DatasetError.invalidTemplate }
         return template
     }
 
-    /// A whole split with its labels: `train`, `valid` or `test`.
-    static func split(_ name: String) throws -> [ExtractionExample] {
-        try DatasetLoader.parse(
-            jsonl: text("Dataset/\(name).jsonl"),
-            labelsJSONL: text("Dataset/\(name).labels.jsonl"),
-            indexCSV: text("Dataset/index.csv"),
-            template: promptTemplate(),
-            schema: schema(),
-            split: name)
+    /// The chat file of a split for a tier: `test.jsonl` or `test.extended.jsonl`.
+    static func chatFile(_ split: String, tier: FieldTier) -> String {
+        tier == .core ? "Dataset/\(split).jsonl" : "Dataset/\(split).extended.jsonl"
     }
 
-    static func testSplit() throws -> [ExtractionExample] {
-        try split("test")
+    /// A whole split with its labels: `train`, `valid` or `test`, for the core call or the extended call.
+    static func split(_ name: String, tier: FieldTier = .core) throws -> [ExtractionExample] {
+        try DatasetLoader.parse(
+            jsonl: text(chatFile(name, tier: tier)),
+            labelsJSONL: text("Dataset/\(name).labels.jsonl"),
+            indexCSV: text("Dataset/index.csv"),
+            template: promptTemplate(tier: tier),
+            schema: schema(),
+            split: name,
+            tier: tier)
+    }
+
+    static func testSplit(tier: FieldTier = .core) throws -> [ExtractionExample] {
+        try split("test", tier: tier)
     }
 
     /// The raw JSON of every assistant message of a split, one per line of the file.
-    static func assistantMessages(of split: String) throws -> [String] {
+    static func assistantMessages(of split: String, tier: FieldTier = .core) throws -> [String] {
         struct Line: Decodable {
             struct Message: Decodable {
                 let role: String
@@ -57,7 +65,7 @@ enum DatasetFiles {
             }
             let messages: [Message]
         }
-        return try text("Dataset/\(split).jsonl").split(separator: "\n").map { line in
+        return try text(chatFile(split, tier: tier)).split(separator: "\n").map { line in
             let decoded = try JSONDecoder().decode(Line.self, from: Data(line.utf8))
             return decoded.messages.first { $0.role == "assistant" }?.content ?? ""
         }

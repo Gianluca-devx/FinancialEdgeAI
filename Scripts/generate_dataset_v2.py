@@ -249,11 +249,13 @@ def be(plural):
     return "were" if plural else "was"
 
 
-def clause(name, plural, M, up, P, R, rng, split, py):
+def clause(name, plural, M, up, P, R, rng, split, py, has_year):
     """A prose clause about a metric: M printed amount, P printed percent (direction `up`), R printed previous amount."""
     verb = word(UP if up else DOWN, split, rng) if P else None
     w, noun = ("up", "increase") if up else ("down", "decrease")
-    prior = word(PRIOR, split, rng).format(py=py)
+    # A previous period named by its year ("in 2022") is only clear when the statement names the current year.
+    options = [t for pool in SPLIT_POOLS[split] for t in PRIOR[pool] if has_year or "{py}" not in t]
+    prior = rng.choice(options).format(py=py)
     last = SPLIT_POOLS[split][-1] if rng.random() < 0.7 else SPLIT_POOLS[split][0]
     noun = rng.choice(GROWTH_NOUN[last])[0 if up else 1].format(P=P) if P else None
     cmps = GROWTH_CMP[last] or GROWTH_CMP[SPLIT_POOLS[split][-1]]
@@ -452,7 +454,7 @@ def render_style(style, split, rng, metrics, singles, extras, year, py, co, f):
             if M is None and P is None and R is None:
                 continue
             name, plural = name_for(key, split, rng)
-            text = clause(name, plural, M, up, P, R, rng, split, py)
+            text = clause(name, plural, M, up, P, R, rng, split, py, intro is not None)
             if style == "we" and text.lower().startswith(name.lower()):
                 text = "our " + lower_first(text)
             if style == "group":
@@ -509,7 +511,7 @@ def render_style(style, split, rng, metrics, singles, extras, year, py, co, f):
         return "\n".join(out)
 
     if style == "heading":
-        out = [rng.choice(["Results of operations", "Financial highlights", "Summary of results"]) + ":"]
+        out = [rng.choice(["Results of operations", "Financial highlights", "Summary of results"]) + f", fiscal {year}:"]
         for key, M, P, R, up in rows:
             if not (M or P or R):
                 continue

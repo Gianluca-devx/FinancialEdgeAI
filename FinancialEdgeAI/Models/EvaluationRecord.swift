@@ -116,6 +116,9 @@ struct EvaluationReport: Codable, Sendable {
         let tier: String
         /// The keys that were asked and judged, in order.
         let keys: [String]
+        /// The LoRA adapter that was on the model during the run, with the hashes of its files; nil for the
+        /// base model (the key is then absent from the report).
+        let adapter: AdapterInfo?
         /// Seconds the model took to load (the first load includes the download).
         let modelLoadSeconds: Double?
     }

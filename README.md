@@ -12,16 +12,18 @@ The input is a sentence like *"Net income was $21 billion, down 4% from $21.9 bi
 The output is a set of fields copied from the text, read by code into numbers, and a few values that code
 derives from them (growth, margins, free cash flow, ratios).
 
-**This repository answers the first half and prepares the second.** It is a personal project without a
-deadline; it began as an academic challenge.
+**This repository measures both halves: the unmodified model and a specialised one.** It is a personal project
+without a deadline; it began as an academic challenge.
 
 - Done: the app, a 300-statement labelled dataset, a measuring harness that runs on the device, the **baselines
   of the unmodified model** (v1.1.0 with 7 numeric fields; the current schema with 13 fields copied as printed,
   and the second call for the 5 balance sheet fields).
-- Next: **LoRA fine-tuning** and the same evaluation on the same frozen test split. See
+- Done: a **LoRA adapter** for the 13 core fields, trained on the Mac, loaded by the app and evaluated on the
+  same frozen test split, with the same prompt, seeds and phone.
+- **The hypothesis (specialisation helps) is partly confirmed.** The adapter raised the fully correct answers from
+  57 / 90 to 78 / 90 and removed every error of the baseline, but it also made the model answer null for wording
+  it had never seen (15 missed values). See [the LoRA results](#results-the-lora-adapter) and
   [Next steps](#next-steps).
-- **The hypothesis (specialisation helps) is untested.** Nothing here shows that fine-tuning improves the
-  result. It shows what there is to improve.
 
 ## How the extraction is designed
 
@@ -84,6 +86,31 @@ The second call has its own prompt and its own baseline, on the same 30 statemen
 | Fields correct | 438 / 450 (97.3%); four fields are 100%, `cash` is 86.7% |
 | Wrong fields | 12, all `cash`: the operating cash flow written as `cash` (9), a correct number the parser refuses (3) |
 | Time per statement / peak memory | 4.0 s / 2.59 GiB (both calls together: about 14.5 s) |
+
+### Results: the LoRA adapter
+
+The adapter `lora-v1` (rank 8 on the last 16 layers, 7.3 M trained numbers, a 29.4 MB file) was trained on the 240
+train statements and evaluated like the baseline: the same prompt, the same 30 test statements, three runs, the
+same phone ([`Results/lora-v1-analysis.md`](Results/lora-v1-analysis.md), side by side:
+[`Results/comparison-schema1-vs-lora-v1.md`](Results/comparison-schema1-vs-lora-v1.md)). The success criteria were
+written before training ([`Specs/phase-2-lora.md`](Specs/phase-2-lora.md)).
+
+| Measure | Baseline | With the adapter |
+|---|---|---|
+| Answers the app can decode | 90 / 90 | 90 / 90 |
+| **All 13 fields correct** | 57 / 90 (63.3%) | **78 / 90 (86.7%)** |
+| Fields correct | 1115 / 1170 (95.3%) | 1155 / 1170 (98.7%) |
+| Fields hallucinated or refused by the parser | 55 | **0** |
+| Fields **missed** (null where the text gives a value) | 0 | **15** |
+| Time per statement / peak memory | 10.5 s / 2.72 GiB | 11.6 s / 2.86 GiB |
+
+Criteria 1 (at least 68 / 90), 2 (at most 28 wrong fields) and 4 (at most 12 s, at most 3.0 GiB) are met;
+**criterion 3 (no loss on what is right) is not**: all 15 missed values are in 4 statements whose wording
+("net earnings", "cash generated from operations", "net sales a year earlier", "year-over-year growth") is in none
+of the 270 training statements. The adapter learned that a null is the safe answer, and that is wrong for new
+wording. On wording not in the training data (12 statements) the gain is smaller than on seen wording (58.3% to
+75.0%, against 66.7% to 94.4%). The test split comes from the same generator as the train split: this is an
+indication, not a measure, and no real report was tested.
 
 ### What the iPhone costs
 
@@ -173,11 +200,12 @@ FinancialEdgeAI/                 Xcode app target (Swift, SwiftUI, MLX)
 ├── ViewModel/  ChatViewModel, EvaluationViewModel, MetricsPresenter
 ├── Views/      ContentView (Extract), EvaluationView (Evaluate, work in progress)
 └── Resources/  schema, prompt files and test split (bundled copies, checked for drift)
-FinancialEdgeAITests/            Swift Testing, 173 tests
+FinancialEdgeAITests/            Swift Testing, 218 tests
 Dataset/                         300 labelled statements, schema.json, the prompt, labels, archive/v1.1.0
 Scripts/                         generate and validate the dataset, render the prompt, summarise and compare reports
-Results/                         model gate, both baselines (reports, tables, analysis), their comparison
-Specs/                           the written specs of each phase (metrics, schema and prompt experiment)
+Scripts/lora/                    LoRA training: data check, config, run record (needs mlx-lm; weights never committed)
+Results/                         model gate, the baselines and the LoRA run (reports, tables, analysis), comparisons
+Specs/                           the written specs of each phase (metrics, schema, extended call, LoRA)
 ```
 
 ## Run it
@@ -202,7 +230,11 @@ says so, instead of crashing), and a network connection on the first launch only
    GianlucaPascarella.Dev.FinancialEdgeAI -- -autoRunEvaluation YES` (add `-evaluationTier extended` for the
    balance sheet call), then copy the report from the app's
    `Documents` folder with `xcrun devicectl device copy from --domain-type appDataContainer ...`.
-6. `python3 Scripts/summarize_results.py <report.json>` prints the tables and every failing statement.
+6. With an adapter: copy the folder (`adapter_config.json`, `adapters.safetensors`) to the app's
+   `Documents/Adapters/<name>` with `xcrun devicectl device copy to`, and add `-adapterName <name>` to the launch
+   arguments. The screen and the report say which adapter is on; if it cannot be loaded the load fails (the app never
+   runs the base model while saying "adapter"). Training: [`Scripts/lora/README.md`](Scripts/lora/README.md).
+7. `python3 Scripts/summarize_results.py <report.json>` prints the tables and every failing statement.
    `python3 Scripts/compare_baselines.py <old.json> <new.json>` puts two reports side by side.
 
 ```
@@ -224,29 +256,29 @@ the prompt, of the test split with its labels, and of the schema. The schema 1 b
 
 ## Next steps
 
-The research question is about a **specialised** model. This work measures the unmodified model and builds
-everything needed to measure a specialised one.
+The first LoRA run improved the answers on the wording it was trained on and left a new error on new wording.
+What to do next, each a new experiment with its own comparison:
 
-1. **LoRA.** Instead of changing all the weights, LoRA freezes them and learns a small correction next to some
-   of the weight matrices: two thin matrices `A` and `B` whose product has the shape of the original matrix,
-   so `output = W x + scale * B (A x)`. For a 2048 x 2048 matrix, rank 8 is 32,768 trained numbers instead of
-   4,194,304 (0.8%). Train on `Dataset/train.jsonl`, watch the loss on `Dataset/valid.jsonl`, load the adapted
-   model in the app, and run the **same** evaluation on the **same** frozen test split with the same seeds.
-   Report the cost too: adapter size, memory, speed on the iPhone.
-2. **The targets are concrete** and come from the baselines above: do not calculate a growth, do not fill a
-   previous-year field that the text does not state, do not take a value of the wrong period or from a
-   distractor, do not take a cash flow for the cash balance. Success criteria are set before training
-   ([`Specs/phase-2-lora.md`](Specs/phase-2-lora.md)): fewer of these errors, no loss on the fields that
-   are already right, and a usable speed. A mixed or negative result is a valid result.
-3. **Three small things to look at,** each a new experiment with its own baseline: the parser
-   could accept `$10.3 billion dollars` (seen in both calls), a growth returned by the model could be checked against the two
+1. **More varied training data.** The four statements the adapter fails use wording that is in no training
+   statement. Add synonyms (net earnings, cash generated from operations, "a year earlier" forms, year-over-year
+   growth) and hand-written statements to the train split, and test on a split with real reports. The dataset
+   changes, so it is a new experiment, not a silent change.
+2. **Other checkpoints and a lower learning rate.** The validation loss was already 0.002 at iteration 50, and
+   the validation split has the same wording as the train split, so it cannot show overfitting to the templates.
+   Evaluate the checkpoints of iterations 50 and 100, and other seeds.
+3. **Make a missed value visible.** The app shows an empty field for a null; it cannot be told from a
+   statement that does not give the value. A check of the text for the number would turn a silent miss into a warning.
+4. **An adapter for the balance sheet call** (the operating cash flow is not the cash balance).
+5. **Three small things to look at,** each a new experiment with its own baseline: the parser could accept
+   `$10.3 billion dollars` (seen in both calls), a growth returned by the model could be checked against the two
    amounts, and the prompt could say in words that a previous-year field stays null when only the current
-   value is given, and a sentence of the balance sheet prompt could say that a cash flow is not the cash.
+   value is given.
 
-**Practical points.** `mlx-swift-lm` has a Swift LoRA trainer (`LoRATrain`), but its data loader reads
-`{"text": ...}` lines, while the dataset uses the chat `messages` format that the Python tool `mlx_lm.lora`
-reads directly: either that tool is used, or the dataset is converted. An adapter only works with the base
-model it was trained on. Weights and adapters must not be committed (`.gitignore` excludes them).
+**Practical points.** The adapter was trained with the Python tool `mlx_lm.lora`, which reads the chat `messages`
+format of the dataset directly (the Swift trainer `LoRATrain` reads `{"text": ...}` lines). An adapter only works
+with the base model it was trained on, and it runs unfused in the app (about 10% slower per answer). Weights and
+adapters are not committed (`.gitignore` excludes them): the config, the data and the run record
+([`Scripts/lora/runs/lora-v1.md`](Scripts/lora/runs/lora-v1.md)) are.
 
 **Other next steps.** A Release build for the speed numbers, real reports instead of synthetic statements,
 a larger test split, the overview and business sections of a report, PDF input, a comparison with a smaller

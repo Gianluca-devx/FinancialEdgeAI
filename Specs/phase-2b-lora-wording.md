@@ -168,6 +168,9 @@ committed (`/RealSet/` is git-ignored); this rule and `Scripts/real_set.py` are.
 1. **Text:** `pdftotext` (reading order, no page breaks), lines joined into paragraphs at blank lines.
 2. **Region:** from the end of "Item 7. Management's Discussion and Analysis" (its second occurrence, the first is the
    table of contents) to "Item 7A"; the whole document if it is not found.
+   *Amendment, 2026-10-17, before any passage was read:* the first run of the script found no candidate for 5 of the 17
+   filings, because only one "Item 7" heading was found (the table of contents entry) and the region was tiny. From
+   counts alone, and not from any text: if the region has no candidate of a kind, the whole document is used for that kind.
 3. **Candidate paragraph with fields:** 40 to 160 words; at least 2 sentences; at least 80% of its characters are letters
    or spaces (prose, not a table); at least one amount with its unit word in the text (`$` + number +
    million/billion/thousand); at least one core keyword (revenue, net sales, net income, net earnings, operating income,

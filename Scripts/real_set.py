@@ -88,9 +88,15 @@ def has_keyword(paragraph):
 
 
 def candidates(text):
-    body = region(text)
-    fields = [p for p in paragraphs(body) if shape(p) and AMOUNT.search(p) and has_keyword(p)]
-    nones = [p for p in paragraphs(body) if shape(p) and re.search(r"\d", p) and not has_keyword(p)]
+    """Paragraphs of the region; if the region has none of a kind (its heading was not found properly), the whole text."""
+    def of(body):
+        fields = [p for p in paragraphs(body) if shape(p) and AMOUNT.search(p) and has_keyword(p)]
+        nones = [p for p in paragraphs(body) if shape(p) and re.search(r"\d", p) and not has_keyword(p)]
+        return fields, nones
+    fields, nones = of(region(text))
+    if not fields or not nones:
+        whole_fields, whole_nones = of(text)
+        fields, nones = fields or whole_fields, nones or whole_nones
     return fields, nones
 
 

@@ -159,3 +159,31 @@ A pure Swift check "amounts in the text that no field used" (for example "1 amou
 field: $11.6 billion"), shown as a warning row. It is code, so it is measured without the phone: on every statement
 of the dataset with the true labels as the answer (false alarms: the distractor sentences) and with one label
 blanked (how many misses it flags). It touches neither the prompt, the dataset nor the evaluation code.
+
+## D28: the selection rule of the real-style set (written and committed before any passage was chosen or read)
+
+The 17 annual reports (SEC Form 10-K, English, with a text layer) are in `~/Downloads/Reports`. Nothing from them is
+committed (`/RealSet/` is git-ignored); this rule and `Scripts/real_set.py` are.
+
+1. **Text:** `pdftotext` (reading order, no page breaks), lines joined into paragraphs at blank lines.
+2. **Region:** from the end of "Item 7. Management's Discussion and Analysis" (its second occurrence, the first is the
+   table of contents) to "Item 7A"; the whole document if it is not found.
+3. **Candidate paragraph with fields:** 40 to 160 words; at least 2 sentences; at least 80% of its characters are letters
+   or spaces (prose, not a table); at least one amount with its unit word in the text (`$` + number +
+   million/billion/thousand); at least one core keyword (revenue, net sales, net income, net earnings, operating income,
+   income from operations, operating profit, earnings per share, cash provided by operating, capital expenditures,
+   interest expense).
+4. **Choice:** one candidate per filing, drawn uniformly at random with a seeded generator (seed 20261017) from the
+   candidates in order of position. Never chosen by reading.
+5. **Passages with no field:** for 5 of the 17 filings (drawn with the same generator), one more paragraph of the same
+   length and prose test that contains a digit and **none** of the core keywords, drawn uniformly. They test the nulls.
+6. **Length:** a paragraph with more than 6 sentences is cut after the sixth, at a sentence boundary; the words are never
+   edited.
+7. **Labels:** by me, from the passage text only, by the dataset's rules (the string as printed; a decrease gets a leading
+   minus; null if the passage does not state the field; never calculated; never from what I know of the company).
+   The user spot-checks 5. Until then the set's results are marked **provisional**.
+8. **Not changed afterwards:** once the set is frozen (hash recorded), no label or passage is edited to make a result
+   look better. A label error found later is fixed, announced, and every run on the set is re-judged (the judging is
+   pure, the answers are in the report).
+9. **What is committed:** counts, hashes and rates only; no passage, no failing-statement listing, no per-statement
+   table of the real-style set.

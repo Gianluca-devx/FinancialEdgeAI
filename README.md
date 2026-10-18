@@ -20,9 +20,12 @@ without a deadline; it began as an academic challenge.
   and the second call for the 5 balance sheet fields).
 - Done: a **LoRA adapter** for the 13 core fields, trained on the Mac, loaded by the app and evaluated on the
   same frozen test split, with the same prompt, seeds and phone.
-- **The hypothesis (specialisation helps) is partly confirmed.** The adapter raised the fully correct answers from
-  57 / 90 to 78 / 90 and removed every error of the baseline, but it also made the model answer null for wording
-  it had never seen (15 missed values). See [the LoRA results](#results-the-lora-adapter) and
+- **The hypothesis (specialisation helps) is confirmed on short synthetic statements, and not yet on real text.** The
+  first adapter raised the fully correct answers from 57 / 90 to 78 / 90 but made the model answer null for wording it had
+  never seen (15 missed values). A second adapter, trained on data with several names for every metric, reaches
+  85 / 90 on the same test with no missed value, and 77 / 90 against 34 / 90 on a second test of new wording. On
+  text from real annual reports it is no better than the unmodified model. See
+  [the LoRA results](#results-the-lora-adapter), [lora-v2](#results-more-varied-training-data-lora-v2) and
   [Next steps](#next-steps).
 
 ## How the extraction is designed
@@ -112,6 +115,36 @@ wording. On wording not in the training data (12 statements) the gain is smaller
 75.0%, against 66.7% to 94.4%). The test split comes from the same generator as the train split: this is an
 indication, not a measure, and no real report was tested.
 
+### Results: more varied training data (lora-v2)
+
+The first adapter missed values whenever the wording was not in its training data: the training statements had one phrase for
+net income ("net income": 167 statements; "net earnings" and "net profit": none), and three fields were stated in only
+10% to 12% of them. The second adapter (`lora-v2`) is trained on a new dataset (`Dataset/v2`): several names for every
+metric, other structures, every field in at least a quarter of the statements, and a validation split whose wording is held out of
+training. The method and hyperparameters are those of `lora-v1`; the stop of the training is decided by a program written
+beforehand ([`Scripts/lora/stop_rule.py`](Scripts/lora/stop_rule.py)). The criteria were written before training
+([`Specs/phase-2b-lora-wording.md`](Specs/phase-2b-lora-wording.md)); the analysis is
+[`Results/lora-v2-analysis.md`](Results/lora-v2-analysis.md).
+
+| Fully correct answers | Unmodified | `lora-v1` | `lora-v2` |
+|---|---|---|---|
+| The frozen test (30 statements x 3 runs) | 57 / 90 | 78 / 90 | **85 / 90** |
+| Missed values on it | 0 | 15 | **0** |
+| Wording not in training (pool B, 36 answers) | 21 / 36 | 27 / 36 | **34 / 36** |
+| **Test 2** (30 new statements, new wording and structures) | 34 / 90 | 48 / 90 | **77 / 90** |
+| Missed values on it | 9 | 56 | **6** |
+
+All the accuracy criteria of the spec are met, on the frozen test and on test 2. **One practical criterion is missed, by
+6 milliseconds**: the median time per statement is 12.006 s against a limit of 12 s (the first run of each evaluation is slower; the
+other two are 10.7 s and 10.8 s). Memory is 2.86 GiB, thermal state "serious".
+
+**Real text is another matter.** On passages from 17 real annual reports (not in the repository: only counts are published, labels
+provisional) the adapters help on passages that are mostly distractors for `lora-v1` and not for `lora-v2`, and neither beats the
+unmodified model on passages with headline statements. One passage makes both adapters write a garbled key (`previous6YearEps`,
+`previous5000`): valid JSON that cannot be used, 3 answers in each set; the unmodified model never does this. The
+synthetic result is real and replicated on two sets; the real-text result is a warning that the synthetic task is easier than the real
+one. See [`Results/phase-2b-references.md`](Results/phase-2b-references.md).
+
 ### What the iPhone costs
 
 | | v1.1.0 (7 numbers) | Schema version 1 (13 strings) |
@@ -200,7 +233,7 @@ FinancialEdgeAI/                 Xcode app target (Swift, SwiftUI, MLX)
 ├── ViewModel/  ChatViewModel, EvaluationViewModel, MetricsPresenter
 ├── Views/      ContentView (Extract), EvaluationView (Evaluate, work in progress)
 └── Resources/  schema, prompt files and test split (bundled copies, checked for drift)
-FinancialEdgeAITests/            Swift Testing, 218 tests
+FinancialEdgeAITests/            Swift Testing, 238 tests
 Dataset/                         300 labelled statements, schema.json, the prompt, labels, archive/v1.1.0
 Scripts/                         generate and validate the dataset, render the prompt, summarise and compare reports
 Scripts/lora/                    LoRA training: data check, config, run record (needs mlx-lm; weights never committed)
@@ -256,20 +289,21 @@ the prompt, of the test split with its labels, and of the schema. The schema 1 b
 
 ## Next steps
 
-The first LoRA run improved the answers on the wording it was trained on and left a new error on new wording.
-What to do next, each a new experiment with its own comparison:
+The synthetic task is solved well enough to be measured against real text, which it does not yet cover. What to do next, each a
+new experiment with its own comparison:
 
-1. **More varied training data.** The four statements the adapter fails use wording that is in no training
-   statement. Add synonyms (net earnings, cash generated from operations, "a year earlier" forms, year-over-year
-   growth) and hand-written statements to the train split, and test on a split with real reports. The dataset
-   changes, so it is a new experiment, not a silent change.
-2. **Other checkpoints and a lower learning rate.** The validation loss was already 0.002 at iteration 50, and
-   the validation split has the same wording as the train split, so it cannot show overfitting to the templates.
-   Evaluate the checkpoints of iterations 50 and 100, and other seeds.
-3. **Make a missed value visible.** The app shows an empty field for a null; it cannot be told from a
-   statement that does not give the value. A check of the text for the number would turn a silent miss into a warning.
-4. **An adapter for the balance sheet call** (the operating cash flow is not the cash balance).
-5. **Three small things to look at,** each a new experiment with its own baseline: the parser could accept
+1. **Real-text distractors in the training data.** Segment figures, changes in amount, deferred and adjusted items and cost
+   lines are what real annual reports are full of and what the training statements lack. Test on more real passages than the 31 of
+   the first attempt, and with their labels confirmed.
+2. **A schema check with one retry in the app.** The garbled key (`previous6YearEps`) is visible and cheap to catch; an undecodable
+   answer should be asked again, and counted.
+3. **Other seeds of the same training.** The checkpoints of `lora-v1` varied from 42 to 78 fully correct answers
+   ([`Results/lora-v1-checkpoints.md`](Results/lora-v1-checkpoints.md)): one run is one draw, and the result of `lora-v2`
+   (85 / 90, 77 / 90) is one draw of a better recipe.
+4. **Make a missed value visible.** The app shows an empty field for a null; it cannot be told from a statement that does not give
+   the value. A check of the text for the number would turn a silent miss into a warning.
+5. **An adapter for the balance sheet call** (the operating cash flow is not the cash balance).
+6. **Three small things to look at,** each a new experiment with its own baseline: the parser could accept
    `$10.3 billion dollars` (seen in both calls), a growth returned by the model could be checked against the two
    amounts, and the prompt could say in words that a previous-year field stays null when only the current
    value is given.
@@ -278,7 +312,7 @@ What to do next, each a new experiment with its own comparison:
 format of the dataset directly (the Swift trainer `LoRATrain` reads `{"text": ...}` lines). An adapter only works
 with the base model it was trained on, and it runs unfused in the app (about 10% slower per answer). Weights and
 adapters are not committed (`.gitignore` excludes them): the config, the data and the run record
-([`Scripts/lora/runs/lora-v1.md`](Scripts/lora/runs/lora-v1.md)) are.
+([`Scripts/lora/runs/lora-v1.md`](Scripts/lora/runs/lora-v1.md), [`lora-v2.md`](Scripts/lora/runs/lora-v2.md)) are.
 
 **Other next steps.** A Release build for the speed numbers, real reports instead of synthetic statements,
 a larger test split, the overview and business sections of a report, PDF input, a comparison with a smaller

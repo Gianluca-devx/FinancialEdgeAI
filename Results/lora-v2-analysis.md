@@ -68,10 +68,13 @@ it to make it pass.
   values did not come back as they were: 2 on the old test (baseline 33) and 14 on test 2 (baseline 75).
 - **What got worse, a little.** On the old test the 5 new wrong fields are all `previousYearNetIncome` in two statements: in
   statement 13 the model copies "19.7%" (a percentage) into the previous-year net income (unreadable), in statement 25 it writes the current
-  net earnings as the previous-year value. On test 2 there are 14 invented values, in five statements: a free cash flow ("$2.8
-  billion", a distractor) taken for the operating cash flow in all three runs; in one mixed statement the EPS written as net income and the
-  previous-year revenue written as the current revenue; a percentage written as a previous-year EPS. These are the old kinds of mistake
-  (the previous year taken for the current, a distractor taken for a field) at a much lower rate than the baseline's.
+  net earnings as the previous-year value. On test 2 there are 14 invented values, in four statements: a free cash flow ("$2.8
+  billion", a distractor) taken for the operating cash flow in all three runs (3 values); in one mixed statement the EPS written as net
+  income and the previous-year revenue written as the current revenue, in all three runs (9 values); a revenue and a net income growth
+  invented once each in two other statements (1 value each). Two more statements fail without an invented value: a percentage written as a
+  previous-year EPS (unreadable, 2 answers) and an operating income missed in all three runs (3 missed values, plus 3 more missed values in the
+  mixed statement above). These are the old kinds of mistake (the previous year taken for the current, a distractor taken for a field) at a
+  much lower rate than the baseline's.
 - **Structures.** On test 2, 0 of 12 answers fail for first-person statements and 0 of 12 for statements with headings, 1 of 12 with
   dashes, 9 of 24 for plain prose, 3 of 30 (answers) for the hand-written ones. What is left is chained prose with a distractor or a
   previous period.

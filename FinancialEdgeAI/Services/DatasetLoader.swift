@@ -11,6 +11,8 @@ enum DatasetError: LocalizedError, Equatable {
     case invalidTemplate
     case malformedLine(Int, String)
     case labelCountMismatch(statements: Int, labels: Int)
+    case unsupportedTier(set: String, tier: String)
+    case missingExternalSet(String)
 
     var errorDescription: String? {
         switch self {
@@ -19,6 +21,8 @@ enum DatasetError: LocalizedError, Equatable {
         case .malformedLine(let line, let reason): "Line \(line) of the dataset is malformed: \(reason)"
         case .labelCountMismatch(let statements, let labels):
             "The split has \(statements) statements but \(labels) label lines."
+        case .unsupportedTier(let set, let tier): "The set \(set) has no \(tier) call."
+        case .missingExternalSet(let path): "The evaluation set was not found: \(path)"
         }
     }
 }
@@ -29,6 +33,38 @@ enum DatasetError: LocalizedError, Equatable {
 /// The expected values come from the sidecar: they are the true numbers written by the generator,
 /// not the result of parsing a text. That is what lets the tests check the parser.
 enum DatasetLoader {
+
+    /// The bytes of a set's three files: what is parsed, and what the report's hash is made of.
+    struct SetData: Sendable {
+        let chat: Data
+        let labels: Data
+        let index: Data
+
+        /// The statements with their labels, as hashed in a report.
+        var hashed: Data { chat + labels }
+    }
+
+    /// Reads an external set from `directory` (`<name>.jsonl`, `<name>.labels.jsonl`, `index.csv`). Pure: no bundle.
+    static func externalSetData(named name: String, in directory: URL) throws -> SetData {
+        let files = EvaluationSet.externalFiles(named: name)
+        func read(_ file: String) throws -> Data {
+            let url = directory.appending(path: file)
+            guard let data = try? Data(contentsOf: url) else { throw DatasetError.missingExternalSet(url.path) }
+            return data
+        }
+        return SetData(chat: try read(files.chat), labels: try read(files.labels), index: try read(files.index))
+    }
+
+    /// Parses a set's files with the core prompt, for the keys of `tier` (an external set is core only).
+    static func parse(
+        _ data: SetData, template: PromptTemplate, schema: Schema, split: String, tier: FieldTier = .core
+    ) throws -> [ExtractionExample] {
+        try parse(
+            jsonl: String(decoding: data.chat, as: UTF8.self),
+            labelsJSONL: String(decoding: data.labels, as: UTF8.self),
+            indexCSV: String(decoding: data.index, as: UTF8.self),
+            template: template, schema: schema, split: split, tier: tier)
+    }
 
     /// Pure and testable: no bundle access.
     /// `tier` says which call the chat file belongs to (`test.jsonl` or `test.extended.jsonl`, with the

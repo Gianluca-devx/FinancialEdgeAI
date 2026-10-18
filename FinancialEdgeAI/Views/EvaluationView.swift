@@ -38,7 +38,7 @@ struct EvaluationView: View {
                     }
                     .pickerStyle(.segmented)
                     .disabled(viewModel.isRunning)
-                    Text("30 test statements, 3 runs each")
+                    Text("\(viewModel.setDescription), 3 runs each")
                         .foregroundStyle(.secondary)
 
                     if viewModel.isRunning {

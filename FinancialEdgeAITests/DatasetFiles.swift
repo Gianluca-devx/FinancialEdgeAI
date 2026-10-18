@@ -41,11 +41,12 @@ enum DatasetFiles {
     }
 
     /// A whole split with its labels: `train`, `valid` or `test`, for the core call or the extended call.
-    static func split(_ name: String, tier: FieldTier = .core) throws -> [ExtractionExample] {
+    /// `directory` is `Dataset` or `Dataset/v2` (the Phase 2b files: `train`, `valid`, `test2`, core call only).
+    static func split(_ name: String, tier: FieldTier = .core, directory: String = "Dataset") throws -> [ExtractionExample] {
         try DatasetLoader.parse(
-            jsonl: text(chatFile(name, tier: tier)),
-            labelsJSONL: text("Dataset/\(name).labels.jsonl"),
-            indexCSV: text("Dataset/index.csv"),
+            jsonl: text(directory == "Dataset" ? chatFile(name, tier: tier) : "\(directory)/\(name).jsonl"),
+            labelsJSONL: text("\(directory)/\(name).labels.jsonl"),
+            indexCSV: text("\(directory)/index.csv"),
             template: promptTemplate(tier: tier),
             schema: schema(),
             split: name,
@@ -57,7 +58,7 @@ enum DatasetFiles {
     }
 
     /// The raw JSON of every assistant message of a split, one per line of the file.
-    static func assistantMessages(of split: String, tier: FieldTier = .core) throws -> [String] {
+    static func assistantMessages(of split: String, tier: FieldTier = .core, directory: String = "Dataset") throws -> [String] {
         struct Line: Decodable {
             struct Message: Decodable {
                 let role: String
@@ -65,7 +66,8 @@ enum DatasetFiles {
             }
             let messages: [Message]
         }
-        return try text(chatFile(split, tier: tier)).split(separator: "\n").map { line in
+        let file = directory == "Dataset" ? chatFile(split, tier: tier) : "\(directory)/\(split).jsonl"
+        return try text(file).split(separator: "\n").map { line in
             let decoded = try JSONDecoder().decode(Line.self, from: Data(line.utf8))
             return decoded.messages.first { $0.role == "assistant" }?.content ?? ""
         }
@@ -81,8 +83,8 @@ enum DatasetFiles {
         let fields: [String: Entry?]
     }
 
-    static func labelLines(of split: String) throws -> [LabelLine] {
-        try text("Dataset/\(split).labels.jsonl").split(separator: "\n").map {
+    static func labelLines(of split: String, directory: String = "Dataset") throws -> [LabelLine] {
+        try text("\(directory)/\(split).labels.jsonl").split(separator: "\n").map {
             try JSONDecoder().decode(LabelLine.self, from: Data($0.utf8))
         }
     }

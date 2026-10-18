@@ -81,14 +81,15 @@ final class EvaluationRunner {
         modelLoadSeconds: Double?,
         schema: Schema = .bundled,
         tier: FieldTier = .core,
-        adapter: AdapterInfo? = nil
+        adapter: AdapterInfo? = nil,
+        set: EvaluationSet = .test,
+        setData: DatasetLoader.SetData? = nil
     ) throws -> EvaluationReport {
         let promptFile = tier == .core ? "prompt_template" : "prompt_template_extended"
         let prompts = try DatasetLoader.bundledData("system_prompt", "txt")
             + DatasetLoader.bundledData(promptFile, "txt")
-        // The test split is the statements (of the tier's chat file) together with their labels.
-        let testSet = try DatasetLoader.bundledData(DatasetLoader.testFileName(for: tier), "jsonl")
-            + DatasetLoader.bundledData("test.labels", "jsonl")
+        // The test set is the statements (of the tier's chat file) together with their labels.
+        let testSet = try (setData ?? DatasetLoader.setData(for: set, tier: tier)).hashed
         let schemaFile = try DatasetLoader.bundledData("schema", "json")
 
         let metadata = EvaluationReport.Metadata(
@@ -109,7 +110,8 @@ final class EvaluationRunner {
             tier: tier.rawValue,
             keys: schema.keys(for: tier),
             adapter: adapter,
-            modelLoadSeconds: modelLoadSeconds)
+            modelLoadSeconds: modelLoadSeconds,
+            evaluationSet: set.name)
 
         return EvaluationReport(
             metadata: metadata,

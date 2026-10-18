@@ -14,6 +14,9 @@ final class EvaluationViewModel {
     /// Which call is evaluated: the core fields or the balance sheet fields. Fixed while a run is on.
     var tier: FieldTier = .core
 
+    /// Which statements are run: the frozen test split by default (`-evaluationSet test2` or another name chooses).
+    var evaluationSet: EvaluationSet = .test
+
     private(set) var isRunning = false
     private(set) var completed = 0
     private(set) var total = 0
@@ -28,6 +31,9 @@ final class EvaluationViewModel {
     var adapterDescription: String {
         service.adapter.map { "Adapter: \($0.summary)" } ?? "Adapter: none (the base model)"
     }
+
+    /// Which statements are on, next to the adapter: a result belongs to the exact set it was measured on.
+    var setDescription: String { "Set: \(evaluationSet.name)" }
 
     init(service: LLMService) {
         self.service = service
@@ -54,12 +60,13 @@ final class EvaluationViewModel {
         }
         do {
             let tier = self.tier
-            let examples = try DatasetLoader.loadTestSplit(tier: tier)
+            let set = self.evaluationSet
+            let (examples, setData) = try DatasetLoader.loadSet(set, tier: tier)
             let seeds = EvaluationRunner.seeds
             total = examples.count * seeds.count
 
             let runner = EvaluationRunner(service: service)
-            print("[evaluation] started: \(total) answers, tier \(tier.rawValue)")
+            print("[evaluation] started: \(total) answers, tier \(tier.rawValue), set \(set.name)")
             let records = await runner.run(examples: examples, seeds: seeds, tier: tier) { [weak self] done, total in
                 self?.completed = done
                 self?.total = total
@@ -69,9 +76,10 @@ final class EvaluationViewModel {
 
             let report = try EvaluationRunner.makeReport(
                 records: records, examples: examples, seeds: seeds,
-                modelLoadSeconds: service.loadDuration, tier: tier, adapter: service.adapter)
+                modelLoadSeconds: service.loadDuration, tier: tier, adapter: service.adapter,
+                set: set, setData: setData)
             self.report = report
-            let url = try write(report, tier: tier)
+            let url = try write(report, tier: tier, set: set)
             exportURL = url
             print("[evaluation] finished, report: \(url.lastPathComponent)")
         } catch {
@@ -81,14 +89,15 @@ final class EvaluationViewModel {
     }
 
     /// Saves the report in the app's Documents folder, from where it can be shared.
-    private func write(_ report: EvaluationReport, tier: FieldTier) throws -> URL {
+    private func write(_ report: EvaluationReport, tier: FieldTier, set: EvaluationSet) throws -> URL {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
 
         let stamp = Date.now.formatted(.iso8601.year().month().day().time(includingFractionalSeconds: false)
             .timeSeparator(.omitted).dateSeparator(.omitted))
         let model = LLMService.modelName.split(separator: "/").last.map(String.init) ?? "model"
-        let prefix = tier == .core ? "baseline" : "baseline-\(tier.rawValue)"
+        let prefix = (["baseline"] + (tier == .core ? [] : [tier.rawValue]) + (set == .test ? [] : [set.name]))
+            .joined(separator: "-")
         let url = URL.documentsDirectory.appending(path: "\(prefix)-\(model)-\(stamp).json")
         try encoder.encode(report).write(to: url, options: .atomic)
         return url

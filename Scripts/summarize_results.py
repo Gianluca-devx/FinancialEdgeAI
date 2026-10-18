@@ -136,6 +136,8 @@ def main(path):
         ["Prompt hash (SHA-256)", f'`{meta["promptHash"][:16]}...`'],
         ["Test set hash (SHA-256)", f'`{meta["testSetHash"][:16]}...`'],
     ]
+    if meta.get("evaluationSet"):       # reports of Phase 2b and later name the statements they ran on
+        run_rows.append(["Evaluation set", meta["evaluationSet"]])
     if new_format:
         run_rows.append(["Schema hash (SHA-256)", f'`{meta["schemaHash"][:16]}...`'])
         run_rows.append(["Core fields asked and judged" if "coreKeys" in meta

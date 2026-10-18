@@ -35,8 +35,13 @@ Tables: `baseline-test2-tables-iphone-20261017.md`, `lora-v1-test2-tables-iphone
 
 The passages are not in the repository, by the user's instruction (`RealSet/` is git-ignored; no commit contains a passage).
 The sets are described in `Specs/phase-2b-lora-wording.md` (D28 and its two amendments). The numbers below come from
-`python3 Scripts/report_counts.py`, which prints counts and never a statement. **The labels are provisional until the
-user has confirmed the five labels of the spot-check list.**
+`python3 Scripts/report_counts.py`, which prints counts and never a statement. **The labels were spot-checked by the
+user on 18 October: 3 of the 5 listed labels are confirmed; for the other two the answer was "not understanding" and "depends on
+the context before and after". Those two stay as I wrote them (the rule is: from the passage text only), flagged uncertain, and
+they touch 3 fields per model: the revenue of one `real1` passage (a hypothetical constant-currency figure, which only `lora-v2`
+wrote as revenue) and the net income of one `real2` passage (`lora-v2` wrote the cash flow amount there; `lora-v1` left it null; the
+unmodified model wrote the figure that I labelled). If they were labelled the other way, at most 3 answers per model would change sides
+in each set, and the order of the models would not.**
 
 Both sets are mostly null: the passages of an annual report's discussion rarely state a headline figure in a sentence (those
 are in tables, outside the dataset's rules), so these sets measure above all whether a model **invents values on real text**.
@@ -62,7 +67,7 @@ are in tables, outside the dataset's rules), so these sets measure above all whe
   used (3 answers in each set, the same passage, which is in both sets). The unmodified model never does it. It is one
   passage; it shows that an adapter can break the output format on text it has not seen, which the 90 clean synthetic
   answers could not show. In the field counts, the 3 undecodable answers cost 39 fields (13 each) in each set.
-- **Read these with caution:** 21 and 10 passages, 3 and 9 stated fields, three runs that are nearly identical, labels provisional, text
+- **Read these with caution:** 21 and 10 passages, 3 and 9 stated fields, three runs that are nearly identical, 2 of the labels uncertain (3 fields per model), text
   chosen by a rule that I wrote and amended once after reading the first draw (disclosed in the spec).
 
 ## What this means for the next step
@@ -78,4 +83,4 @@ are in tables, outside the dataset's rules), so these sets measure above all whe
 
 One adapter (one training run, one seed), one phone (Debug build), 30 statements in test 2, 21 and 10 passages in the real sets, three
 runs that are nearly identical. The statements of test 2 are synthetic and written by the same author as the training data
-(another pool, other structures). The real sets are real text, but selected and labelled by me; the labels wait for the user's spot check.
+(another pool, other structures). The real sets are real text, but selected and labelled by me; 3 of the 5 labels in doubt were confirmed by the user, 2 stay uncertain.

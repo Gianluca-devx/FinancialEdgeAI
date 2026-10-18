@@ -19,3 +19,22 @@ venv/bin/mlx_lm.lora -c Scripts/lora/lora-v1.yaml
   `*.safetensors`); the data, the config and the seed are what reproduce them.
 - The adapter is loaded by the app at run time from `Documents/Adapters/<name>` (copy it with
   `xcrun devicectl device copy to`), selected with the launch argument `-adapterName <name>`.
+
+## Phase 2b: `lora-v2` (more varied wording, `Dataset/v2`)
+
+```
+venv/bin/python Scripts/lora/prepare_data.py --source Dataset/v2 --out adapters/data-v2 \
+    [--report <evaluation report> --report-test Dataset/v2/test2.jsonl]
+mkdir -p adapters/lora-v2
+venv/bin/mlx_lm.lora -c Scripts/lora/lora-v2.yaml > adapters/lora-v2/train.log 2>&1 &
+python3 Scripts/lora/stop_rule.py --log adapters/lora-v2/train.log --pid <pid of mlx_lm.lora>
+python3 Scripts/lora/stop_rule.py --log adapters/lora-v2/train.log --select      # which checkpoint, after the run
+```
+
+- Same method and hyperparameters as `lora-v1`; the data is `Dataset/v2` (480 training statements, a validation split
+  whose wording is held out of training) and the run is up to 600 iterations.
+- **The stop rule is a program, not a judgement** (`stop_rule.py`, from the spec): the run stops after 3 validations in a
+  row without a strictly lower loss, and the checkpoint with the lowest validation loss is used (the earliest on a tie).
+- `prepare_data.py` checks, as before, that the training text equals the inference text and that no statement of
+  `Dataset/test.jsonl` or `Dataset/v2/test2.jsonl` is in the training data; the test splits are never copied.
+

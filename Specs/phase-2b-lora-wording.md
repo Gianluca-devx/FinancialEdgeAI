@@ -184,7 +184,7 @@ committed (`/RealSet/` is git-ignored); this rule and `Scripts/real_set.py` are.
    edited.
 7. **Labels:** by me, from the passage text only, by the dataset's rules (the string as printed; a decrease gets a leading
    minus; null if the passage does not state the field; never calculated; never from what I know of the company).
-   The user spot-checks 5. Until then the set's results are marked **provisional**.
+   The user spot-checks 5. Until then the set's results are marked **provisional**. (Done on 18 October: 3 of the 5 confirmed, 2 uncertain and kept as written; see `Results/phase-2b-references.md`.)
 8. **Not changed afterwards:** once the set is frozen (hash recorded), no label or passage is edited to make a result
    look better. A label error found later is fixed, announced, and every run on the set is re-judged (the judging is
    pure, the answers are in the report).

@@ -139,7 +139,7 @@ All the accuracy criteria of the spec are met, on the frozen test and on test 2.
 other two are 10.7 s and 10.8 s). Memory is 2.86 GiB, thermal state "serious".
 
 **Real text is another matter.** On passages from 17 real annual reports (not in the repository: only counts are published, labels
-partly confirmed) the adapters help on passages that are mostly distractors for `lora-v1` and not for `lora-v2`, and neither beats the
+confirmed where in doubt) the adapters help on passages that are mostly distractors for `lora-v1` and not for `lora-v2`, and neither beats the
 unmodified model on passages with headline statements. One passage makes both adapters write a garbled key (`previous6YearEps`,
 `previous5000`): valid JSON that cannot be used, 3 answers in each set; the unmodified model never does this. The
 synthetic result is real and replicated on two sets; the real-text result is a warning that the synthetic task is easier than the real

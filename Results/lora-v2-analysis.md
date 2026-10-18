@@ -17,7 +17,7 @@ Tables: `lora-v2-tables-iphone-20261018.md` (old test), `lora-v2-test2-tables-ip
   single adapter's result is a draw. The validation split of `lora-v2` was built to make the draw less blind, and it is, but this
   analysis cannot say how another seed would turn out.
 - **Test 2 and the training data come from the same author and the same generator family** (other pools and structures, written by me). The
-  real sets are real text, but tiny, mostly null, and labelled by me (the user confirmed 3 of the 5 labels I was unsure about; 2 stay uncertain, 3 fields per model, with no effect on the order of the models).
+  real sets are real text, but tiny, mostly null, and labelled by me (the user confirmed all 5 labels I was unsure about).
 
 ## The criteria of the spec
 
@@ -85,9 +85,8 @@ it to make it pass.
 ## The real-style sets (from the user's annual reports): counts only
 
 The passages are not in the repository. `real1` has 21 passages with 1 stated field (a test of not inventing values), `real2` 10
-passages with 3 stated fields (9 over the three runs). Both are mostly null. **The user spot-checked the labels I was unsure about on 18 October:
-3 of 5 confirmed, 2 uncertain (kept as written, 3 fields per model; at most 3 answers per model would change sides in each set, not the
-order of the models: see `phase-2b-references.md`).**
+passages with 3 stated fields (9 over the three runs). Both are mostly null. **The user spot-checked the five labels I was unsure
+about on 18 October: all confirmed (see `phase-2b-references.md`).**
 
 | | `real1`: base | `real1`: `lora-v1` | `real1`: **`lora-v2`** | `real2`: base | `real2`: `lora-v1` | `real2`: **`lora-v2`** |
 |---|---|---|---|---|---|---|
@@ -120,7 +119,7 @@ order of the models: see `phase-2b-references.md`).**
 ## Limits
 
 One adapter (one run, one seed) per experiment; 30 statements per synthetic test, effectively one run each; 21 and 10 real passages with 3 and 9
-stated fields, labelled by me (3 of the 5 doubtful labels confirmed by the user, 2 uncertain); Debug build, one phone; the synthetic data and test 2 have one author. The stop rule picked
+stated fields, labelled by me (the 5 doubtful labels confirmed by the user); Debug build, one phone; the synthetic data and test 2 have one author. The stop rule picked
 iteration 200 by a loss that is flat and noisy there: another seed or another checkpoint (100: 0.029, 250: 0.030) could give a different
 adapter.
 

@@ -25,6 +25,24 @@ nonisolated struct MetricRow: Identifiable, Equatable, Sendable {
     }
 }
 
+/// One line of the "Check" group of the Extract tab: something to know about the answer that is not a field.
+nonisolated struct CheckRow: Identifiable, Equatable, Sendable {
+    enum Kind: Equatable, Sendable {
+        /// An amount in the text that no field used: the model may have left a value out. A hint.
+        case possibleMiss
+        /// A garbled key of the answer was read as the schema's key. A caution.
+        case keyRepaired
+    }
+
+    let id: String
+    let kind: Kind
+    let title: String
+    let detail: String
+
+    /// What a screen reader says: the same as the text, in one phrase.
+    var accessibilityLabel: String { "\(title). \(detail)" }
+}
+
 /// Turns the decoded metrics into the rows of the Extract tab. Pure, so it is covered by unit tests.
 ///
 /// A missing value is shown as "null", not hidden. A value that code calculated is marked as
@@ -93,6 +111,38 @@ nonisolated enum MetricsPresenter {
             }
     }
 
+    // MARK: - Check
+
+    /// What to say about an answer besides its fields (empty when there is nothing to say):
+    /// a key that was repaired, and the amounts of the statement that no field used.
+    /// `statement` is the text the answer is about; the balance sheet fields count as used once that call was made.
+    static func checkRows(
+        statement: String?, core: ParseOutcome?, extended: ParseOutcome?, schema: Schema, maxListed: Int = 4
+    ) -> [CheckRow] {
+        var rows: [CheckRow] = []
+        for (name, outcome) in [("core", core), ("extended", extended)] {
+            if let repair = outcome?.repair {
+                rows.append(CheckRow(
+                    id: "key-repaired-\(name)", kind: .keyRepaired, title: "A key was repaired",
+                    detail: "The model wrote \(repair.found) where \(repair.expected) belongs (key \(repair.position)); "
+                        + "it was read as \(repair.expected)."))
+            }
+        }
+        if let statement, let coreMetrics = core?.metrics {
+            let metrics = [coreMetrics] + (extended?.metrics.map { [$0] } ?? [])
+            let unused = UnusedAmounts.unused(in: statement, metrics: metrics, schema: schema)
+            if !unused.isEmpty {
+                let listed = unused.prefix(maxListed).map(\.text).joined(separator: ", ")
+                let more = unused.count > maxListed ? " and \(unused.count - maxListed) more" : ""
+                let detail = unused.count == 1
+                    ? "\(listed) is in the text but in no field."
+                    : "\(unused.count) amounts are in the text but in no field: \(listed)\(more)."
+                rows.append(CheckRow(id: "possible-miss", kind: .possibleMiss, title: "Possible miss", detail: detail))
+            }
+        }
+        return rows
+    }
+
     // MARK: - Formatting
 
     static func display(_ value: Double, kind: FieldKind, locale: Locale = .current) -> String {
@@ -117,6 +167,9 @@ nonisolated enum MetricsPresenter {
             let skipped = [outcome.hadThinking ? "a reasoning block" : nil,
                            outcome.hadFence ? "a code fence" : nil].compactMap { $0 }
             var text = skipped.isEmpty ? "Decoded" : "Decoded, after skipping \(skipped.joined(separator: " and "))"
+            if let repair = outcome.repair {
+                text += "; key \(repair.found) read as \(repair.expected)"
+            }
             let unreadable = outcome.unreadableKeys.count
             if unreadable > 0 {
                 text += "; \(unreadable) \(unreadable == 1 ? "value" : "values") could not be read"

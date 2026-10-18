@@ -35,6 +35,14 @@ struct ContentView: View {
                         ForEach(viewModel.metricRows) { row in
                             MetricRowView(row: row)
                         }
+                        if viewModel.checkRows.isEmpty == false {
+                            Text("Check")
+                                .font(.headline)
+                                .padding(.top, 8)
+                            ForEach(viewModel.checkRows) { row in
+                                CheckRowView(row: row)
+                            }
+                        }
                         if viewModel.extendedOutcome != nil {
                             Text("Balance sheet (second call)")
                                 .font(.headline)
@@ -143,6 +151,28 @@ private struct MetricRowView: View {
                     .foregroundStyle(row.isWarning ? .orange : .secondary)
             }
         }
+    }
+}
+
+/// A line of the "Check" group: an info icon for a hint, a caution icon for a repair. Read as one phrase by VoiceOver.
+private struct CheckRowView: View {
+    let row: CheckRow
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: row.kind == .keyRepaired ? "exclamationmark.triangle.fill" : "info.circle")
+                .foregroundStyle(row.kind == .keyRepaired ? .orange : .secondary)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(row.title)
+                    .font(.subheadline.weight(.semibold))
+                Text(row.detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(row.accessibilityLabel)
     }
 }
 

@@ -77,6 +77,12 @@ class ChatViewModel {
 
     /// What code calculated from the fields. The model never writes these. The ratios that need the
     /// balance sheet appear once the extended call was made.
+    /// What to know besides the fields: a repaired key, and the amounts of the statement that no field used.
+    var checkRows: [CheckRow] {
+        MetricsPresenter.checkRows(
+            statement: lastStatement, core: outcome, extended: extendedOutcome, schema: Schema.bundled)
+    }
+
     var derivedRows: [MetricRow] {
         let core = outcome?.metrics
         let extended = extendedOutcome?.metrics
@@ -125,7 +131,7 @@ class ChatViewModel {
         do {
             let generated = try await service.generate(statement: statement)
             result = generated
-            outcome = MetricsParser.parse(generated.text, schema: Schema.bundled)
+            outcome = MetricsParser.parse(generated.text, schema: Schema.bundled, repairKeys: true)
         } catch {
             errorMessage = "An Error Occurred: \(error.localizedDescription)"
         }
@@ -142,7 +148,7 @@ class ChatViewModel {
         do {
             let generated = try await service.generate(statement: statement, tier: .extended)
             extendedResult = generated
-            extendedOutcome = MetricsParser.parse(generated.text, schema: Schema.bundled, tier: .extended)
+            extendedOutcome = MetricsParser.parse(generated.text, schema: Schema.bundled, tier: .extended, repairKeys: true)
         } catch {
             errorMessage = "An Error Occurred: \(error.localizedDescription)"
         }

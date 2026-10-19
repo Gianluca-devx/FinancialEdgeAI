@@ -164,3 +164,21 @@ training run starts. The data validator's private check also reads `passages3.js
 would be a leak by coincidence; if one appears it is **disclosed with its count**, and the data stays frozen.
 
 **5. Unchanged.** The criteria 1 to 8, the stop rule, the seeds and the cost. Criterion 5 reads `real3` as drawn here (not blind by labels, blind by construction).
+
+## Amendment 3, 2026-10-19, after a first draw of `real3` that was discarded unread
+
+What happened, in order. Amendment 2 was committed (fbebf18); `select --rule 3` was run once: **12 passages (6 with fields, 5 with no field, 1 headline), 60 candidate
+paragraphs removed as not fresh, SHA-256 of that file `a1669dbf5b244e23068e95222a69b5ea8434389bea48df81c5d441d11c053ae`**. Only these counts and the hash were looked
+at: no passage was opened, read or labelled.
+
+**The deviation.** Amendment 2 says the freshness measure is "the measure of the data validator", which ignores the standard date phrase ("year ended December").
+`real_set.py` did not ignore it (an implementation slip, not a choice). It is corrected (`GENERIC` in `real_set.py`, same regular expression as the validator), a test
+shows that the phrase alone no longer makes two passages overlap and that a real shared run still does, and rules 1 and 2 still reproduce `passages1.json` and
+`passages2.json` byte for byte. The draw is deterministic, so it is run again with the corrected measure; the first file is overwritten (its hash is above).
+
+**What the counts showed, which Amendment 2 got wrong.** The estimate "about 20 to 30 passages" was a guess. Counted per filing (counts only), the 17 reports hold **53** paragraphs
+with a keyword and an amount (16 already drawn for `real1`, 22 still fresh in 6 filings), **380** with no field (341 fresh), and **18** headline paragraphs (3 fresh): real1 and
+real2 took most of the paragraphs of the kinds that carry fields. So `real3` will be **small (about 12 passages), with few stated fields**, and its numbers are mostly about invented values.
+This is not changed here: the shape rule, the keywords and the six-sentence cut stay, and no rule is relaxed to get more passages (that would be a change made after seeing the counts).
+`real3` stays what D37 says, with this limit stated; it is **one** of three real sets, and the conclusion on real text is read on `real1`, `real2` and `real3` together as well as on
+each. If the user supplies more reports later, they can make a further fresh set (a new experiment, not a change to this one).

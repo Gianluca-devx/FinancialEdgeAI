@@ -194,10 +194,14 @@ def words(text):
     return re.findall(r"[a-z0-9]+", text.lower())
 
 
+# The standard date phrase of every annual report is not a copy of a passage (validate_dataset_v3.py ignores it too).
+GENERIC = re.compile(r"year ended december")
+
+
 def runs(text, n=SHINGLE):
-    """The runs of n consecutive words of a text (the same measure as validate_dataset_v3.py, without its date phrase)."""
+    """The runs of n consecutive words of a text: the same measure as validate_dataset_v3.py (the date phrase is ignored)."""
     w = words(text)
-    return {" ".join(w[i:i + n]) for i in range(len(w) - n + 1)}
+    return {s for s in (" ".join(w[i:i + n]) for i in range(len(w) - n + 1)) if not GENERIC.search(s)}
 
 
 def select3(reports: Path, out: Path):

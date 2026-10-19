@@ -145,6 +145,19 @@ unmodified model on passages with headline statements. One passage makes both ad
 synthetic result is real and replicated on two sets; the real-text result is a warning that the synthetic task is easier than the real
 one. See [`Results/phase-2b-references.md`](Results/phase-2b-references.md).
 
+### Safeguards in the app (Phase 2c)
+
+Two failures of an adapted model are made visible and recoverable in the Extract tab, without touching the model, the prompt, the
+dataset or the way an evaluation judges an answer ([`Results/phase-2c-safeguards.md`](Results/phase-2c-safeguards.md)):
+
+- **A garbled key is repaired.** If an answer is valid JSON with the right number of keys and exactly one key is wrong at its position
+  (`previous6YearEps`, `previous5000` where `previousYearEps` belongs), the app reads it as the schema's key and says so. Of the 14
+  undecodable answers saved, 12 were of that kind: **all 12 become fully correct**, and no decodable answer changes (0 of 985). Evaluations stay
+  strict.
+- **A possible miss is shown.** Amounts with a unit word in the statement that no field used are listed as a hint. It is shown on 97% of the answers
+  that miss an amount and on 31% of the fully correct ones (distractor amounts are "unused" too); it cannot see a missed percentage or per-share value
+  (26% of the misses), and on real annual-report text it is shown on most answers, so it says little there.
+
 ### What the iPhone costs
 
 | | v1.1.0 (7 numbers) | Schema version 1 (13 strings) |
@@ -233,7 +246,7 @@ FinancialEdgeAI/                 Xcode app target (Swift, SwiftUI, MLX)
 ├── ViewModel/  ChatViewModel, EvaluationViewModel, MetricsPresenter
 ├── Views/      ContentView (Extract), EvaluationView (Evaluate, work in progress)
 └── Resources/  schema, prompt files and test split (bundled copies, checked for drift)
-FinancialEdgeAITests/            Swift Testing, 238 tests
+FinancialEdgeAITests/            Swift Testing, 310 tests
 Dataset/                         300 labelled statements, schema.json, the prompt, labels, archive/v1.1.0
 Scripts/                         generate and validate the dataset, render the prompt, summarise and compare reports
 Scripts/lora/                    LoRA training: data check, config, run record (needs mlx-lm; weights never committed)
@@ -295,13 +308,13 @@ new experiment with its own comparison:
 1. **Real-text distractors in the training data.** Segment figures, changes in amount, deferred and adjusted items and cost
    lines are what real annual reports are full of and what the training statements lack. Test on more real passages than the 31 of
    the first attempt, and with their labels confirmed.
-2. **A schema check with one retry in the app.** The garbled key (`previous6YearEps`) is visible and cheap to catch; an undecodable
-   answer should be asked again, and counted.
+2. **A garbled key** is now repaired in the app (Phase 2c) instead of asked again; the cause (the adapter writing it) remains, and constrained
+   decoding would remove it if it becomes available.
 3. **Other seeds of the same training.** The checkpoints of `lora-v1` varied from 42 to 78 fully correct answers
    ([`Results/lora-v1-checkpoints.md`](Results/lora-v1-checkpoints.md)): one run is one draw, and the result of `lora-v2`
    (85 / 90, 77 / 90) is one draw of a better recipe.
-4. **Make a missed value visible.** The app shows an empty field for a null; it cannot be told from a statement that does not give
-   the value. A check of the text for the number would turn a silent miss into a warning.
+4. **A sharper hint.** The possible-miss hint is shown (Phase 2c) but is noisy on distractor amounts and blind to percentages and per-share
+   values; a better hint is a new experiment.
 5. **An adapter for the balance sheet call** (the operating cash flow is not the cash balance).
 6. **Three small things to look at,** each a new experiment with its own baseline: the parser could accept
    `$10.3 billion dollars` (seen in both calls), a growth returned by the model could be checked against the two

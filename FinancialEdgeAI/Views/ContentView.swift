@@ -35,6 +35,14 @@ struct ContentView: View {
                         ForEach(viewModel.metricRows) { row in
                             MetricRowView(row: row)
                         }
+                        if viewModel.checkRows.isEmpty == false {
+                            Text("Check")
+                                .font(.headline)
+                                .padding(.top, 8)
+                            ForEach(viewModel.checkRows) { row in
+                                CheckRowView(row: row)
+                            }
+                        }
                         if viewModel.extendedOutcome != nil {
                             Text("Balance sheet (second call)")
                                 .font(.headline)
@@ -146,6 +154,47 @@ private struct MetricRowView: View {
     }
 }
 
+/// A line of the "Check" group: an info icon for a hint, a caution icon for a repair. Read as one phrase by VoiceOver.
+private struct CheckRowView: View {
+    let row: CheckRow
+    @ScaledMetric private var iconWidth = 24.0
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: row.kind == .keyRepaired ? "exclamationmark.triangle.fill" : "info.circle")
+                .foregroundStyle(row.kind == .keyRepaired ? .orange : .secondary)
+                .frame(width: iconWidth)   // the two icons differ in width: keep the texts aligned
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(row.title)
+                    .font(.subheadline.weight(.semibold))
+                Text(row.detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(row.accessibilityLabel)
+    }
+}
+
 #Preview {
     ContentView(viewModel: ChatViewModel(service: LLMService()))
+}
+
+#Preview("Check rows") {
+    // The rows the presenter builds for an answer with a garbled key and an amount that no field used.
+    let schema = Schema.bundled
+    var keys = schema.keys(for: .core)
+    keys[9] = "previous6YearEps"
+    let body = keys.map { "\"\($0)\": null" }.joined(separator: ", ")
+    let outcome = MetricsParser.parse("{\(body)}", schema: schema, repairKeys: true)
+    let rows = MetricsPresenter.checkRows(
+        statement: "Net earnings stood at 11.6 billion dollars; capital spending was $25.6bn.",
+        core: outcome, extended: nil, schema: schema)
+    return VStack(alignment: .leading, spacing: 8) {
+        Text("Check").font(.headline)
+        ForEach(rows) { CheckRowView(row: $0) }
+    }
+    .padding()
 }

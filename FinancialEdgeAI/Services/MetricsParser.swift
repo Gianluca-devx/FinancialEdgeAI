@@ -25,6 +25,8 @@ nonisolated struct ParseOutcome: Equatable, Sendable {
     let hadThinking: Bool
     /// Keys whose string the parser could not read as a number. They are flagged, not guessed.
     let unreadableKeys: [String]
+    /// A garbled key that was read as the schema's key (only when the parser was asked to repair keys).
+    var repair: KeyRepair.Rename? = nil
 
     /// The text contained a JSON object that parsed, even if its schema was wrong.
     var isValidJSON: Bool {
@@ -48,7 +50,10 @@ nonisolated enum MetricsParser {
 
     /// `tier` says which call the answer belongs to, and so which keys are demanded: the core
     /// answer has exactly the core keys, the extended answer exactly the extended ones.
-    static func parse(_ raw: String, schema: Schema, tier: FieldTier = .core) -> ParseOutcome {
+    ///
+    /// `repairKeys` (off by default, and off in every evaluation) lets one garbled key be read as the schema's key at
+    /// its position, see `KeyRepair`. The outcome says which key was read as which.
+    static func parse(_ raw: String, schema: Schema, tier: FieldTier = .core, repairKeys: Bool = false) -> ParseOutcome {
         var text = raw
 
         var hadThinking = false
@@ -58,10 +63,10 @@ nonisolated enum MetricsParser {
         }
         let hadFence = text.contains("```")
 
-        func outcome(_ metrics: FinancialMetrics?, _ failure: ParseFailure?) -> ParseOutcome {
+        func outcome(_ metrics: FinancialMetrics?, _ failure: ParseFailure?, repair: KeyRepair.Rename? = nil) -> ParseOutcome {
             ParseOutcome(
                 metrics: metrics, failure: failure, hadFence: hadFence, hadThinking: hadThinking,
-                unreadableKeys: metrics?.unreadableKeys(in: schema) ?? [])
+                unreadableKeys: metrics?.unreadableKeys(in: schema) ?? [], repair: repair)
         }
 
         guard let open = text.firstIndex(of: "{"),
@@ -73,18 +78,32 @@ nonisolated enum MetricsParser {
         let json = Data(text[open...close].utf8)
 
         // JSONDecoder is strict (a trailing comma is an error). JSONSerialization is not.
-        guard let object = try? JSONDecoder().decode([String: JSONValue].self, from: json) else {
+        guard var object = try? JSONDecoder().decode([String: JSONValue].self, from: json) else {
             return outcome(nil, .invalidJSON)
         }
 
-        if let problem = schemaProblem(in: object, keys: schema.keys(for: tier)) {
-            return outcome(nil, .wrongSchema(problem))
+        let keys = schema.keys(for: tier)
+        var repair: KeyRepair.Rename?
+        if let problem = schemaProblem(in: object, keys: keys) {
+            guard repairKeys,
+                  let rename = KeyRepair.rename(
+                      inJSON: String(text[open...close]), expected: keys,
+                      alsoKnown: schema.keys(for: .core) + schema.keys(for: .extended)),
+                  let value = object.removeValue(forKey: rename.found)
+            else {
+                return outcome(nil, .wrongSchema(problem))
+            }
+            object[rename.expected] = value
+            if let remaining = schemaProblem(in: object, keys: keys) {
+                return outcome(nil, .wrongSchema(remaining))
+            }
+            repair = rename
         }
         var texts: [String: String] = [:]
         for (key, value) in object {
             if case .string(let string) = value { texts[key] = string }
         }
-        return outcome(FinancialMetrics(texts: texts, schema: schema), nil)
+        return outcome(FinancialMetrics(texts: texts, schema: schema), nil, repair: repair)
     }
 
     /// Swift turns a missing optional key into nil, so the keys are checked here.

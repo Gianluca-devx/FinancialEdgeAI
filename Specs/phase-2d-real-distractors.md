@@ -168,7 +168,7 @@ would be a leak by coincidence; if one appears it is **disclosed with its count*
 ## Amendment 3, 2026-10-19, after a first draw of `real3` that was discarded unread
 
 What happened, in order. Amendment 2 was committed (fbebf18); `select --rule 3` was run once: **12 passages (6 with fields, 5 with no field, 1 headline), 60 candidate
-paragraphs removed as not fresh, SHA-256 of that file `a1669dbf5b244e23068e95222a69b5ea8434389bea48df81c5d441d11c053ae`**. Only these counts and the hash were looked
+paragraphs removed as not fresh, SHA-256 of that file `a1669dbf5b244e23068e95222a69b5ea8434389bea48df81bc5d441d11c053ae`**. Only these counts and the hash were looked
 at: no passage was opened, read or labelled.
 
 **The deviation.** Amendment 2 says the freshness measure is "the measure of the data validator", which ignores the standard date phrase ("year ended December").
@@ -182,3 +182,7 @@ real2 took most of the paragraphs of the kinds that carry fields. So `real3` wil
 This is not changed here: the shape rule, the keywords and the six-sentence cut stay, and no rule is relaxed to get more passages (that would be a change made after seeing the counts).
 `real3` stays what D37 says, with this limit stated; it is **one** of three real sets, and the conclusion on real text is read on `real1`, `real2` and `real3` together as well as on
 each. If the user supplies more reports later, they can make a further fresh set (a new experiment, not a change to this one).
+
+**Result of the corrected draw (added after it was run).** The second draw is **byte-identical to the first** (same SHA-256 `a1669dbf5b244e23068e95222a69b5ea8434389bea48df81bc5d441d11c053ae`, 12 passages: 6 with fields, 5 with
+no field, 1 headline, 60 removed as not fresh): the slip changed nothing. The hash was mistyped (one character missing) in the first version of this amendment (commit 61e05b0) and is
+corrected here. `real3` is frozen with this hash; reading and labelling start now.

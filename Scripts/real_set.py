@@ -10,13 +10,20 @@ Nothing this script reads or writes from the reports is committed: its outputs a
       Rule 1: paragraphs that mention a core keyword and an amount (set real1). Rule 2: paragraphs with a headline
       statement, "<metric> was $<amount>" (set real2).
 
-  python3 Scripts/real_set.py build --rule 1|2 --out RealSet
+  python3 Scripts/real_set.py select --rule 3 --reports ~/Downloads/Reports --out RealSet
+      Phase 2d (Specs/phase-2d-real-distractors.md, Amendment 2): the set real3, drawn after Dataset/v3 was frozen. Rule 3
+      is rules 1 and 2 together with a new seed (SEED3): per filing one paragraph with a keyword and an amount, five filings
+      add a paragraph with no field, and one headline paragraph per filing; a paragraph that shares a run of 6 words with
+      a passage of real1 or real2, or with one already drawn for real3, is removed from the pools first. Writes
+      RealSet/passages3.json; nothing is labelled here.
+
+  python3 Scripts/real_set.py build --rule 1|2|3 --out RealSet
       Reads RealSet/labels<rule>.json ({"<id>": {"<core key>": "<string as printed>" | null, ...}}) written by hand
       from the passages, checks every label appears in its passage and is read by the parser rules to a number, and
       writes the three files of an external evaluation set: RealSet/real<rule>/real<rule>.jsonl, .labels.jsonl,
       index.csv. The folder is what is copied to the phone: Documents/EvalSets/real<rule>/.
 
-  python3 Scripts/real_set.py check --rule 1|2 --out RealSet
+  python3 Scripts/real_set.py check --rule 1|2|3 --out RealSet
       Prints the counts of the frozen set (statements, fields stated, hash). Nothing from the text.
 """
 import argparse
@@ -32,6 +39,8 @@ from pathlib import Path
 import generate_dataset as g
 
 SEED = 20261017
+SEED3 = 20261019                      # rule 3 (real3), fixed in Amendment 2 before the draw
+SHINGLE = 6
 KEYWORDS = ["revenue", "net sales", "net income", "net earnings", "operating income", "income from operations",
             "operating profit", "earnings per share", "cash provided by operating", "capital expenditures",
             "interest expense"]
@@ -181,6 +190,75 @@ def select(reports: Path, out: Path):
           f"{sum(p['kind'] == 'nofield' for p in passages)} without) from {len(ids)} filings -> {out / 'passages1.json'}")
 
 
+def words(text):
+    return re.findall(r"[a-z0-9]+", text.lower())
+
+
+def runs(text, n=SHINGLE):
+    """The runs of n consecutive words of a text (the same measure as validate_dataset_v3.py, without its date phrase)."""
+    w = words(text)
+    return {" ".join(w[i:i + n]) for i in range(len(w) - n + 1)}
+
+
+def select3(reports: Path, out: Path):
+    """Rule 3 (real3): rules 1 and 2 with SEED3, on paragraphs that are not in real1, real2 or already drawn for real3."""
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "text").mkdir(exist_ok=True)
+    seen = set()
+    for earlier in (1, 2):
+        for passage in json.loads((out / f"passages{earlier}.json").read_text()):
+            seen |= runs(passage["text"])
+    filings, pools1, pools2 = [], {}, {}
+    for pdf in sorted(reports.glob("*.pdf")):
+        m = re.search(r"_(\d+)-", pdf.name)
+        filing = m.group(1) if m else pdf.stem
+        text = extract(pdf, out / "text" / f"{filing}.txt")
+        filings.append(filing)
+        pools1[filing] = candidates(text)
+        pools2[filing] = candidates2(text)
+
+    def fresh(paragraphs_):
+        """The paragraphs whose cut (what would be drawn) shares no run of 6 words with what was seen."""
+        return [p for p in paragraphs_ if not (runs(cut(p)) & seen)]
+
+    rng = random.Random(SEED3)
+    chosen, excluded = [], 0
+    for filing in filings:                       # draw 1: one paragraph with fields per filing
+        fields = pools1[filing][0]
+        pool = fresh(fields)
+        excluded += len(fields) - len(pool)
+        if pool:
+            passage = cut(rng.choice(pool))
+            chosen.append((filing, "fields", passage))
+            seen |= runs(passage)
+        else:
+            print(f"filing {filing}: no fresh paragraph with fields", file=sys.stderr)
+    with_none = sorted(rng.sample(filings, 5))   # draw 2: which filings also give a paragraph with no field
+    for filing in with_none:                     # draw 3: that paragraph
+        nones = pools1[filing][1]
+        pool = fresh(nones)
+        excluded += len(nones) - len(pool)
+        if pool:
+            passage = cut(rng.choice(pool))
+            chosen.append((filing, "nofield", passage))
+            seen |= runs(passage)
+    for filing in filings:                       # draw 4 (rule 2): one headline paragraph per filing
+        found = pools2[filing]
+        pool = fresh(found)
+        excluded += len(found) - len(pool)
+        if pool:
+            passage = cut(rng.choice(pool))
+            chosen.append((filing, "headline", passage))
+            seen |= runs(passage)
+        else:
+            print(f"filing {filing}: no fresh headline paragraph", file=sys.stderr)
+    passages = [{"id": i + 1, "filing": f, "kind": k, "text": t} for i, (f, k, t) in enumerate(chosen)]
+    (out / "passages3.json").write_text(json.dumps(passages, indent=1, ensure_ascii=False))
+    kinds = {k: sum(p["kind"] == k for p in passages) for k in ("fields", "nofield", "headline")}
+    print(f"{len(passages)} passages {kinds} from {len(filings)} filings; {excluded} candidate paragraphs removed as not fresh "
+          f"-> {out / 'passages3.json'}")
+
+
 # --- the parser rules, as in ValueParser.swift (checked against the Swift tests on the dataset) -------------------
 NUMBER = r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+"
 UNIT = r"thousand|million|billion|trillion|bn|mn|mm|tn|k|m|b|t|%|percent|per cent"
@@ -297,12 +375,12 @@ def main():
     parser.add_argument("command", choices=["select", "build", "check"])
     parser.add_argument("--reports", type=Path)
     parser.add_argument("--out", type=Path, default=Path("RealSet"))
-    parser.add_argument("--rule", type=int, choices=[1, 2], default=1)
+    parser.add_argument("--rule", type=int, choices=[1, 2, 3], default=1)
     args = parser.parse_args()
     if args.command == "select":
         if not args.reports:
             parser.error("select needs --reports")
-        (select if args.rule == 1 else select2)(args.reports, args.out)
+        {1: select, 2: select2, 3: select3}[args.rule](args.reports, args.out)
     elif args.command == "build":
         build(args.out, args.rule)
     else:

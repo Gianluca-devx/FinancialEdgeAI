@@ -127,3 +127,40 @@ training statements **about a quarter (60) are null-only paragraphs of distracto
 two to four inserted distractor sentences, and 10% (24) are positive sentences of the kind in D35 (7)**; the validation and test 3 splits have the
 same proportions. The floor of 25% per core field over the whole of train (720) stays a hard check of the validator.
 
+
+## Amendment 2, 2026-10-19, before `real3` was drawn (Step 4)
+
+Written and committed **before** the draw, after `Dataset/v3` was committed (0b40ca6) and test 3 was bundled in the app (6ddc8a2). Nothing of `real3` has been
+drawn, read or counted when this is written.
+
+**1. The freeze.** `Dataset/v3` has not changed since 0b40ca6. SHA-256 of every file, and of the seven files read one after the other in the order below:
+
+| File | SHA-256 |
+|---|---|
+| `train.jsonl` | `0218c6632f8ded1d3c88f63cc6c78a1bc0e2da75a5a155c67e8c7773ed21edff` |
+| `train.labels.jsonl` | `8a87d19a525e2574a16514316b8c82561ba5f2f629434498ece16600fe3486bd` |
+| `valid.jsonl` | `3f303a2325ebc48f56d3edda73fb86c7acd7e012939e0484ac11d1adaf98a2d2` |
+| `valid.labels.jsonl` | `f14d4d2f1b7f46309f053d28f528b9a1489e41d965ae9ae81ebd3c0409b1fa21` |
+| `test3.jsonl` | `d2061b25fca4524e33a38fd86e5e2cdaa26c939dfcd4ecdd5838e54ae29428db` |
+| `test3.labels.jsonl` | `5c131b3b3dffc2bca794fac5894ddf89b40ae00ed6e936c62bc9a613647e474a` |
+| `index.csv` | `d21e2317c767075411e387d56ab0ed76c10203ad059392c20c8303f32e2bfa40` |
+| all seven, in this order | `66181954b3c74c17519096a3c3bc3e01bef3702784d3962171b066699bea4a12` |
+
+From here a change to `Dataset/v3` is a new dataset, not a repair: lora-v3 is trained on exactly these bytes (the run record repeats the hash).
+
+**2. What "the same committed rule" means for `real3`.** D37 says "the same committed rule, a new seed". `real1` used rule 1 and `real2` rule 2, so `real3` uses
+**both, with one new seed `SEED3 = 20261019`** (`Scripts/real_set.py select --rule 3`): per filing one paragraph with a keyword and an amount (draw 1); five filings
+that also give a paragraph with no field (draws 2 and 3); and one headline paragraph per filing that has one (rule 2). The shape tests, the keywords, the
+region and the cut to six sentences are those of rules 1 and 2, unchanged (proven: rules 1 and 2 still reproduce `passages1.json` and `passages2.json` byte for byte).
+The expected size is about 20 to 30 passages from the same 17 filings.
+
+**3. Fresh passages.** Before each draw, a paragraph whose cut shares **a run of 6 consecutive words** (the measure of the data validator) with a passage of `real1`,
+of `real2` or with one already drawn for `real3` is removed from the pool. Without it the same paragraph could come twice. The number removed is printed (a count).
+Proven on a synthetic set (deterministic, no overlap with the earlier set or inside `real3`; with the check switched off 3 passages overlap).
+
+**4. After the draw.** The passages are frozen (SHA-256 recorded in the run record), then read and labelled by the strict rule of Phase 2b (labels in
+`RealSet/labels3.json`, never committed); the doubtful labels are put to the user; the references (unmodified model and `lora-v2`) run on `real3` before any
+training run starts. The data validator's private check also reads `passages3.json` (the glob `RealSet/passages*.json`): a six-word run of `real3` in `Dataset/v3`
+would be a leak by coincidence; if one appears it is **disclosed with its count**, and the data stays frozen.
+
+**5. Unchanged.** The criteria 1 to 8, the stop rule, the seeds and the cost. Criterion 5 reads `real3` as drawn here (not blind by labels, blind by construction).

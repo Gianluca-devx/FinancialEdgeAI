@@ -1,0 +1,28 @@
+# LoRA adapter v3 (Specs/phase-2d-real-distractors.md, D38). Run from the repository root:
+#   python3 Scripts/lora/prepare_data.py --source Dataset/v3 --out adapters/data-v3
+#   mlx_lm.lora -c Scripts/lora/lora-v3.yaml        (and Scripts/lora/stop_rule.py --pid <pid> --log <log> beside it)
+# Seed 2 of the same recipe: add  --seed 2 --adapter-path adapters/lora-v3-s2  (a command-line value wins over this file).
+# The second seed of lora-v2 is the same command on lora-v2.yaml:  --seed 2 --adapter-path adapters/lora-v2-s2
+# The method and hyperparameters are those of lora-v1 and lora-v2: only the data (Dataset/v3, frozen by hash in the spec,
+# Amendment 2) and the length of the run change. The test splits (including test 3) are not in adapters/data-v3 and the
+# tool's --test option is not used.
+model: "mlx-community/Qwen3-4B-4bit"
+train: true
+data: "adapters/data-v3"
+adapter_path: "adapters/lora-v3"
+fine_tune_type: lora
+mask_prompt: true          # the loss is on the answer, not on the prompt
+num_layers: 16
+lora_parameters:
+  rank: 8
+  scale: 20.0
+  dropout: 0.0
+batch_size: 4
+iters: 900                 # at most 5 epochs of 720 examples; the stop rule may end the run earlier
+learning_rate: 1.0e-4
+val_batches: -1            # the whole validation set (72 examples: 48 of v2 and 24 new, wording and templates held out of train)
+steps_per_report: 10
+steps_per_eval: 50
+save_every: 50
+max_seq_length: 1024       # the longest training example has 964 tokens, the longest validation example 916
+seed: 1

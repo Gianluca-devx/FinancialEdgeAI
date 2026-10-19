@@ -36,6 +36,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DATASET = ROOT / "Dataset"
 FROZEN_TAG = "v2.4.0"
 SPLITS = ("train", "valid", "test3")
+BUNDLE = ROOT / "FinancialEdgeAI" / "Resources"
+# Files of Dataset/v3 that the app bundles (published name in Resources, source in Dataset/v3).
+BUNDLED = {"test3.jsonl": "test3.jsonl", "test3.labels.jsonl": "test3.labels.jsonl", "index.v3.csv": "index.csv"}
 MIN_COVERAGE = 0.25
 SHINGLE = 6
 
@@ -208,6 +211,14 @@ def check(v3_dir, errors, passages_glob="RealSet/passages*.json"):
     for split in SPLITS:
         counts = Counter(r["scenario"] for r in rows_by_split[split] if r["kinds"] != "v2" and r["scenario"].startswith("real"))
         print(f"  new statements in {split}: {dict(counts)}")
+
+    # 6b. The app bundles test 3: the copies must be the dataset files, byte for byte.
+    for published, source in BUNDLED.items():
+        copy = BUNDLE / published
+        if not copy.exists():
+            errors.append(f"FinancialEdgeAI/Resources/{published} is missing")
+        elif copy.read_bytes() != (v3_dir / source).read_bytes():
+            errors.append(f"FinancialEdgeAI/Resources/{published} differs from Dataset/v3/{source}")
 
     # 7. The private check against the real passages (counts only).
     files = sorted(glob.glob(str(ROOT / passages_glob)))

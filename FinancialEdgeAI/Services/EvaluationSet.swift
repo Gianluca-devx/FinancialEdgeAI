@@ -10,6 +10,8 @@ import Foundation
 ///
 /// - `test`: the frozen test split of every earlier experiment (bundled).
 /// - `test2`: the second test set of Phase 2b, wording that is in no training statement (bundled).
+/// - `test3`: the third test set of Phase 2d, synthetic statements in the style of real reports, with wording and
+///   templates that are in no training statement (bundled).
 /// - `external(name)`: a set that is not in the repository, copied to the app's
 ///   `Documents/EvalSets/<name>/` (for example text from real reports, which is never committed).
 ///
@@ -18,6 +20,7 @@ import Foundation
 nonisolated enum EvaluationSet: Equatable, Sendable {
     case test
     case test2
+    case test3
     case external(String)
 
     /// "test" and "test2" are the bundled sets; any other name is an external set.
@@ -25,6 +28,7 @@ nonisolated enum EvaluationSet: Equatable, Sendable {
         switch name {
         case "test", "": self = .test
         case "test2": self = .test2
+        case "test3": self = .test3
         default: self = .external(name)
         }
     }
@@ -34,6 +38,7 @@ nonisolated enum EvaluationSet: Equatable, Sendable {
         switch self {
         case .test: "test"
         case .test2: "test2"
+        case .test3: "test3"
         case .external(let name): name
         }
     }
@@ -52,6 +57,7 @@ nonisolated enum EvaluationSet: Equatable, Sendable {
         switch self {
         case .test: Files(chat: "test", labels: "test.labels", index: "index")
         case .test2: Files(chat: "test2", labels: "test2.labels", index: "index.v2")
+        case .test3: Files(chat: "test3", labels: "test3.labels", index: "index.v3")
         case .external: nil
         }
     }

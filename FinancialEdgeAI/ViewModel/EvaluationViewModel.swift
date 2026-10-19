@@ -14,7 +14,7 @@ final class EvaluationViewModel {
     /// Which call is evaluated: the core fields or the balance sheet fields. Fixed while a run is on.
     var tier: FieldTier = .core
 
-    /// Which statements are run: the frozen test split by default (`-evaluationSet test2` or another name chooses).
+    /// Which statements are run: the frozen test split by default (`-evaluationSet test2|test3` or another name chooses).
     var evaluationSet: EvaluationSet = .test
 
     private(set) var isRunning = false

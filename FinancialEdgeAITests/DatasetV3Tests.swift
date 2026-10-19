@@ -120,4 +120,22 @@ struct DatasetV3Tests {
             text: text, promptTokens: 300, generatedTokens: 70, promptTime: 1.5, generateTime: 3.2,
             totalTime: 4.7, tokensPerSecond: 21.8, activeMemory: 2_000_000_000, peakMemory: 2_500_000_000)
     }
+
+    /// The app bundles test 3; the copy must be the file of the dataset, byte for byte.
+    @Test func theBundledCopiesOfTest3AreTheDatasetFiles() throws {
+        for (published, source) in [("test3.jsonl", "test3.jsonl"), ("test3.labels.jsonl", "test3.labels.jsonl"),
+                                    ("index.v3.csv", "index.csv")] {
+            let bundled = try DatasetFiles.text("FinancialEdgeAI/Resources/\(published)")
+            #expect(bundled == (try DatasetFiles.text("Dataset/v3/\(source)")), "\(published) differs")
+        }
+    }
+
+    /// The loader reads the bundled test 3 files through the index: 30 statements, each with its scenario and kinds.
+    @Test func test3IsReadThroughTheBundledFileNames() throws {
+        let files = try #require(EvaluationSet.test3.bundledFiles)
+        #expect(try DatasetFiles.text("FinancialEdgeAI/Resources/\(files.chat).jsonl")
+                == (try DatasetFiles.text("Dataset/v3/test3.jsonl")))
+        let examples = try DatasetFiles.split("test3", directory: Self.directory)
+        #expect(examples.count == 30)
+    }
 }

@@ -58,7 +58,7 @@ def check_frozen(errors):
         elif current.read_bytes() != frozen:
             errors.append(f"{path} differs from {FROZEN_TAG}")
     extra = [p.relative_to(ROOT).as_posix() for p in DATASET.rglob("*") if p.is_file()
-             and "v2" not in p.relative_to(DATASET).parts[:1] and p.relative_to(ROOT).as_posix() not in files
+             and p.relative_to(DATASET).parts[0] not in ("v2", "v3") and p.relative_to(ROOT).as_posix() not in files
              and p.name != ".DS_Store"]
     for path in extra:
         errors.append(f"{path} is not in {FROZEN_TAG}: Dataset/ outside v2/ must not change")

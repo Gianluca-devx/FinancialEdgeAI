@@ -22,4 +22,48 @@ with the references on `test3` and then on `real3`, and the Mac is free. The tra
 
 ## Results
 
-(added after the runs)
+### Run 1: `lora-v3`, seed 1 (2026-10-22, 00:42 to 05:32, 289 minutes)
+
+Same Mac, `mlx-lm` 0.32.2, `mlx` 0.32.4, `HF_HUB_OFFLINE=1`, started by `mlx_lm.lora -c Scripts/lora/lora-v3.yaml`, followed by `stop_rule.py --pid <pid>`.
+Trainable parameters 7.340 M of 4022.468 M (0.182%). Data check as in the plan (training data byte-identical to `Dataset/v3`).
+
+| Iteration | Validation loss (72 statements, wording and templates held out) | |
+|---|---|---|
+| 1 | 0.418 | |
+| 50 | 0.043 | |
+| 100 | 0.036 | |
+| 150 | 0.037 | |
+| 200 | 0.030 | |
+| 250 | 0.039 | |
+| 300 | 0.031 | |
+| 350 | 0.026 | |
+| 400 | 0.036 | |
+| 450 | 0.023 | |
+| 500 | 0.027 | |
+| 550 | 0.035 | |
+| 600 | **0.020** | **best, chosen** |
+| 650 | 0.021 | miss 1 |
+| 700 | 0.020 | miss 2 (equal to the best, not strictly lower) |
+| 750 | 0.023 | miss 3: the rule stops |
+
+**The stop rule, applied by the program:** the best validation is iteration 600 (0.020); 650, 700 (a tie, which is not an improvement) and 750 did not improve, so the program
+stopped the process after the checkpoint of 750 was saved. The chosen checkpoint is the lowest loss, the earliest on the tie: **iteration 600**
+(`0000600_adapters.safetensors`). The `iters: 900` in the saved `adapter_config.json` is the planned value, not what ran (750). Assembled in `adapters/phone/lora-v3/`.
+
+| File | Size | SHA-256 |
+|---|---|---|
+| `adapter_config.json` | | `a5a91a164061b1c1b4084046c99bf2a9f6783d2c9010258206864af1ba0b6b11` |
+| `adapters.safetensors` (iteration 600) | 29,384,266 bytes | `26a0d90702e19f00e97ba73555c0084d91d9432a10dceddf1c56c0deb0527959` |
+
+**What the losses say.** The validation loss goes from 0.043 (iteration 50) to 0.020 (600), lower than `lora-v2`'s best (0.027 on its own, smaller validation set of 48; the two
+numbers are on different validation sets and are not compared). The curve is noisy (0.020 to 0.039 from iteration 200), so the choice of 600 over 450 (0.023) is a difference within the
+noise of the curve, as for `lora-v2`: the evaluation, not this loss, says whether the adapter is better. The run is longer than `lora-v2`'s (750 against 350 iterations) because the
+loss kept improving with a slow trend. One seed.
+
+**An interrupted first attempt, kept as evidence, not used.** The same command was started on 2026-10-19 (15:19) and killed by hand at iteration 310 because the Mac was needed
+(an earlier start was killed at iteration 0). Its seven validations (iterations 1 to 300) are **identical to the three decimals** to the first seven of the finished run: with the same seed the
+training is reproducible here, which also means the interruption did not change the run. Its folder is `adapters/lora-v3-interrupted-it310` (not in the repository).
+
+### Runs 2 and 3: seed 2 of `lora-v3` and seed 2 of `lora-v2`
+
+Skipped on the night of 2026-10-22 by the time guard (the first run took 289 minutes and the Mac was needed at 08:30), started the same evening at 17:58, one after the other. (added after the runs)

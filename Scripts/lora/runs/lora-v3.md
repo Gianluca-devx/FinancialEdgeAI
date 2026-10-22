@@ -66,4 +66,32 @@ training is reproducible here, which also means the interruption did not change 
 
 ### Runs 2 and 3: seed 2 of `lora-v3` and seed 2 of `lora-v2`
 
-Skipped on the night of 2026-10-22 by the time guard (the first run took 289 minutes and the Mac was needed at 08:30), started the same evening at 17:58, one after the other. (added after the runs)
+Skipped on the night of 2026-10-22 by the time guard (the first run took 289 minutes and the Mac was needed at 08:30), started the same evening at 17:58, one after the other (the Mac had been restarted in between: the virtual environment was rebuilt with the same `mlx-lm` 0.32.2 and `mlx` 0.32.4,
+and the training data was checked byte-identical to `Dataset/v3` and `Dataset/v2`). Command lines as in the plan, with `caffeinate -dims` against sleep.
+
+| | `lora-v3` seed 1 | `lora-v3` seed 2 | `lora-v2` seed 1 (Phase 2b) | `lora-v2` seed 2 |
+|---|---|---|---|---|
+| Data | `Dataset/v3` | `Dataset/v3` | `Dataset/v2` | `Dataset/v2` |
+| Validation set | 72 | 72 | 48 | 48 |
+| Stopped after (the rule) | 750 | 300 | 350 | 300 |
+| Chosen checkpoint | 600 | 150 | 200 | 150 |
+| Validation loss at the chosen checkpoint | 0.020 | 0.028 | 0.027 | 0.026 |
+| Duration | 289 min | 124 min | about 120 min | 109 min |
+
+Validation losses of the seed-2 runs (iterations 1, 50, ... , 300):
+`lora-v3` seed 2: 0.418, 0.054, 0.036, **0.028**, 0.035, 0.036, 0.041 (miss 3 at 300: the rule stops);
+`lora-v2` seed 2: 0.390, 0.048, 0.036, **0.026**, 0.045, 0.035, 0.032 (miss 3 at 300: the rule stops).
+
+| File | Size | SHA-256 |
+|---|---|---|
+| `lora-v3-s2` `adapter_config.json` | | `c68d4b3d2e8bd971bf399321db8527b9d5dbc98457397a06b78e775e341323e8` |
+| `lora-v3-s2` `adapters.safetensors` (iteration 150) | 29,384,266 bytes | `e00e658338352a5c271a19be10bdf89470fa234bf95323726e7fabd79bde0a87` |
+| `lora-v2-s2` `adapter_config.json` | | `ed6d648f367ef9f89feb64523cf783bea98ba7186e19da7bb8756379e7bf50f7` |
+| `lora-v2-s2` `adapters.safetensors` (iteration 150) | 29,384,266 bytes | `ef41cf860ced63ad7502dbb2d5ece646068b6391724c819dbc618d64a2c8903f` |
+
+Assembled in `adapters/phone/lora-v3-s2/` and `adapters/phone/lora-v2-s2/`. The `iters` in the saved configs are the planned values (900 and 600), not what ran.
+
+**What the seeds already show, before any evaluation.** The same recipe on the same data gave different stopping points and chosen checkpoints: `lora-v3` ran 750 iterations (checkpoint 600) with seed 1
+and 300 (checkpoint 150) with seed 2. The validation loss at the chosen checkpoint is 0.020 and 0.028 for the two seeds of `lora-v3`, and 0.027 and 0.026 for the two of `lora-v2` (on a different,
+smaller validation set): the loss does not say which checkpoint is better, as the earlier runs showed. The seed-2 runs are the measure of noise (D39); what it means for the answers is for the
+evaluations. Nothing was run on the phone for any of these adapters.

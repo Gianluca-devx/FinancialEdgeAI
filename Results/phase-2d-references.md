@@ -43,18 +43,27 @@ Set hash `c242e9d301bb`. Reports in `RealSet/reports/` (git-ignored). Counts onl
 
 | | Unmodified model | `lora-v2` |
 |---|---|---|
-| Answers / decodable | **not measured yet** | 36 / 33 (**3 undecodable**) |
-| **All 13 fields null (fully correct)** | **not measured yet** | 19 / 36 |
-| Invented values | **not measured yet** | 13 |
-| Median time per statement / peak memory | | 13.3 s / 2.67 GiB |
+| Answers / decodable | 36 / **36** | 36 / 33 (**3 undecodable**) |
+| **All 13 fields null (fully correct)** | **24 / 36** | 19 / 36 |
+| Invented values | 12 | 13 |
+| Unreadable fields (counted apart from the invented ones) | 3 | 0 (plus the 39 fields of the 3 undecodable answers) |
+| Median time per statement / peak memory | 9.1 s / 2.52 GiB | 13.3 s / 2.67 GiB |
 
-- The unmodified model's run on `real3` was started on 19 October and **never produced a report** (the one report of that day for `real3` is `lora-v2`'s); it is to be run again,
-  and criterion 5 cannot be read until it exists: its two thresholds are "fully correct at least the unmodified model's" and "invented values at most 70% of `lora-v2`'s", that is
-  **at most 9 of 13** invented values (0.7 x 13 = 9.1).
-- `lora-v2` has **3 undecodable answers** on `real3` (one passage, all three runs: valid JSON with a wrong key, `previous500` or `previous5`, the same failure as on `real1` and `real2`; only key names are quoted): criterion 6 (0 undecodable on every set) is the reference to beat.
+- **On this set `lora-v2` is not better than the unmodified model, it is slightly worse:** 19 against 24 all-null answers, 13 against 12 invented values, and 3 undecodable answers where the unmodified
+  model has none. This is the finding of Phase 2b again (no better than the unmodified model on real annual-report text), now on 12 passages that nobody had read when the training data was written.
+  With 12 passages and 3 runs the difference of 5 answers is small, and the answers of the 3 runs of a passage are not independent: it is not a measured difference, it is the absence of an advantage.
+- `lora-v2`'s 3 undecodable answers are one passage, all three runs: valid JSON with a wrong key (`previous500` or `previous5`), the same failure as on `real1` and `real2`; only key names are quoted.
+  Criterion 6 (0 undecodable on every set) is the reference to beat.
+
+**Thresholds this fixes for criterion 5** (read on `lora-v3` seed 1, the spec's wording "fully correct no fewer than the unmodified model's, invented values at most 70% of `lora-v2`'s"):
+**at least 24 / 36** all-null answers and **at most 9** invented values (0.7 x 13 = 9.1, rounded down). The unmodified model's own 12 invented values are above the second threshold: the criterion asks `lora-v3`
+to be clearly better than both references on invented values.
+
+Reports: `RealSet/reports/` (git-ignored): `baseline-real3-Qwen3-4B-4bit-20261023T081340.json` (unmodified, run alone on the phone on 23 October, 09:54 to 10:14), `lora-v2-real3-Qwen3-4B-4bit-20261019T153744.json`.
 
 ## What happened to the runs, for the record
 
+- The unmodified model on `real3` was started on 19 October and never produced a report (the cause was not found: the scripts and logs of that day were lost with the scratchpad); it was run again on 23 October, with the user's approval.
 - The unmodified model on `test3` was started on 19 October and **killed after 7 minutes by a fault in my queue script** (a copied `.jsonl` counted as a new report and a relaunch ended it), then
   started again and stopped on request (a partial report of 16 of 90 answers exists on the phone and is **not used**). It was run completely on 23 October (09:03 to 09:50), alone on the phone.
 - The Mac was restarted on 22 October and wiped the copies of the reports in the scratchpad; the phone still held them and they were copied again on 23 October. No report was changed.

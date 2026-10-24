@@ -20,13 +20,16 @@ without a deadline; it began as an academic challenge.
   and the second call for the 5 balance sheet fields).
 - Done: a **LoRA adapter** for the 13 core fields, trained on the Mac, loaded by the app and evaluated on the
   same frozen test split, with the same prompt, seeds and phone.
-- **The hypothesis (specialisation helps) is confirmed on short synthetic statements, and not yet on real text.** The
+- **The hypothesis (specialisation helps) is confirmed on short synthetic statements, and, after a third adapter, on a small set of real text.** The
   first adapter raised the fully correct answers from 57 / 90 to 78 / 90 but made the model answer null for wording it had
   never seen (15 missed values). A second adapter, trained on data with several names for every metric, reaches
-  85 / 90 on the same test with no missed value, and 77 / 90 against 34 / 90 on a second test of new wording. On
-  text from real annual reports it is no better than the unmodified model. See
-  [the LoRA results](#results-the-lora-adapter), [lora-v2](#results-more-varied-training-data-lora-v2) and
-  [Next steps](#next-steps).
+  85 / 90 on the same test with no missed value, and 77 / 90 against 34 / 90 on a second test of new wording, but on
+  text from real annual reports it was no better than the unmodified model. A third adapter (`lora-v3`, Phase 2d), trained with synthetic
+  sentences that look like the real ones that fooled it (segment figures, changes, costs, adjusted items), writes **no invented value** on 12 fresh real passages
+  that were drawn after its training data was frozen (the unmodified model 12, `lora-v2` 13 and 21 for two seeds), keeps 85 / 90 on the old test, and the gain is far larger than the
+  difference between two training runs. One failure is not fixed: a garbled key on one passage. See
+  [the LoRA results](#results-the-lora-adapter), [lora-v2](#results-more-varied-training-data-lora-v2),
+  [lora-v3](#results-real-style-distractors-in-the-training-data-lora-v3) and [Next steps](#next-steps).
 
 ## How the extraction is designed
 
@@ -158,6 +161,29 @@ dataset or the way an evaluation judges an answer ([`Results/phase-2c-safeguards
   that miss an amount and on 31% of the fully correct ones (distractor amounts are "unused" too); it cannot see a missed percentage or per-share value
   (26% of the misses), and on real annual-report text it is shown on most answers, so it says little there.
 
+### Results: real-style distractors in the training data (lora-v3)
+
+`lora-v2` fails on real annual-report text because real paragraphs are full of figures it was never taught to ignore: a segment's revenue, a change in
+amount, a cost line, an adjusted figure. The third adapter (`lora-v3`, Phase 2d) is trained on `Dataset/v3`: the data of `lora-v2` plus 240 synthetic statements of nine such
+kinds, with fictional companies and generated numbers, never copied from a real report (a private check proves no run of six words is shared). Two seeds of `lora-v3` and a second seed of `lora-v2`
+measure the noise of a training run. The full comparison, every criterion and the seed spread are in [`Results/lora-v3-analysis.md`](Results/lora-v3-analysis.md).
+
+| Fully correct answers | Unmodified | `lora-v2` (2 seeds) | `lora-v3` (2 seeds) |
+|---|---|---|---|
+| Old test (90) | 57 | 85, 80 | **85, 85** |
+| Test 2 (90, new wording) | 34 | 77, not run | **81**, not run |
+| Test 3 (90, synthetic real-style) | 14 | 27, 16 | **66, 57** |
+| `real1` (63, not blind) | 39 | 37, 30 | **57, 57** |
+| `real2` (30, not blind) | 21 | 10, 11 | **24, 27** |
+| `real3` (36, drawn blind; all-null is correct) | 24 | 19, 12 | **33, 36** |
+
+- **Invented values on real text fall by far more than the noise:** `real1` 42 (unmodified), 33 and 39 (`lora-v2`), 3 and 9 (`lora-v3`); `real3` 12, 13 and 21, then 0 and 0.
+- **The criteria:** seven of eight are met for the first `lora-v3` run. Not met: no undecodable answer on any set. One `real3` passage makes it write a key with a number inside
+  (`previous4YearEps`) in all three runs, as `lora-v1` and `lora-v2` did on other sets; the second seed does not, and `lora-v2`'s second seed does it more. The app repairs this by position (Phase 2c).
+- **Cost:** a few more missed values than `lora-v2` seed 1 on the synthetic sets (5 against 0 on the old test), mostly growths and previous-year values; within the noise by the rule of the spec, and fewer in the second seed.
+- **Limits:** `real3` has 12 passages and no stated field (the 17 reports hold too few fresh paragraphs), so it measures not inventing a value, not extracting one; `real1` and `real2` were read while
+  the training data was designed; two seeds are a thin measure of noise.
+
 ### What the iPhone costs
 
 | | v1.1.0 (7 numbers) | Schema version 1 (13 strings) |
@@ -246,12 +272,12 @@ FinancialEdgeAI/                 Xcode app target (Swift, SwiftUI, MLX)
 ├── ViewModel/  ChatViewModel, EvaluationViewModel, MetricsPresenter
 ├── Views/      ContentView (Extract), EvaluationView (Evaluate, work in progress)
 └── Resources/  schema, prompt files and test split (bundled copies, checked for drift)
-FinancialEdgeAITests/            Swift Testing, 310 tests
+FinancialEdgeAITests/            Swift Testing, 326 tests
 Dataset/                         300 labelled statements, schema.json, the prompt, labels, archive/v1.1.0
 Scripts/                         generate and validate the dataset, render the prompt, summarise and compare reports
 Scripts/lora/                    LoRA training: data check, config, run record (needs mlx-lm; weights never committed)
 Results/                         model gate, the baselines and the LoRA run (reports, tables, analysis), comparisons
-Specs/                           the written specs of each phase (metrics, schema, extended call, LoRA)
+Specs/                           the written specs of each phase (metrics, schema, extended call, LoRA, safeguards, real-style distractors)
 ```
 
 ## Run it
@@ -305,14 +331,10 @@ the prompt, of the test split with its labels, and of the schema. The schema 1 b
 The synthetic task is solved well enough to be measured against real text, which it does not yet cover. What to do next, each a
 new experiment with its own comparison:
 
-1. **Real-text distractors in the training data.** Segment figures, changes in amount, deferred and adjusted items and cost
-   lines are what real annual reports are full of and what the training statements lack. Test on more real passages than the 31 of
-   the first attempt, and with their labels confirmed.
+1. **More real passages, with stated fields.** Phase 2d is read on 12 fresh passages with no stated field; a larger blind set from other reports (the 17 reports are used up) would measure extraction on real text too.
 2. **A garbled key** is now repaired in the app (Phase 2c) instead of asked again; the cause (the adapter writing it) remains, and constrained
    decoding would remove it if it becomes available.
-3. **Other seeds of the same training.** The checkpoints of `lora-v1` varied from 42 to 78 fully correct answers
-   ([`Results/lora-v1-checkpoints.md`](Results/lora-v1-checkpoints.md)): one run is one draw, and the result of `lora-v2`
-   (85 / 90, 77 / 90) is one draw of a better recipe.
+3. **A third seed**, and the second seeds on test 2 (not run in Phase 2d): two seeds give a thin spread, and the cost of `lora-v3` (a few more missed growths and previous-year values) is within it, but is the direction to watch.
 4. **A sharper hint.** The possible-miss hint is shown (Phase 2c) but is noisy on distractor amounts and blind to percentages and per-share
    values; a better hint is a new experiment.
 5. **An adapter for the balance sheet call** (the operating cash flow is not the cash balance).
@@ -325,7 +347,7 @@ new experiment with its own comparison:
 format of the dataset directly (the Swift trainer `LoRATrain` reads `{"text": ...}` lines). An adapter only works
 with the base model it was trained on, and it runs unfused in the app (about 10% slower per answer). Weights and
 adapters are not committed (`.gitignore` excludes them): the config, the data and the run record
-([`Scripts/lora/runs/lora-v1.md`](Scripts/lora/runs/lora-v1.md), [`lora-v2.md`](Scripts/lora/runs/lora-v2.md)) are.
+([`Scripts/lora/runs/lora-v1.md`](Scripts/lora/runs/lora-v1.md), [`lora-v2.md`](Scripts/lora/runs/lora-v2.md), [`lora-v3.md`](Scripts/lora/runs/lora-v3.md)) are.
 
 **Other next steps.** A Release build for the speed numbers, real reports instead of synthetic statements,
 a larger test split, the overview and business sections of a report, PDF input, a comparison with a smaller

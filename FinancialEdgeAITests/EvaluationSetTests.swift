@@ -13,6 +13,7 @@ struct EvaluationSetTests {
         #expect(EvaluationSet(name: "test") == .test)
         #expect(EvaluationSet(name: "") == .test)
         #expect(EvaluationSet(name: "test2") == .test2)
+        #expect(EvaluationSet(name: "test3") == .test3)
         #expect(EvaluationSet(name: "real") == .external("real"))
     }
 
@@ -21,11 +22,14 @@ struct EvaluationSetTests {
         #expect(EvaluationSet.test2.name == "test2")
         #expect(EvaluationSet.external("real").name == "real")
         #expect(EvaluationSet.test2.split == "test2")
+        #expect(EvaluationSet.test3.name == "test3")
+        #expect(EvaluationSet.test3.split == "test3")
     }
 
     @Test func theBundledSetsHaveTheirFilesAndAnExternalSetHasNone() {
         #expect(EvaluationSet.test.bundledFiles == .init(chat: "test", labels: "test.labels", index: "index"))
         #expect(EvaluationSet.test2.bundledFiles == .init(chat: "test2", labels: "test2.labels", index: "index.v2"))
+        #expect(EvaluationSet.test3.bundledFiles == .init(chat: "test3", labels: "test3.labels", index: "index.v3"))
         #expect(EvaluationSet.external("real").bundledFiles == nil)
     }
 
@@ -41,6 +45,7 @@ struct EvaluationSetTests {
     @Test func onlyTheFrozenTestHasABalanceSheetCall() {
         #expect(EvaluationSet.test.supports(.extended))
         #expect(!EvaluationSet.test2.supports(.extended))
+        #expect(!EvaluationSet.test3.supports(.extended))
         #expect(!EvaluationSet.external("real").supports(.extended))
         #expect(EvaluationSet.test2.supports(.core))
         #expect(EvaluationSet.external("real").supports(.core))

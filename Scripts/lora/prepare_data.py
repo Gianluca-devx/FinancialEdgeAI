@@ -6,9 +6,9 @@ scripts of Scripts/ use the standard library only; this folder is the exception,
 
 What it does:
   1. Copies train.jsonl and valid.jsonl of the source folder (Dataset by default, Dataset/v2 for Phase 2b) to <out>/
-     (the chat format `mlx_lm.lora` reads). The test splits (Dataset/test.jsonl, Dataset/v2/test2.jsonl) are
-     never copied or listed: they stay unseen by the training. They are only read to check that none of their
-     statements is in the training data.
+     (the chat format `mlx_lm.lora` reads). The test splits (Dataset/test.jsonl, Dataset/v2/test2.jsonl and Dataset/v3/test3.jsonl) are
+     and Dataset/v3/test3.jsonl) are never copied or listed: they stay unseen by the training. They are only read to
+     check that none of their statements is in the training data.
   2. For every example, builds the text the training sees (the chat template over system, user and
      assistant messages) and the text the app feeds the model at inference (system and user messages,
      generation prompt, `enable_thinking` off), and checks that the training text is exactly the inference
@@ -23,6 +23,7 @@ Usage:
   python3 Scripts/lora/prepare_data.py --out adapters/data [--report Results/baseline-schema1-....json]
   python3 Scripts/lora/prepare_data.py --source Dataset/v2 --out adapters/data-v2 \
       [--report Results/baseline-test2-....json --report-test Dataset/v2/test2.jsonl]
+  python3 Scripts/lora/prepare_data.py --source Dataset/v3 --out adapters/data-v3
 """
 import argparse
 import json
@@ -90,14 +91,14 @@ def main():
             n, trained, expected = problems[0]
             print(f"  first difference, example {n}:\n  trained : {trained[-160:]!r}\n  expected: {expected[-160:]!r}")
 
-    test_files = [DATASET / "test.jsonl", DATASET / "v2" / "test2.jsonl"]
+    test_files = [DATASET / "test.jsonl", DATASET / "v2" / "test2.jsonl", DATASET / "v3" / "test3.jsonl"]
     test_statements = {row["messages"][1]["content"] for f in test_files if f.exists() for row in read_jsonl(f)}
     leaked = sum(row["messages"][1]["content"] in test_statements
                  for name in ("train", "valid") for row in read_jsonl(out / f"{name}.jsonl"))
     print(f"test statements ({len(test_statements)} in {', '.join(f.name for f in test_files if f.exists())}) "
           f"found in the training data: {leaked}")
     failed = failed or leaked > 0
-    for forbidden in ("test.jsonl", "test2.jsonl"):
+    for forbidden in ("test.jsonl", "test2.jsonl", "test3.jsonl"):
         assert not (out / forbidden).exists(), "the data folder must not hold a test split"
 
     if args.report:

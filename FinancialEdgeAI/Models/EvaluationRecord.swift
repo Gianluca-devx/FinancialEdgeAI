@@ -121,7 +121,7 @@ struct EvaluationReport: Codable, Sendable {
         let adapter: AdapterInfo?
         /// Seconds the model took to load (the first load includes the download).
         let modelLoadSeconds: Double?
-        /// Which statements were run: "test" (the frozen test split), "test2" or the name of an external set.
+        /// Which statements were run: "test" (the frozen test split), "test2", "test3" or the name of an external set.
         /// Reports written before Phase 2b do not have it: they are the test split.
         var evaluationSet: String? = nil
     }

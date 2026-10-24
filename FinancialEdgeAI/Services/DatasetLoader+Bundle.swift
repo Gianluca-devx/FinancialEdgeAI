@@ -15,7 +15,7 @@ extension DatasetLoader {
         try loadSet(.test, tier: tier).examples
     }
 
-    /// The files of a set: bundled (`test`, `test2`) or copied to the app's Documents (`external`).
+    /// The files of a set: bundled (`test`, `test2`, `test3`) or copied to the app's Documents (`external`).
     static func setData(for set: EvaluationSet, tier: FieldTier = .core, documents: URL = .documentsDirectory) throws -> SetData {
         guard set.supports(tier) else { throw DatasetError.unsupportedTier(set: set.name, tier: tier.rawValue) }
         if let files = set.bundledFiles {

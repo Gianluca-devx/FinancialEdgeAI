@@ -204,6 +204,11 @@ def main():
         import validate_dataset_v2
         print("\n--- Dataset/v2 (Phase 2b) ---")
         validate_dataset_v2.check(DATASET / "v2", errors)
+    if (DATASET / "v3").exists():
+        # Phase 2d: the third dataset has its own checks (held-out template pools, real-text check, Dataset/ frozen).
+        import validate_dataset_v3
+        print("\n--- Dataset/v3 (Phase 2d) ---")
+        validate_dataset_v3.check(DATASET / "v3", errors)
     if errors:
         print(f"\n{len(errors)} problem(s):")
         for e in errors[:50]:

@@ -33,9 +33,9 @@ Adapters that missed a value of the statement (all three runs unless a number is
 | "above the earlier year", "an advance of" | 0 | test 2 (2), test 3 (5) |
 | "built from", "profit for the period" | 0 | test 3 (3 and 7), test 2 (5) |
 | "a year earlier stood at", "year-over-year", "for 2024 was" | 0 | test (1), test 2 (1) |
-| "year over year" | 54 | test 17 and 19 use the hyphenated or "was down" forms |
+| "year over year" | 54 | test 19 ("Net income was down 20.4% year over year") is missed by `lora-v2` seed 3 only: **not every miss is unseen wording** |
 
-The held-out design of Phase 2b (the wording pools of train, validation and the tests are disjoint) is what makes these zeros: **the missed values are mostly growth and previous-year values written in wording the training never contained**, the
+The held-out design of Phase 2b (the wording pools of train, validation and the tests are disjoint) is what makes these zeros: **most of the missed values are growth and previous-year values written in wording the training never contained** (test 19 is one exception), the
 lesson of `lora-v1` (more data variety) in a smaller form.
 
 ## Reading

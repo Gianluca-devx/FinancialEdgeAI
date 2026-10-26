@@ -72,3 +72,7 @@ produced no report and is not a result); the most likely cause is a throttled ph
 2. **`lora-v2`'s noise was larger than two seeds showed** (up to 49 fully correct on `real1` for one seed, 30 for another): one training run of any recipe is a draw, as D39 said, and two draws were still too few.
 3. **The garbled key** is a failure of `lora-v2` in every seed and of `lora-v3` in one of three.
 4. **The earlier analysis is not rewritten** (Amendment 4, 5): its table and verdict stay as published, this file corrects the readings that the third seed reverses.
+
+## `real3` labels
+
+The three doubtful `real3` labels (all null, counts only here) were put to the user, who confirmed all three on 2026-10-26. All 12 `real3` labels are therefore confirmed and no `real3` count in this or the earlier analysis changes.

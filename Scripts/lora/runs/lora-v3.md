@@ -95,3 +95,19 @@ Assembled in `adapters/phone/lora-v3-s2/` and `adapters/phone/lora-v2-s2/`. The 
 and 300 (checkpoint 150) with seed 2. The validation loss at the chosen checkpoint is 0.020 and 0.028 for the two seeds of `lora-v3`, and 0.027 and 0.026 for the two of `lora-v2` (on a different,
 smaller validation set): the loss does not say which checkpoint is better, as the earlier runs showed. The seed-2 runs are the measure of noise (D39); what it means for the answers is for the
 evaluations. Nothing was run on the phone for any of these adapters.
+
+### Runs 4 and 5: seed 3 of `lora-v3` and of `lora-v2` (Amendment 4 of the spec)
+
+Written into the spec before any run (commit 6a0ed34). Same configs and data (checked byte-identical to `Dataset/v3` and `Dataset/v2`), `--seed 3 --adapter-path adapters/<name>`, `caffeinate -dims`, the stop rule applied by `stop_rule.py`; the Mac was on battery at the start of the first run (73%) and was plugged in later (the time is not recorded); the run was not interrupted.
+
+| | `lora-v3` seed 3 | `lora-v2` seed 3 |
+|---|---|---|
+| Run | 2026-10-25 23:12 to 2026-10-26 01:57 (164 min) | 01:57 to 03:47 (110 min) |
+| Stopped after (the rule) | 400 | 300 |
+| Chosen checkpoint, validation loss | 250, 0.032 | 150, 0.029 |
+| Validations | 0.418, 0.050, 0.038, 0.037, 0.047, **0.032**, 0.034, 0.035, 0.037 | 0.390, 0.053, 0.038, **0.029**, 0.032, 0.031, 0.035 |
+| `adapters.safetensors` SHA-256 | `3a1eacbeee6e2bf5250fa6cdc0f738cd17d68e86871dc0dac6ebde85b348485a` | `0745f63d140cb17ea962c802dfed35d26d10e107ecb09682dd10df75777b40e2` |
+| `adapter_config.json` SHA-256 | `d850923a59d9deab58341d839955ca9ed0324c805dfe8929e559f532be878618` | `de67b7f68949d53a2eb4c2ffbbd5442285e837b2385db63d215ba50141bae8bb` |
+
+Evaluation on the phone: `lora-v3-s3` 03:53 to 06:27 on 26 October (the first launch waited about two hours for an unlocked phone); `lora-v2-s3`: a first attempt on test 3 started at 06:27 and **never produced a report because the phone's battery drained**
+(not a result, disclosed); the five runs were restarted from scratch at 09:36 and finished at 13:28. The first of them (test 3) ran at half speed (a throttled phone after the drain); see `Results/lora-seed3-analysis.md`.

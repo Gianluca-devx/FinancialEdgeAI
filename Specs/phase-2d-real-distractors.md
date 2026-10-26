@@ -186,3 +186,25 @@ each. If the user supplies more reports later, they can make a further fresh set
 **Result of the corrected draw (added after it was run).** The second draw is **byte-identical to the first** (same SHA-256 `a1669dbf5b244e23068e95222a69b5ea8434389bea48df81bc5d441d11c053ae`, 12 passages: 6 with fields, 5 with
 no field, 1 headline, 60 removed as not fresh): the slip changed nothing. The hash was mistyped (one character missing) in the first version of this amendment (commit 61e05b0) and is
 corrected here. `real3` is frozen with this hash; reading and labelling start now.
+
+## Amendment 4, 2026-10-25, after the release v2.5.0: a third seed of both recipes (written before any run)
+
+**What was seen first.** All of the Phase 2d results: two seeds of `lora-v3` and of `lora-v2` on the old test, test 3, `real1`, `real2` and `real3`
+(`Results/lora-v3-analysis.md`), including the one garbled key of `lora-v3` seed 1 on `real3` and its absence in seed 2. The analysis itself says that two seeds
+are a thin measure of noise (a spread is one range of two points) and that `lora-v3` may miss more growth and previous-year values. Nothing else was seen: no third-seed run exists.
+
+**What is added.** An extension, not a change to the criteria: **seed 3 of `lora-v3` and seed 3 of `lora-v2`**, trained with the same configs, the same data (the frozen `Dataset/v3`
+and `Dataset/v2`, checked byte-identical to `adapters/data-v3` and `adapters/data-v2`), the same stop rule applied by `stop_rule.py`, and only `--seed 3 --adapter-path adapters/<name>`
+on the command line, exactly as the seed-2 runs. Names: `lora-v3-s3` and `lora-v2-s3`. Each is evaluated on the same five sets as the seed-2 adapters (old test, test 3, `real1`, `real2`, `real3`;
+not test 2) with the same prompt, build, seeds 1 to 3 and settings. The user approved the work, including the phone use, on 2026-10-25 ("do all of them").
+
+**How the result is read (fixed now).**
+1. The criteria 1 to 8 stay as written for `lora-v3` seed 1 and are **not re-judged** on seed 3; the verdict of `lora-v3-analysis.md` (seven of eight met, criterion 6 not met) stays as published.
+2. D39 is applied again with three seeds: means over the three seeds, spread = maximum minus minimum over the three, and a difference counts only if it exceeds the larger of the two spreads. Each conclusion
+   marked "beyond the noise" or "not distinguishable" in the analysis is re-read; **if a third seed reverses one, that is reported as it is**, with the old reading kept in the table.
+3. Counted separately, per recipe: how many seeds give an undecodable answer on each set (the garbled key), and the missed values on the old test (criterion 1 was met with zero margin).
+4. No adapter is chosen, dropped or re-run because of how it scores; a seed whose training stops late or early is kept as the rule gives it. An interrupted run is kept as evidence and restarted from scratch.
+5. The real-set numbers stay counts only (`Scripts/phase2d_table.py`, which will list the new adapter names); the results go in a new file `Results/lora-seed3-analysis.md`, and the earlier analysis is not edited.
+
+**Cost.** Training about 2 to 5 hours each on the Mac (the seed-2 runs took 124 and 109 minutes, seed 1 of `lora-v3` 289), the evaluations about 3.5 hours of phone time each. The `lora-v2-s3` training runs
+on the Mac while the phone evaluates `lora-v3-s3`.

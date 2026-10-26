@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PROMPT = "7779853b346c"
 ANSWERS = {"test": 90, "test2": 90, "test3": 90, "real1": 63, "real2": 30, "real3": 36}
 SETS = ["test", "test2", "test3", "real1", "real2", "real3"]
-MODELS = ["none", "lora-v1", "lora-v2", "lora-v2-s2", "lora-v3", "lora-v3-s2"]
+MODELS = ["none", "lora-v1", "lora-v2", "lora-v2-s2", "lora-v2-s3", "lora-v3", "lora-v3-s2", "lora-v3-s3"]
 THERMAL = {0: "nominal", 1: "fair", 2: "serious", 3: "critical"}
 
 

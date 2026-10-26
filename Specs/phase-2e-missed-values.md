@@ -1,6 +1,6 @@
 # Spec: Phase 2e, the missed growth and previous-year values (DRAFT)
 
-Status: **DRAFT, not approved** (written 2026-10-25 while the third seeds of Phase 2d train). Nothing in this spec has been built or run. It becomes binding only when the user
+Status: **STOPPED after step 2 (the diagnosis), by the user's decision on 2026-10-26.** The spec was never approved, so steps 3 to 6 were never built or run. The diagnosis is the result: `Results/phase-2e-diagnosis.md`. Most missed values are growth and previous-year values written in wording that the training data does not contain, and both recipes miss them. Reason for stopping: on the real passages every seed of `lora-v3` found all 4 stated fields, so there is no evidence that the misses matter on real text. The next question that decides the project is PDF input (`Specs/phase-2f-pdf-pilot.md`). This spec can be resumed if that pilot shows missed growth or previous-year values on real reports. The original draft status was: DRAFT, not approved (written 2026-10-25 while the third seeds of Phase 2d were training).
 approves it; the decisions are mine, each with the alternative, and the user may change any of them. Depends on `Specs/phase-2d-real-distractors.md` (tag `v2.5.0`, and its
 Amendment 4, the third seeds) and `Results/lora-v3-analysis.md`.
 

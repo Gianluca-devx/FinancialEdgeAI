@@ -1,6 +1,6 @@
 # Spec: Phase 2f, a PDF pilot (DRAFT)
 
-Status: **DRAFT, not approved** (written 2026-10-26; the comparison of three retrievers, P9, added on 2026-10-28 at the user's request). Nothing in it is built. It becomes binding when the user approves it. The decisions are mine, each with the alternative.
+Status: **APPROVED by the user on 2026-10-29** (written 2026-10-26; the comparison of three retrievers, P9, added on 2026-10-28 at the user's request). The decisions are mine, each with the alternative.
 Depends on `v2.5.0` (`lora-v3`) and its third-seed analysis (`Results/lora-seed3-analysis.md`).
 
 **Goal:** find out, on whole annual-report PDFs, **where the path from a PDF to the 13 core fields breaks**, and whether the current model and adapter are usable on it. The pilot should give a go, a
@@ -34,6 +34,15 @@ extended (balance sheet) call; UI for importing a PDF.
 | P7 | **One timing run on the phone** (about 30 minutes, only with the user's approval): the pages of condition C for one report, through the app's existing external-set path (`-evaluationSet`), so no app change is needed. It gives the time per page and per report. | Estimating from the Mac: Mac speed says little about an iPhone at "serious" thermal state. |
 | P8 | **PDFKit against `pdftotext`:** the text of the same statement pages extracted with PDFKit, by a Swift script on the Mac (the same `PDFPage.string` API as on iOS), compared with `pdftotext -layout` by whether the table rows stay intact (counts). Condition A is run with both. | Using only `pdftotext`: the app cannot ship poppler, so the result would not carry over. |
 | P9 | **Three retrievers compared in condition B, on the same pages and the same two fixed queries** (one for the income statement: "consolidated statements of operations income net sales revenue operating income net income earnings per share"; one for the cash flow statement: "consolidated statements of cash flows operating activities purchases of property and equipment capital expenditures"). The unit retrieved is **one page**, so a table keeps its header and its unit. (1) **Keywords:** a BM25 score of each page against the query, in the pilot script. (2) **Embeddings:** Apple's on-device `NLContextualEmbedding` (English), run by a Swift script on the Mac (the same API as on iOS); a page vector is the mean of its token vectors, and the score is the cosine similarity with the query vector; if a page is longer than the model's maximum input, it is split into windows and its score is the best window's. (3) **Hybrid:** reciprocal rank fusion of the two rankings (score = sum of 1 / (60 + rank)). **Measure:** for each report and statement, whether a true statement page is in the top 3 (recall at 3), over 5 reports x 2 statements = 10 cases per retriever; the rank of the first true page is also reported. **Choice for condition C, fixed now:** the retriever with the highest recall at 3; on a tie, keywords, then hybrid (the simpler one wins). The choice is made on the same 5 reports it is then used on, which is disclosed. No reranking step in this pilot. | Keywords only: the design would not say whether a retriever by meaning finds pages the keywords miss. An embedding model from the Hub: a download and a second runtime, while `NLContextualEmbedding` ships with iOS. Chunks smaller than a page: they can separate a table's rows from its unit header. |
+
+### Details fixed in step 2, before the draw
+
+The spec left these open; they are fixed in the committed scripts (`Scripts/pdf_pilot.py`, its docstring) before any report is drawn or labelled:
+- The retrievers rank pages of the **PDFKit** text (the app's extraction) for the decision rule and the choice of P9; the `pdftotext` text is ranked too and reported beside it.
+- Condition C feeds the **union of the top 3 pages for each of the two statements** (at most 6 pages per report), in rank order.
+- **Combining** (A and C): for each field, the first page in priority order that gives a readable value wins (A: the income statement pages, then the cash flow pages; C: by best rank); a field with two different readable values is a conflict, counted.
+- A value is correct when it equals the label **within half a unit of the last digit printed** (P6); a bare number takes its page header's unit; `capex` and `interestExpense` are compared as magnitudes (the schema's `magnitude`).
+- The model runs on the Mac with `Scripts/lora/pdf_generate.py` (the adapter checked by its weights hash before any call); the embedding model is `NLContextualEmbedding` English (512 dimensions, at most 256 tokens), so a page is scored by its best window of 128 words.
 
 ## Decision rule (fixed before the pilot runs)
 

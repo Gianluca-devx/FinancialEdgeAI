@@ -14,6 +14,8 @@ output is counts only: no page text, no label, no answer.
   inputs   --condition A|C --extraction X     the model inputs (one per page) for Scripts/lora/pdf_generate.py
   combine  --answers FILE --condition A|C --extraction X   the model's answers per page combined into one per report
   score    --pred FILE               P6: counts of correct, unit, column, invented, missed, unparsed and wrong amounts
+  phoneset                           P7: the condition C pages of one report (the seeded spot-check report) as an external
+                                     evaluation set for the app, RealSet/pdf/phone/pdfc/ (labels all null: time only)
 
 All of them take --out (default RealSet/pdf). Fixed here before the draw, as the spec asks, where it left a detail open:
 - The retrievers rank pages of the PDFKit text (the app's extraction) for the decision rule; the pdftotext text is ranked
@@ -526,9 +528,41 @@ def combine(answers_path: Path, condition, extraction, out: Path):
     print(f"wrote {target}: runs {len(runs)}, conflicts {conflicts}, undecodable {undecodable}")
 
 
+# --- P7, the phone timing run ------------------------------------------------------------------------------------------
+PHONE_SET = "pdfc"
+
+
+def phone_report(out):
+    """The report the draw's seed picked for the spot-check: no report is chosen by hand."""
+    return random.Random(SEED_PDF).choice([e["name"] for e in draw_file(out)["reports"]])
+
+
+def phoneset(out: Path):
+    """The condition C pages of one report (PDFKit text, the app's extraction) in the format of an external set:
+    <name>.jsonl (the chat file, the core prompt around each page), <name>.labels.jsonl, index.csv. Every label is null:
+    P7 measures the time on the phone, not the answers, so the accuracy counts of the phone report are not a result."""
+    name = phone_report(out)
+    rows_ = [json.loads(line) for line in (out / f"inputs.C.{PRIMARY}.jsonl").read_text().splitlines() if line.strip()]
+    mine = sorted((r for r in rows_ if r["report"] == name), key=lambda r: r["priority"])
+    folder = out / "phone" / PHONE_SET
+    folder.mkdir(parents=True, exist_ok=True)
+    chat, side, index = [], [], ["split,line,source,scenario,pool,unit,distractors"]
+    for line, r in enumerate(mine, start=1):
+        messages = r["messages"] + [{"role": "assistant", "content": json.dumps({k: None for k in rs.schema_keys()}, indent=2)}]
+        chat.append(json.dumps({"messages": messages}, ensure_ascii=False))
+        side.append(json.dumps({"line": line, "fields": rs.g.full_label({})}, ensure_ascii=False))
+        index.append(f"{PHONE_SET},{line},page-{r['page']},pdf,real,-,-")
+    (folder / f"{PHONE_SET}.jsonl").write_text("\n".join(chat) + "\n")
+    (folder / f"{PHONE_SET}.labels.jsonl").write_text("\n".join(side) + "\n")
+    (folder / "index.csv").write_text("\n".join(index) + "\n")
+    digest = hashlib.sha256((folder / f"{PHONE_SET}.jsonl").read_bytes() + (folder / f"{PHONE_SET}.labels.jsonl").read_bytes())
+    print(f"wrote {len(mine)} pages -> {folder}; set hash (chat + labels) {digest.hexdigest()[:12]}")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=["draw", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score"])
+    parser.add_argument("command", choices=["draw", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score",
+                                            "phoneset"])
     parser.add_argument("--reports", default=str(Path.home() / "Downloads" / "Reports"))
     parser.add_argument("--out", default=str(ROOT / "RealSet" / "pdf"))
     parser.add_argument("--extraction", choices=EXTRACTIONS, default=PRIMARY)
@@ -555,6 +589,8 @@ def main():
         combine(Path(args.answers), args.condition, args.extraction, out)
     elif args.command == "score":
         score(Path(args.pred), out)
+    elif args.command == "phoneset":
+        phoneset(out)
 
 
 if __name__ == "__main__":

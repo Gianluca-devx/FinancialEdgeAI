@@ -215,6 +215,34 @@ class PdfPilotTests(unittest.TestCase):
         quiet(p.draw, reports, out)
         self.assertEqual(json.loads((out / "draw.json").read_text())["hash"], first["hash"])
 
+    def test_phone_set_keeps_each_page_whole_inside_the_app_prompt(self):
+        out = self.tmp / "phone"
+        out.mkdir()
+        names = ["A.pdf", "B.pdf", "C.pdf"]
+        (out / "draw.json").write_text(json.dumps({"reports": [{"name": n} for n in names]}))
+        chosen = p.phone_report(out)
+        self.assertEqual(chosen, p.random.Random(p.SEED_PDF).choice(names))
+        template = (p.ROOT / "Dataset" / "prompt_template.txt").read_text().rstrip("\n")
+        prefix, suffix = template.split("<<STATEMENT>>")
+        texts = {n: [f'{n} page {i} "quoted"\nNet income 12 {i}' for i in range(3)] for n in names}
+        with (out / "inputs.C.pdfkit.jsonl").open("w") as f:
+            for n in names:
+                for priority, text in reversed(list(enumerate(texts[n]))):
+                    messages = [{"role": "system", "content": "s"},
+                                {"role": "user", "content": template.replace("<<STATEMENT>>", text)}]
+                    f.write(json.dumps({"report": n, "page": priority + 1, "priority": priority, "messages": messages}) + "\n")
+        quiet(p.phoneset, out)
+        folder = out / "phone" / p.PHONE_SET
+        chat = [json.loads(line) for line in (folder / f"{p.PHONE_SET}.jsonl").read_text().splitlines()]
+        labels = (folder / f"{p.PHONE_SET}.labels.jsonl").read_text().splitlines()
+        index = (folder / "index.csv").read_text().splitlines()
+        self.assertEqual((len(chat), len(labels), len(index)), (3, 3, 4))
+        for line, record in enumerate(chat):
+            user = record["messages"][1]["content"]
+            self.assertTrue(user.startswith(prefix) and user.endswith(suffix))
+            self.assertEqual(user[len(prefix):len(user) - len(suffix)], texts[chosen][line])
+        self.assertTrue(all(v is None for line in labels for v in json.loads(line)["fields"].values()))
+
     # the Swift scripts
     @unittest.skipUnless(shutil.which("swift"), "needs swift")
     def test_pdfkit_text_and_embeddings(self):

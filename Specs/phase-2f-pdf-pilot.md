@@ -44,6 +44,21 @@ The spec left these open; they are fixed in the committed scripts (`Scripts/pdf_
 - A value is correct when it equals the label **within half a unit of the last digit printed** (P6); a bare number takes its page header's unit; `capex` and `interestExpense` are compared as magnitudes (the schema's `magnitude`).
 - The model runs on the Mac with `Scripts/lora/pdf_generate.py` (the adapter checked by its weights hash before any call); the embedding model is `NLContextualEmbedding` English (512 dimensions, at most 256 tokens), so a page is scored by its best window of 128 words.
 
+### Details fixed before the phone run (step 5), 2026-10-31
+
+Written and committed after step 4's Mac results were seen (`Results/phase-2f-runs.md`) and before the phone is used; the user
+approved the run on 2026-10-31:
+- **The report:** the one the draw's seed picked for the spot-check (`random.Random(20261029).choice` over the draw), so no report
+  is chosen by hand.
+- **The pages:** its 6 condition C pages (keywords on the PDFKit text), in rank order, as the external set `pdfc`
+  (`Scripts/pdf_pilot.py phoneset`, copied to `Documents/EvalSets/pdfc/`). Every label is null: P7 measures time, so the accuracy
+  counts of the phone report are not a result.
+- **The app:** the build already on the phone (no app code changed since it was installed in Phase 2d), with `lora-v3` from
+  `Documents/Adapters/lora-v3`: `-autoRunEvaluation YES -evaluationSet pdfc -adapterName lora-v3`. The app's own 3 runs
+  (seeds 1, 2, 3): 18 calls.
+- **Measured,** from the app's report: the time per call (median and maximum), the time to the first token, the prompt tokens,
+  the peak memory and the thermal state; the time per report is the sum over its 6 pages, in each run.
+
 ## Decision rule (fixed before the pilot runs)
 
 Over the 5 reports, for the 10 labelled current-year and previous-year amounts:

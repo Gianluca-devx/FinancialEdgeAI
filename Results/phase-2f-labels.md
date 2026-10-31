@@ -7,5 +7,5 @@ Spec: `Specs/phase-2f-pdf-pilot.md` (P2, P3). The reports, their text and the la
   - **50 amounts** (10 per report), **45 stated** and **5 null** (an operating income not printed in 2 reports, an interest expense not printed in 3). The three growth fields are null in all 5 (no percent on the statement pages).
   - Units: 4 reports in millions, 1 in thousands.
   - The page header gives the unit on **8 of the 10 statement pages** in a form the fixed rule reads as a table unit; on one income page it is read only through a share-count phrase ("in millions of shares"), which happens to be correct, and **one cash flow page prints no unit at all**. By the rule fixed before the draw (P6) a bare number on that page cannot be scored correct; it is reported, not fixed.
-- **Spot-check:** one report, chosen by the draw's seed, is checked by the user (pending).
+- **Spot-check:** one report, chosen by the draw's seed, was checked by the user: asked whether its 10 labels are right, the user answered "Go" (2026-10-31); no label changed.
 - **Disclosed:** the 17 reports were partly read for `real1` to `real3` (prose paragraphs of the management discussion); the statement pages were not used before. The statement pages were located by their titles and confirmed by reading.

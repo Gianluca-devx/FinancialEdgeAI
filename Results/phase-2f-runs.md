@@ -81,3 +81,33 @@ Keywords pick the top 3 pages per statement; their union is at most 6 pages per 
 
 A statement page is about 1,100 to 1,800 prompt tokens, two to three times the 567 tokens of a synthetic statement. Condition C
 costs 6 calls per report, so about 50 s per report on the Mac before any phone measurement.
+
+## Step 5: the timing run on the phone (P7)
+
+Run on 2026-10-31 on the user's approval, with the details fixed and committed before it (spec, "Details fixed before the phone
+run", 59c9bd3). iPhone 16 (iPhone17,3), iOS 27.0.1, the build already on the phone (no app code changed since it was installed),
+`-evaluationSet pdfc -adapterName lora-v3`. The report records `lora-v3` with weights `26a0d90702e1` and config `a5a91a164061`
+(the expected ones), prompt hash `7779853b346c` and schema hash `f70490659aa3` (the same as every `lora-v3` run), and the set hash
+`ff8eec2c38e1` (the set built by `phoneset`). The set is the 6 condition C pages of one report (the seeded spot-check report), 3 runs:
+18 calls. The report is private (`RealSet/reports/`, sha256 `22f13c3cb4c0`): it holds the answers.
+
+| Measure | Phone | Mac (the same 18 calls, step 4) |
+|---|---|---|
+| Prompt tokens per page | 1,028 to 1,535 | the same |
+| Time per page, median (min to max) | **18.6 s** (13.8 to 22.6) | 7.7 s |
+| Time to the first token (prompt processing), median | 11.0 s (about 112 prompt tokens per second) | - |
+| Generation speed, median | 13.9 tokens per second | - |
+| **Time per report (6 pages)** | **102 s in run 1, 122 s in runs 2 and 3** | 46 s |
+| Model load | 3.0 s | - |
+| Peak memory | 2.89 GiB | - |
+| Thermal state | nominal in all 18 calls | - |
+| Valid JSON with the schema's keys | 18/18 | 18/18 |
+| Answer identical to the Mac's (same page, same seed) | **17/18** | - |
+
+- **About 2 minutes per report on the phone** for condition C's 6 pages, without the embedding or keyword indexing (keywords take no
+  model). Run 1 was faster (the first pages at 18 tokens per second); from its fourth page on, generation settled at about 14 tokens
+  per second, although the app read the thermal state as nominal throughout.
+- The prompt rate (about 112 tokens per second) is lower than the 150 estimated in the spec from Phase 1's short prompts, so a
+  1,500-token page costs about 13 s before the first token, not 10.
+- **17 of the 18 answers are the same text on the phone and on the Mac** for the same page and seed: for this adapter, the Mac
+  runs of step 4 stand for the phone (the risk named in the spec). P7 measures time; the answers are not scored here.

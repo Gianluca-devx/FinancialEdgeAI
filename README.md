@@ -183,6 +183,9 @@ measure the noise of a training run. The full comparison, every criterion and th
 - **Cost:** a few more missed values than `lora-v2` seed 1 on the synthetic sets (5 against 0 on the old test), mostly growths and previous-year values; within the noise by the rule of the spec, and fewer in the second seed.
 - **Limits:** `real3` has 12 passages and no stated field (the 17 reports hold too few fresh paragraphs), so it measures not inventing a value, not extracting one; `real1` and `real2` were read while
   the training data was designed; two seeds are a thin measure of noise.
+- **A third seed (Amendment 4, [`Results/lora-seed3-analysis.md`](Results/lora-seed3-analysis.md)) shrinks the claim:** `lora-v3` seed 3 has the best test 3 (78) and `real2` (30) so far, but writes 3 invented values on `real3`; `lora-v2` seed 3 is much better on real text than seeds 1 and 2
+  (`real3` 0 invented values, `real1` 15). With three seeds the invented-value gain is beyond the noise on `real2` and test 3 only, and "not distinguishable" by the rule on `real1` and `real3` (every `lora-v3` seed still has fewer invented values than every `lora-v2` seed on `real1`); the fully-correct gain stays beyond the noise on four sets.
+  The garbled key appears in all three seeds of `lora-v2` and in one of three of `lora-v3`.
 
 ### What the iPhone costs
 
@@ -334,7 +337,7 @@ new experiment with its own comparison:
 1. **More real passages, with stated fields.** Phase 2d is read on 12 fresh passages with no stated field; a larger blind set from other reports (the 17 reports are used up) would measure extraction on real text too.
 2. **A garbled key** is now repaired in the app (Phase 2c) instead of asked again; the cause (the adapter writing it) remains, and constrained
    decoding would remove it if it becomes available.
-3. **A third seed**, and the second seeds on test 2 (not run in Phase 2d): two seeds give a thin spread, and the cost of `lora-v3` (a few more missed growths and previous-year values) is within it, but is the direction to watch.
+3. **The missed growths and previous-year values** (a draft spec, [`Specs/phase-2e-missed-values.md`](Specs/phase-2e-missed-values.md), not approved): the third seed (done) shows they are not a cost of `lora-v3` alone (`lora-v2` misses up to 36 on test 3); a diagnosis comes first. The second seeds on test 2 are still not run.
 4. **A sharper hint.** The possible-miss hint is shown (Phase 2c) but is noisy on distractor amounts and blind to percentages and per-share
    values; a better hint is a new experiment.
 5. **An adapter for the balance sheet call** (the operating cash flow is not the cash balance).

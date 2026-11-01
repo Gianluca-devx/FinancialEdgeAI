@@ -1,6 +1,6 @@
-# Spec: Phase 2f, a PDF pilot (DRAFT)
+# Spec: Phase 2f, a PDF pilot
 
-Status: **APPROVED by the user on 2026-10-29** (written 2026-10-26; the comparison of three retrievers, P9, added on 2026-10-28 at the user's request). The decisions are mine, each with the alternative.
+Status: **DONE (steps 2 to 6) on 2026-11-01: rule 2, "redesign", borderline (`Results/phase-2f-analysis.md`); the PR waits for the user's go.** APPROVED by the user on 2026-10-29 (written 2026-10-26; the comparison of three retrievers, P9, added on 2026-10-28 at the user's request). The decisions are mine, each with the alternative.
 Depends on `v2.5.0` (`lora-v3`) and its third-seed analysis (`Results/lora-seed3-analysis.md`).
 
 **Goal:** find out, on whole annual-report PDFs, **where the path from a PDF to the 13 core fields breaks**, and whether the current model and adapter are usable on it. The pilot should give a go, a

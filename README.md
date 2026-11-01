@@ -30,6 +30,11 @@ without a deadline; it began as an academic challenge.
   difference between two training runs. One failure is not fixed: a garbled key on one passage. See
   [the LoRA results](#results-the-lora-adapter), [lora-v2](#results-more-varied-training-data-lora-v2),
   [lora-v3](#results-real-style-distractors-in-the-training-data-lora-v3) and [Next steps](#next-steps).
+- **On whole annual-report PDFs (Phase 2f, a pilot on 5 reports), the model is not yet the right reader of the financial
+  statements.** A keyword search finds the statement pages in every report, but on those pages `lora-v3` is correct on 53 to 62% of
+  the amounts, under the 70% fixed beforehand, and a simple row matcher in code does better (69 to 78%). The rule fixed before the
+  pilot gives "redesign" (code for the tables, the model for the prose), and the result is borderline. About 2 minutes per report on
+  the phone. See [the PDF pilot](#results-whole-pdf-reports-phase-2f-pilot).
 
 ## How the extraction is designed
 
@@ -187,6 +192,33 @@ measure the noise of a training run. The full comparison, every criterion and th
   (`real3` 0 invented values, `real1` 15). With three seeds the invented-value gain is beyond the noise on `real2` and test 3 only, and "not distinguishable" by the rule on `real1` and `real3` (every `lora-v3` seed still has fewer invented values than every `lora-v2` seed on `real1`); the fully-correct gain stays beyond the noise on four sets.
   The garbled key appears in all three seeds of `lora-v2` and in one of three of `lora-v3`.
 
+### Results: whole PDF reports (Phase 2f pilot)
+
+Every earlier test used short passages. Phase 2f asks where the path from a whole annual-report PDF to the 13 fields breaks, on 5 of
+the 17 reports drawn by a committed seed, with 45 stated amounts labelled by hand from the income and cash flow statements. Three
+conditions, each with its own number: (A) the model on the true statement pages, (B) three ways to find the pages, (C) the whole
+path. A row matcher in code is the comparison for A. The model ran on the Mac (3 seeds); one report's pages ran on the phone for
+time, and 17 of 18 answers were the same text as on the Mac. Analysis: [`Results/phase-2f-analysis.md`](Results/phase-2f-analysis.md).
+
+| | Result |
+|---|---|
+| Finding the statement pages (B), top 3, 10 cases | keywords (BM25) **10/10**; Apple's on-device embeddings (`NLContextualEmbedding`) 0/10; the two fused 0/10 |
+| Amounts correct on the true pages (A), PDFKit text (the app's extraction) | model **53.3%** (72/135 over 3 runs), code 68.9% (31/45) |
+| The same with `pdftotext` text | model 61.5% (83/135), code 77.8% (35/45) |
+| The whole path (C), keywords and 6 pages per report | model 54.8% (74/135): finding loses nothing |
+| Time on the iPhone 16 | 18.6 s per page, **about 2 minutes per report**, 2.89 GiB, thermal nominal |
+
+- **The decision rule (fixed before the pilot) gives "redesign", borderline:** no "go" (the model is under 70%), no "stop" (the model
+  is over 50% and the pages are found), and the code is over 70% while the model is under it with `pdftotext`; with PDFKit the code
+  is one amount short. Accepting the literal schema wording for previous-year values (basic EPS, total net income), a sensitivity
+  reading made afterwards, gives the same outcome on both extractions.
+- **What goes wrong:** the statements print three years and the training data had two. For a previous-year value, the model copies
+  the oldest column in 29 of its 33 wrong answers (PDFKit). For current-year values it picks a neighbouring row: basic instead of
+  diluted EPS, net income including noncontrolling interests, net sales instead of the total.
+- **Embeddings rank prose first:** the pages they prefer have 6% of words with a digit, the statement pages 30%.
+- **Limits:** 5 reports (one amount is 2.2%), labels by me with one report spot-checked by the user, the thresholds a judgement for a
+  pilot.
+
 ### What the iPhone costs
 
 | | v1.1.0 (7 numbers) | Schema version 1 (13 strings) |
@@ -334,14 +366,17 @@ the prompt, of the test split with its labels, and of the schema. The schema 1 b
 The synthetic task is solved well enough to be measured against real text, which it does not yet cover. What to do next, each a
 new experiment with its own comparison:
 
-1. **More real passages, with stated fields.** Phase 2d is read on 12 fresh passages with no stated field; a larger blind set from other reports (the 17 reports are used up) would measure extraction on real text too.
-2. **A garbled key** is now repaired in the app (Phase 2c) instead of asked again; the cause (the adapter writing it) remains, and constrained
+1. **Reading the financial statements of a PDF** (the outcome of the [PDF pilot](#results-whole-pdf-reports-phase-2f-pilot), a new
+   spec): code that reads the statement tables while the model reads the prose, or an adapter trained on three-year statement
+   tables; either measured on reports the pilot did not draw. Keyword search for the pages, PDFKit for the text.
+2. **More real passages, with stated fields.** Phase 2d is read on 12 fresh passages with no stated field; a larger blind set from other reports (the 17 reports are used up) would measure extraction on real text too.
+3. **A garbled key** is now repaired in the app (Phase 2c) instead of asked again; the cause (the adapter writing it) remains, and constrained
    decoding would remove it if it becomes available.
-3. **The missed growths and previous-year values** (a draft spec, [`Specs/phase-2e-missed-values.md`](Specs/phase-2e-missed-values.md), not approved): the third seed (done) shows they are not a cost of `lora-v3` alone (`lora-v2` misses up to 36 on test 3); a diagnosis comes first. The second seeds on test 2 are still not run.
-4. **A sharper hint.** The possible-miss hint is shown (Phase 2c) but is noisy on distractor amounts and blind to percentages and per-share
+4. **The missed growths and previous-year values** ([`Specs/phase-2e-missed-values.md`](Specs/phase-2e-missed-values.md), stopped after its diagnosis, [`Results/phase-2e-diagnosis.md`](Results/phase-2e-diagnosis.md)): most are in wording the training data does not contain, and both recipes miss them. On the statement pages of the PDF pilot the model missed almost nothing (2 of 135 amounts with PDFKit) but copied previous-year values from the wrong column. The second seeds on test 2 are still not run.
+5. **A sharper hint.** The possible-miss hint is shown (Phase 2c) but is noisy on distractor amounts and blind to percentages and per-share
    values; a better hint is a new experiment.
-5. **An adapter for the balance sheet call** (the operating cash flow is not the cash balance).
-6. **Three small things to look at,** each a new experiment with its own baseline: the parser could accept
+6. **An adapter for the balance sheet call** (the operating cash flow is not the cash balance).
+7. **Three small things to look at,** each a new experiment with its own baseline: the parser could accept
    `$10.3 billion dollars` (seen in both calls), a growth returned by the model could be checked against the two
    amounts, and the prompt could say in words that a previous-year field stays null when only the current
    value is given.
@@ -353,7 +388,7 @@ adapters are not committed (`.gitignore` excludes them): the config, the data an
 ([`Scripts/lora/runs/lora-v1.md`](Scripts/lora/runs/lora-v1.md), [`lora-v2.md`](Scripts/lora/runs/lora-v2.md), [`lora-v3.md`](Scripts/lora/runs/lora-v3.md)) are.
 
 **Other next steps.** A Release build for the speed numbers, real reports instead of synthetic statements,
-a larger test split, the overview and business sections of a report, PDF input, a comparison with a smaller
+a larger test split, the overview and business sections of a report, a comparison with a smaller
 model (`gemma3_1B_qat_4bit`), and energy measurements.
 
 ## Documentation

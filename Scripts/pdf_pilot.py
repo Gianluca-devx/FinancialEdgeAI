@@ -13,7 +13,11 @@ output is counts only: no page text, no label, no answer.
   baseline --extraction X            P5: the code row matcher on the oracle pages, written as a prediction file
   inputs   --condition A|C --extraction X     the model inputs (one per page) for Scripts/lora/pdf_generate.py
   combine  --answers FILE --condition A|C --extraction X   the model's answers per page combined into one per report
-  score    --pred FILE               P6: counts of correct, unit, column, invented, missed, unparsed and wrong amounts
+  score    --pred FILE [--also F]  P6: counts of correct, unit, column, invented, missed, unparsed and wrong amounts;
+                                     with --also, a second, separate count that also accepts the values of F
+                                     ({"<report>": {"<key>": ["<decimal>", ...]}}), a sensitivity reading made in step 6
+  kinds    --pred FILE               step 6: where each wrong or invented amount sits on its page (the labelled row or
+                                     another row, and its column), counts only; the counts of `score` do not change
   phoneset                           P7: the condition C pages of one report (the seeded spot-check report) as an external
                                      evaluation set for the app, RealSet/pdf/phone/pdfc/ (labels all null: time only)
 
@@ -370,15 +374,90 @@ def score_runs(pred, labels, out):
     return totals, stated, correct_stated, growth_invented
 
 
-def score(path: Path, out: Path):
+def score(path: Path, out: Path, also_path=None):
     pred = load_json(path)
-    totals, stated, correct_stated, growth_invented = score_runs(pred, load_json(out / "labels.json"), out)
+    labels = load_json(out / "labels.json")
+    totals, stated, correct_stated, growth_invented = score_runs(pred, labels, out)
     share = 100.0 * correct_stated / stated if stated else 0.0
     order = ["correct", "unit", "column", "invented", "missed", "unparsed", "wrong"]
     print(f"{pred['condition']} {pred['extraction']} runs {len(pred['runs'])}: "
           + ", ".join(f"{k} {totals[k]}" for k in order)
           + f"; stated amounts correct {correct_stated}/{stated} ({share:.1f}%); conflicts {pred.get('conflicts', 0)}; "
           f"growth invented {growth_invented}; undecodable {pred.get('undecodable', 0)}")
+    if also_path:
+        lenient = also_correct(pred, labels, load_json(Path(also_path)), out)
+        print(f"  sensitivity, also accepting {Path(also_path).name}: stated amounts correct {lenient}/{stated} "
+              f"({100.0 * lenient / stated if stated else 0.0:.1f}%)")
+
+
+# --- step 6: where the wrong answers sit, and a sensitivity reading (counts only; the counts of `score` stay) ---------
+def digits_of(text):
+    """A number as printed, without sign, currency or parentheses: '$(1,360)' -> '1,360'."""
+    m = re.search(r"\d[\d,]*(?:\.\d+)?", str(text))
+    return m.group(0).rstrip(",") if m else None
+
+
+def printed_label(key, label, page_text):
+    """The labelled value as a statement prints it: in the unit of the page header, or per share."""
+    value = abs(Decimal(label))
+    if KIND[key] != "amount":
+        return str(value)
+    value = value / SCALE.get(header_unit(page_text), Decimal(1))
+    return f"{int(value):,}" if value == value.to_integral_value() else None
+
+
+def where(key, answer, label, pages):
+    """(row, column) of an answer on its page. row: "labelled row" (its number is on a line that also prints the label),
+    "another row", or "not on the page"; column: the position of its number among the numbers of that line (1 is the
+    first number, the current year in these statements), None when it is not on the page."""
+    page_text = pages[answer["page"] - 1] if answer.get("page") else ""
+    digits = digits_of(answer["text"])
+    found = []
+    for line in page_text.splitlines():
+        cells = [digits_of(c) for c in numbers(line)]
+        if digits in cells:
+            found.append((cells, cells.index(digits) + 1))
+    if not found:
+        return "not on the page", None
+    printed = printed_label(key, label, page_text) if label is not None else None
+    for cells, column in found:
+        if printed and printed in cells:
+            return "labelled row", column
+    return "another row", found[0][1]
+
+
+def kinds(path: Path, out: Path):
+    pred = load_json(path)
+    labels = load_json(out / "labels.json")
+    counts = Counter()
+    for run in pred["runs"]:
+        for name, label in labels.items():
+            pages = pages_of(out, name, pred["extraction"])
+            for key in SCORED:
+                answer = run["answers"].get(name, {}).get(key)
+                category = classify(key, answer, label["values"], pages)
+                if category in ("wrong", "invented"):
+                    group = "previous year" if key.startswith("previousYear") else "current year"
+                    counts[(category, group) + where(key, answer, label["values"].get(key), pages)] += 1
+    print(f"{pred['condition']} {pred['extraction']} runs {len(pred['runs'])}: wrong and invented amounts by where they sit")
+    for (category, group, row, column), n in sorted(counts.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2], kv[0][3] or 0)):
+        print(f"  {category:8s} {group:13s} {row:15s} column {column if column else '-'}: {n}")
+
+
+def also_correct(pred, labels, also, out):
+    """Stated amounts correct when an answer may also equal one of the values of `also` for its report and key."""
+    count = 0
+    for run in pred["runs"]:
+        for name, label in labels.items():
+            pages = pages_of(out, name, pred["extraction"])
+            answers = run["answers"].get(name, {})
+            for key in SCORED:
+                if label["values"].get(key) is None:
+                    continue
+                options = [label["values"][key]] + also.get(name, {}).get(key, [])
+                count += any(classify(key, answers.get(key), dict(label["values"], **{key: v}), pages) == "correct"
+                             for v in options)
+    return count
 
 
 # --- P5, the code baseline, and P8, the rows ----------------------------------------------------------------------------
@@ -562,13 +641,14 @@ def phoneset(out: Path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=["draw", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score",
-                                            "phoneset"])
+                                            "kinds", "phoneset"])
     parser.add_argument("--reports", default=str(Path.home() / "Downloads" / "Reports"))
     parser.add_argument("--out", default=str(ROOT / "RealSet" / "pdf"))
     parser.add_argument("--extraction", choices=EXTRACTIONS, default=PRIMARY)
     parser.add_argument("--condition", choices=["A", "C"])
     parser.add_argument("--answers")
     parser.add_argument("--pred")
+    parser.add_argument("--also")
     args = parser.parse_args()
     out = out_dir(args)
     if args.command == "draw":
@@ -588,7 +668,9 @@ def main():
     elif args.command == "combine":
         combine(Path(args.answers), args.condition, args.extraction, out)
     elif args.command == "score":
-        score(Path(args.pred), out)
+        score(Path(args.pred), out, args.also)
+    elif args.command == "kinds":
+        kinds(Path(args.pred), out)
     elif args.command == "phoneset":
         phoneset(out)
 

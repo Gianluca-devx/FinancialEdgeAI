@@ -156,6 +156,36 @@ class PdfPilotTests(unittest.TestCase):
                                                   labels, out)
         self.assertEqual((stated, correct, totals["invented"]), (9, 9, 1))
 
+    # step 6: where a wrong answer sits, and the sensitivity reading
+    def test_where_a_wrong_answer_sits(self):
+        page = ("(In millions, except per share)\n"
+                "Net income attributable to owners   3,794   7,091   14,997\n"
+                "Net income                          3,855   7,130   15,001\n"
+                "Basic                                1.18    2.23     4.73\n"
+                "Diluted                              1.08    2.04     4.30")
+        on = lambda text: {"text": text, "page": 1}
+        self.assertEqual(p.where("previousYearNetIncome", on("14,997"), "7091000000", [page]), ("labelled row", 3))
+        self.assertEqual(p.where("previousYearNetIncome", on("7,130"), "7091000000", [page]), ("another row", 2))
+        self.assertEqual(p.where("previousYearEps", on("$2.23"), "2.04", [page]), ("another row", 2))
+        self.assertEqual(p.where("netIncome", on("9,999"), "3794000000", [page]), ("not on the page", None))
+        self.assertEqual(p.where("operatingIncome", on("(15,001)"), None, [page]), ("another row", 3))
+        # tamper: with a label the page does not print, the same answer is no longer on the labelled row
+        self.assertEqual(p.where("previousYearNetIncome", on("14,997"), "7092000000", [page]), ("another row", 3))
+
+    def test_also_accepted_values_count_only_for_their_report_and_key(self):
+        out = self.tmp / "also"
+        (out / "text").mkdir(parents=True, exist_ok=True)
+        p.text_file(out, "made-up.pdf", "layout").write_text(json.dumps(self.pages))
+        answers = dict(p.baseline_answers(self.pages, LABEL), previousYearEps={"text": "$1.90", "page": 2})
+        pred = {"extraction": "layout", "runs": [{"seed": 0, "answers": {"made-up.pdf": answers}}]}
+        labels = {"made-up.pdf": LABEL}
+        self.assertEqual(p.score_runs(pred, labels, out)[2], 9)
+        self.assertEqual(p.also_correct(pred, labels, {}, out), 9)
+        self.assertEqual(p.also_correct(pred, labels, {"made-up.pdf": {"previousYearEps": ["1.90"]}}, out), 10)
+        # tamper: the same value accepted for another key or another report changes nothing
+        self.assertEqual(p.also_correct(pred, labels, {"made-up.pdf": {"eps": ["1.90"]}}, out), 9)
+        self.assertEqual(p.also_correct(pred, labels, {"other.pdf": {"previousYearEps": ["1.90"]}}, out), 9)
+
     # P9, the retrievers and recall at 3
     def test_keywords_rank_the_statement_pages_first(self):
         self.assertEqual(p.ranking(p.bm25(self.pages, p.QUERIES["income"]))[0], 2)

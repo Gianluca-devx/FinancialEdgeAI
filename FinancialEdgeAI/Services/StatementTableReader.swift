@@ -108,10 +108,12 @@ nonisolated enum StatementTableReader {
 
     /// The years of the table's header, left to right: the first row whose cells are all years (at least two); failing
     /// that, the first row above any amount whose text holds at least two years ("December 31, 2025 December 31, 2024").
+    /// A header that repeats a year belongs to a table with groups of columns (segments, consolidating data), not to a
+    /// statement: it gives no years.
     static func years(in rows: [TableRow]) -> [Int]? {
         for row in rows where row.cells.count >= 2 {
             let found = row.cells.compactMap(year)
-            if found.count == row.cells.count { return found }
+            if found.count == row.cells.count { return Set(found).count == found.count ? found : nil }
         }
         for row in rows {
             if row.cells.contains(where: { year($0) == nil }) { break }
@@ -337,7 +339,7 @@ nonisolated enum StatementTableReader {
                       "statement of cash flow"]
         }
         for row in rows.prefix(12) {
-            var text = row.label.lowercased()
+            var text = row.label.lowercased().replacingOccurrences(of: "consolidated ", with: "")
             for joined in ["and comprehensive income (loss)", "and comprehensive income", "and comprehensive loss"] {
                 text = text.replacingOccurrences(of: joined, with: "")
             }

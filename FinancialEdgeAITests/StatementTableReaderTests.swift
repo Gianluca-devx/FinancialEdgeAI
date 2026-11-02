@@ -262,6 +262,28 @@ struct StatementTableReaderTests {
         #expect(!StatementTableReader.recognises(.income, rows: rows(cashFlow)))
     }
 
+    @Test func aTitleWithConsolidatedInTheMiddleIsRecognised() {
+        let title = cashFlow.replacingOccurrences(of: "CONSOLIDATED STATEMENTS OF CASH FLOWS",
+                                                  with: "STATEMENTS OF CONSOLIDATED CASH FLOWS")
+        #expect(StatementTableReader.recognises(.cashFlow, rows: rows(title)))
+    }
+
+    @Test func tamperAHeaderThatRepeatsTheYearsIsNotAStatement() {
+        let consolidating = """
+            SUPPLEMENTAL CONSOLIDATING DATA (continued)
+            STATEMENTS OF CASH FLOWS
+            (In millions)
+            2025 2024 2025 2024
+            Net income 210 190 200 180
+            Net cash provided by operating activities 400 350 300 250
+            Purchases of property and equipment (90) (80) (60) (50)
+            Net cash used in investing activities (150) (120) (100) (90)
+            """
+        #expect(StatementTableReader.years(in: rows(consolidating)) == nil)
+        #expect(!StatementTableReader.recognises(.cashFlow, rows: rows(consolidating)))
+        #expect(read(income, consolidating).abstained["capex"] == .noYears)   // not the first group's (90)
+    }
+
     @Test func tamperAComprehensiveIncomePageOrAnIndexIsNotTheIncomeStatement() {
         let comprehensive = income.replacingOccurrences(of: "CONSOLIDATED STATEMENTS OF OPERATIONS",
                                                         with: "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME")

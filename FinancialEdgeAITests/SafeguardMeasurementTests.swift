@@ -86,10 +86,31 @@ struct SafeguardMeasurementTests {
         return examples.map { Dictionary(uniqueKeysWithValues: $0.map { ($0.id, $0) }) }
     }
 
+    /// The 14 reports the criteria of Phase 2c were measured on (`Results/phase-2c-safeguards.md`): 8 committed in `Results/`
+    /// and 6 private ones of `real1` and `real2`. Reports saved by later phases are measured by their own analyses; without
+    /// this list, every new report changed the counts below (they failed from Phase 2d on, which added reports).
+    static let phase2cReports: Set<String> = [
+        "baseline-schema1-Qwen3-4B-4bit-iphone-20261016T114216.json",
+        "baseline-test2-Qwen3-4B-4bit-iphone-20261017T181748.json",
+        "lora-v1-Qwen3-4B-4bit-iphone-20261016T153448.json",
+        "lora-v1-it050-Qwen3-4B-4bit-iphone-20261017T134747.json",
+        "lora-v1-it100-Qwen3-4B-4bit-iphone-20261017T150158.json",
+        "lora-v1-test2-Qwen3-4B-4bit-iphone-20261017T192549.json",
+        "lora-v2-Qwen3-4B-4bit-iphone-20261018T120711.json",
+        "lora-v2-test2-Qwen3-4B-4bit-iphone-20261018T131315.json",
+        "baseline-real1-Qwen3-4B-4bit-20261017T154721.json",
+        "baseline-real1-Qwen3-4B-4bit-20261017T163228.json",
+        "baseline-real1-Qwen3-4B-4bit-20261018T135656.json",
+        "baseline-real2-Qwen3-4B-4bit-20261017T165359.json",
+        "baseline-real2-Qwen3-4B-4bit-20261017T171525.json",
+        "baseline-real2-Qwen3-4B-4bit-20261018T141904.json",
+    ]
+
     private static func reports(in folder: String, isPrivate: Bool) -> [Loaded] {
         let url = DatasetFiles.url(folder)
         let files = (try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)) ?? []
-        return files.filter { $0.pathExtension == "json" }.sorted { $0.lastPathComponent < $1.lastPathComponent }.compactMap { file in
+        return files.filter { $0.pathExtension == "json" && phase2cReports.contains($0.lastPathComponent) }
+            .sorted { $0.lastPathComponent < $1.lastPathComponent }.compactMap { file in
             guard let data = try? Data(contentsOf: file),
                   let report = try? JSONDecoder().decode(Saved.self, from: data), report.isCoreCall,
                   let examples = statements(for: report.setName)

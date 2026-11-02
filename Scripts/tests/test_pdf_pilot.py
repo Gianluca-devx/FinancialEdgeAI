@@ -273,6 +273,20 @@ class PdfPilotTests(unittest.TestCase):
             self.assertEqual(user[len(prefix):len(user) - len(suffix)], texts[chosen][line])
         self.assertTrue(all(v is None for line in labels for v in json.loads(line)["fields"].values()))
 
+    def test_heldout_is_every_report_the_pilot_did_not_draw_and_is_frozen(self):
+        reports, pilot, out = self.tmp / "hreports", self.tmp / "hpilot", self.tmp / "hout"
+        reports.mkdir()
+        for i in range(8):
+            (reports / f"R{i}.pdf").write_bytes(b"%PDF-1.4 made up " + bytes([i]))
+        quiet(p.draw, reports, pilot)
+        drawn = {e["name"] for e in json.loads((pilot / "draw.json").read_text())["reports"]}
+        quiet(p.heldout, reports, out, pilot)
+        held = [e["name"] for e in json.loads((out / "draw.json").read_text())["reports"]]
+        self.assertEqual(sorted(held), sorted({f"R{i}.pdf" for i in range(8)} - drawn))
+        self.assertFalse(set(held) & drawn)
+        with self.assertRaises(SystemExit):          # tamper: a second held-out set is refused
+            quiet(p.heldout, reports, out, pilot)
+
     # the Swift scripts
     @unittest.skipUnless(shutil.which("swift"), "needs swift")
     def test_pdfkit_text_and_embeddings(self):

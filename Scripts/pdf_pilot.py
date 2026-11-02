@@ -6,6 +6,8 @@ Nothing this script reads or writes from a report is committed: every output is 
 output is counts only: no page text, no label, no answer.
 
   draw     --reports DIR             the seeded draw of 5 of the reports (P2); refuses to overwrite a frozen draw
+  heldout  --reports DIR --out DIR   Phase 2g (T7): every report the pilot did not draw (--pilot, default RealSet/pdf), as the
+                                     draw file of a new set; no choice is made; refuses to overwrite
   extract  --reports DIR             the text of every page of the drawn reports, with `pdftotext -layout` and with PDFKit (P8)
   retrieve                           the three retrievers (P9): keywords (BM25), embeddings (NLContextualEmbedding), hybrid
   recall                             recall at 3 of each retriever against the labelled pages, and the retriever chosen for C
@@ -125,6 +127,22 @@ def draw(reports: Path, out: Path):
     out.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps({"seed": SEED_PDF, "from": len(names), "reports": entries, "hash": digest}, indent=1))
     print(f"drew {DRAWN} of {len(names)} reports with seed {SEED_PDF}; draw hash {digest[:12]} -> {target}")
+
+
+def heldout(reports: Path, out: Path, pilot: Path):
+    """Phase 2g, T7: the held-out set is every report the pilot did not draw, so nothing is chosen."""
+    target = out / "draw.json"
+    if target.exists():
+        sys.exit(f"{target} exists: the held-out set is frozen and is never redone")
+    pilot_draw = draw_file(pilot)
+    drawn = {e["name"] for e in pilot_draw["reports"]}
+    names = sorted(p.name for p in reports.glob("*.pdf") if p.name not in drawn)
+    entries = [{"name": n, "sha256": sha256(reports / n)} for n in names]
+    digest = hashlib.sha256(json.dumps(entries, sort_keys=True).encode()).hexdigest()
+    out.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps({"rule": "every report the PDF pilot did not draw", "from": len(names) + len(drawn),
+                                  "pilotDraw": pilot_draw["hash"], "reports": entries, "hash": digest}, indent=1))
+    print(f"held out {len(names)} reports (every one the pilot did not draw); hash {digest[:12]} -> {target}")
 
 
 # --- extraction (P8) --------------------------------------------------------------------------------------------------
@@ -640,7 +658,7 @@ def phoneset(out: Path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=["draw", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score",
+    parser.add_argument("command", choices=["draw", "heldout", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score",
                                             "kinds", "phoneset"])
     parser.add_argument("--reports", default=str(Path.home() / "Downloads" / "Reports"))
     parser.add_argument("--out", default=str(ROOT / "RealSet" / "pdf"))
@@ -649,10 +667,13 @@ def main():
     parser.add_argument("--answers")
     parser.add_argument("--pred")
     parser.add_argument("--also")
+    parser.add_argument("--pilot", default=str(ROOT / "RealSet" / "pdf"))
     args = parser.parse_args()
     out = out_dir(args)
     if args.command == "draw":
         draw(Path(args.reports), out)
+    elif args.command == "heldout":
+        heldout(Path(args.reports), out, Path(args.pilot))
     elif args.command == "extract":
         extract(Path(args.reports), out)
     elif args.command == "retrieve":

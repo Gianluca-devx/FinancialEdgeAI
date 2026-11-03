@@ -20,6 +20,8 @@ output is counts only: no page text, no label, no answer.
                                      ({"<report>": {"<key>": ["<decimal>", ...]}}), a sensitivity reading made in step 6
   kinds    --pred FILE               step 6: where each wrong or invented amount sits on its page (the labelled row or
                                      another row, and its column), counts only; the counts of `score` do not change
+  fallback --pred R --model M       Phase 2g (T9): the reader's answers (R), with the model's (M, same pages, per seed) only
+                                     where the reader left a field null; prints what the model adds, correct and confidently wrong
   phoneset                           P7: the condition C pages of one report (the seeded spot-check report) as an external
                                      evaluation set for the app, RealSet/pdf/phone/pdfc/ (labels all null: time only)
 
@@ -625,6 +627,41 @@ def combine(answers_path: Path, condition, extraction, out: Path):
     print(f"wrote {target}: runs {len(runs)}, conflicts {conflicts}, undecodable {undecodable}")
 
 
+# --- Phase 2g: the reader with the model filling its nulls (T9) -----------------------------------------------------
+WRONG = ("wrong", "column", "unit", "invented")
+
+
+def fallback_runs(reader, model):
+    """One run per model seed: each field is the reader's answer, or the model's when the reader's is null."""
+    base = reader["runs"][0]["answers"]
+    runs = []
+    for run in model["runs"]:
+        answers = {}
+        for name, mine in base.items():
+            theirs = run["answers"].get(name, {})
+            answers[name] = {key: mine.get(key) if mine.get(key) is not None else theirs.get(key) for key in SCORED + GROWTH}
+        runs.append({"seed": run["seed"], "answers": answers})
+    return runs
+
+
+def fallback(reader_path: Path, model_path: Path, out: Path):
+    reader, model = load_json(reader_path), load_json(model_path)
+    if reader["extraction"] != model["extraction"]:
+        sys.exit("the reader and the model must read the same extraction")
+    labels = labels_file(out)
+    runs = fallback_runs(reader, model)
+    tag = reader["condition"].split("-")[-1]
+    target = out / f"pred.fallback.{tag}.{reader['extraction']}.json"
+    target.write_text(json.dumps({"condition": f"fallback-{tag}", "extraction": reader["extraction"], "runs": runs}))
+    before, _, correct_before, _ = score_runs(reader, labels, out)
+    after, _, correct_after, _ = score_runs({"extraction": reader["extraction"], "runs": runs}, labels, out)
+    seeds = len(runs)
+    added_correct = correct_after - correct_before * seeds
+    added_wrong = sum(after[k] for k in WRONG) - sum(before[k] for k in WRONG) * seeds
+    print(f"wrote {target}: over {seeds} seeds the model adds {added_correct} correct and {added_wrong} confidently wrong amounts "
+          f"to the reader's nulls")
+
+
 # --- P7, the phone timing run ------------------------------------------------------------------------------------------
 PHONE_SET = "pdfc"
 
@@ -659,7 +696,7 @@ def phoneset(out: Path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=["draw", "heldout", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score",
-                                            "kinds", "phoneset"])
+                                            "kinds", "phoneset", "fallback"])
     parser.add_argument("--reports", default=str(Path.home() / "Downloads" / "Reports"))
     parser.add_argument("--out", default=str(ROOT / "RealSet" / "pdf"))
     parser.add_argument("--extraction", choices=EXTRACTIONS, default=PRIMARY)
@@ -667,6 +704,7 @@ def main():
     parser.add_argument("--answers")
     parser.add_argument("--pred")
     parser.add_argument("--also")
+    parser.add_argument("--model")
     parser.add_argument("--pilot", default=str(ROOT / "RealSet" / "pdf"))
     args = parser.parse_args()
     out = out_dir(args)
@@ -694,6 +732,8 @@ def main():
         kinds(Path(args.pred), out)
     elif args.command == "phoneset":
         phoneset(out)
+    elif args.command == "fallback":
+        fallback(Path(args.pred), Path(args.model), out)
 
 
 if __name__ == "__main__":

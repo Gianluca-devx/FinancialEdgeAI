@@ -287,6 +287,18 @@ class PdfPilotTests(unittest.TestCase):
         with self.assertRaises(SystemExit):          # tamper: a second held-out set is refused
             quiet(p.heldout, reports, out, pilot)
 
+    def test_fallback_fills_only_the_readers_nulls(self):
+        reader_answers = dict(p.baseline_answers(self.pages, LABEL), previousYearEps=None)
+        model_answers = dict(p.baseline_answers(self.pages, LABEL), previousYearEps={"text": "$1.95", "page": 2},
+                             revenue={"text": "9,999", "page": 2})
+        reader = {"condition": "reader-A", "extraction": "layout", "runs": [{"seed": 0, "answers": {"made-up.pdf": reader_answers}}]}
+        model = {"condition": "A", "extraction": "layout", "runs": [{"seed": s, "answers": {"made-up.pdf": model_answers}} for s in (1, 2)]}
+        runs = p.fallback_runs(reader, model)
+        self.assertEqual([r["seed"] for r in runs], [1, 2])
+        mine = runs[0]["answers"]["made-up.pdf"]
+        self.assertEqual(mine["previousYearEps"], {"text": "$1.95", "page": 2})      # the reader's null, filled
+        self.assertEqual(mine["revenue"], reader_answers["revenue"])                 # tamper: the model never replaces a value
+
     # the Swift scripts
     @unittest.skipUnless(shutil.which("swift"), "needs swift")
     def test_pdfkit_text_and_embeddings(self):

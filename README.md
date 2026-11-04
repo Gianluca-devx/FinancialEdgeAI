@@ -35,6 +35,10 @@ without a deadline; it began as an academic challenge.
   the amounts, under the 70% fixed beforehand, and a simple row matcher in code does better (69 to 78%). The rule fixed before the
   pilot gives "redesign" (code for the tables, the model for the prose), and the result is borderline. About 2 minutes per report on
   the phone. See [the PDF pilot](#results-whole-pdf-reports-phase-2f-pilot).
+- **A statement table reader in code (Phase 2g) reads 81% of the amounts on 12 reports it was not written for, and never shows a
+  wrong one.** The model reads 56% of the same pages. The rule fixed beforehand gives "improve": "build" needed 85%. Every miss is a
+  null with a named cause (a loss year's wording, a few row names, two title forms). See
+  [the table reader](#results-a-statement-table-reader-phase-2g).
 
 ## How the extraction is designed
 
@@ -219,6 +223,33 @@ time, and 17 of 18 answers were the same text as on the Mac. Analysis: [`Results
 - **Limits:** 5 reports (one amount is 2.2%), labels by me with one report spot-checked by the user, the thresholds a judgement for a
   pilot.
 
+### Results: a statement table reader (Phase 2g)
+
+The pilot's rule said: code for the tables, the model for the prose. Phase 2g builds that reader in Swift, as the app would run it: the
+rows of a statement page rebuilt from the positions PDFKit gives, the columns chosen by their year (never the oldest one), the unit from
+the page header, a synonym table with the schema's choices (diluted EPS, net income attributable to the company, the total of
+revenues), and a null with its reason whenever a rule cannot decide. It was written on the pilot's 5 reports only, **frozen by commit and
+hash**, and only then tested on the **12 other reports**, labelled by hand after the freeze and spot-checked by the user. Analysis:
+[`Results/phase-2g-analysis.md`](Results/phase-2g-analysis.md).
+
+| 12 held-out reports, 112 stated amounts | Correct | Confidently wrong |
+|---|---|---|
+| **Reader, whole path** (keyword search, then the page it recognises) | **91 (81.2%)** | **0** |
+| Reader, true statement pages | 96 (85.7%) | 0 |
+| Model `lora-v3`, true pages, mean of 3 seeds | 62.3 (55.7%) | 45.7 per run |
+| Reader, with the model filling only the reader's nulls | 105.3 (94.0%) | 9 per run |
+
+- **The rule fixed beforehand gives "improve"** (70 to 85% on the whole path); "build" needed 85% with at most 3% confidently wrong.
+- **Not fitted to its development reports:** 84.4% there, 81.2 to 85.7% on the held-out ones.
+- **What it misses, all as nulls:** a loss year's rows ("Operating loss", "Net loss"), a few row names ("Consolidated net income
+  attributable to ...", "Net cash from operations", three capex lines), two cash flow titles in the form "cash flows statements",
+  a note reference inside a row, and three pairs of capex lines with different values (null by design).
+- **The model is not a table reader:** besides the oldest column for previous-year values, it took the first column as the current
+  year in both reports that print their years oldest first. Filling the reader's nulls, it adds 28 correct and 27 wrong amounts over
+  3 seeds.
+- **Limits:** 12 reports of one filing year; the labeller wrote the reader (the freeze order and the spot-checks limit it); the reader
+  has not run on the phone. All 17 reports are now used; a second round needs new ones.
+
 ### What the iPhone costs
 
 | | v1.1.0 (7 numbers) | Schema version 1 (13 strings) |
@@ -304,13 +335,15 @@ FinancialEdgeAI/                 Xcode app target (Swift, SwiftUI, MLX)
 │               ExtractionPrompt, PromptTemplate
 │               MetricsParser, ValueParser, Derivations
 │               DatasetLoader, EvaluationMetrics, EvaluationRunner
+│               StatementTable, StatementTableReader, PDFStatementLines (Phase 2g, not used by the app yet)
 ├── ViewModel/  ChatViewModel, EvaluationViewModel, MetricsPresenter
 ├── Views/      ContentView (Extract), EvaluationView (Evaluate, work in progress)
 └── Resources/  schema, prompt files and test split (bundled copies, checked for drift)
-FinancialEdgeAITests/            Swift Testing, 326 tests
+FinancialEdgeAITests/            Swift Testing, 367 tests
 Dataset/                         300 labelled statements, schema.json, the prompt, labels, archive/v1.1.0
 Scripts/                         generate and validate the dataset, render the prompt, summarise and compare reports
 Scripts/lora/                    LoRA training: data check, config, run record (needs mlx-lm; weights never committed)
+Scripts/pdf_pilot.py, table_reader.sh   the PDF pilot (Phase 2f) and the Mac driver of the table reader (Phase 2g); tests in Scripts/tests/
 Results/                         model gate, the baselines and the LoRA run (reports, tables, analysis), comparisons
 Specs/                           the written specs of each phase (metrics, schema, extended call, LoRA, safeguards, real-style distractors)
 ```
@@ -366,9 +399,10 @@ the prompt, of the test split with its labels, and of the schema. The schema 1 b
 The synthetic task is solved well enough to be measured against real text, which it does not yet cover. What to do next, each a
 new experiment with its own comparison:
 
-1. **Reading the financial statements of a PDF** (the outcome of the [PDF pilot](#results-whole-pdf-reports-phase-2f-pilot), a new
-   spec): code that reads the statement tables while the model reads the prose, or an adapter trained on three-year statement
-   tables; either measured on reports the pilot did not draw. Keyword search for the pages, PDFKit for the text.
+1. **A second round of the statement table reader** (the "improve" outcome of [Phase 2g](#results-a-statement-table-reader-phase-2g)):
+   the missing forms (a loss year's rows, a few row names, the title in either word order, a note reference), frozen again and
+   measured on new reports. A "build" then leads to PDF import in the app: keyword search for the pages, PDFKit for the text, the
+   reader for the statements, and a check that PDFKit gives the same rows on the phone.
 2. **More real passages, with stated fields.** Phase 2d is read on 12 fresh passages with no stated field; a larger blind set from other reports (the 17 reports are used up) would measure extraction on real text too.
 3. **A garbled key** is now repaired in the app (Phase 2c) instead of asked again; the cause (the adapter writing it) remains, and constrained
    decoding would remove it if it becomes available.

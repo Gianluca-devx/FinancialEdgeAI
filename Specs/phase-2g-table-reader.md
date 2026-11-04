@@ -1,6 +1,6 @@
 # Spec: Phase 2g, a statement table reader in code
 
-Status: **APPROVED by the user on 2026-11-02**, with all 12 reports held out (T7); for an "improve" round the user will supply new reports (written 2026-11-02 at the user's request). The decisions are mine, each with the alternative.
+Status: **DONE (steps 2 to 5) on 2026-11-04: rule 2, "improve" (`Results/phase-2g-analysis.md`); the PR waits for the user's go.** APPROVED by the user on 2026-11-02, with all 12 reports held out (T7); for an "improve" round the user will supply new reports (written 2026-11-02 at the user's request). The decisions are mine, each with the alternative.
 Depends on `v2.6.0`: the PDF pilot (`Specs/phase-2f-pdf-pilot.md`, `Results/phase-2f-analysis.md`), whose decision rule gave
 "redesign: code for the tables, the model for the prose", borderline.
 

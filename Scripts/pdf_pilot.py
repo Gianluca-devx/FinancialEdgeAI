@@ -22,6 +22,8 @@ output is counts only: no page text, no label, no answer.
                                      another row, and its column), counts only; the counts of `score` do not change
   fallback --pred R --model M       Phase 2g (T9): the reader's answers (R), with the model's (M, same pages, per seed) only
                                      where the reader left a field null; prints what the model adds, correct and confidently wrong
+  gate     --pred NEW --old OLD      Phase 2h (R6): the development gate; fails (exit 1) if NEW loses an amount OLD read
+                                     correctly, or shows any confidently wrong amount
   phoneset                           P7: the condition C pages of one report (the seeded spot-check report) as an external
                                      evaluation set for the app, RealSet/pdf/phone/pdfc/ (labels all null: time only)
 
@@ -662,6 +664,29 @@ def fallback(reader_path: Path, model_path: Path, out: Path):
           f"to the reader's nulls")
 
 
+def gate_counts(new, old, labels, out):
+    """(gained, lost, wrong): stated amounts OLD missed and NEW reads, stated amounts OLD read and NEW does not, and the
+    confidently wrong amounts of NEW (on stated and null labels)."""
+    gained = lost = wrong = 0
+    for name, label in labels.items():
+        pages = pages_of(out, name, new["extraction"])
+        for key in SCORED:
+            after = classify(key, new["runs"][0]["answers"].get(name, {}).get(key), label["values"], pages)
+            before = classify(key, old["runs"][0]["answers"].get(name, {}).get(key), label["values"], pages)
+            if label["values"].get(key) is not None:
+                gained += int(before != "correct" and after == "correct")
+                lost += int(before == "correct" and after != "correct")
+            wrong += int(after in WRONG)
+    return gained, lost, wrong
+
+
+def gate(new_path: Path, old_path: Path, out: Path):
+    gained, lost, wrong = gate_counts(load_json(new_path), load_json(old_path), labels_file(out), out)
+    passed = lost == 0 and wrong == 0
+    print(f"gate {'passes' if passed else 'FAILS'}: amounts gained {gained}, lost {lost}, confidently wrong {wrong}")
+    return passed
+
+
 # --- P7, the phone timing run ------------------------------------------------------------------------------------------
 PHONE_SET = "pdfc"
 
@@ -696,7 +721,7 @@ def phoneset(out: Path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=["draw", "heldout", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score",
-                                            "kinds", "phoneset", "fallback"])
+                                            "kinds", "phoneset", "fallback", "gate"])
     parser.add_argument("--reports", default=str(Path.home() / "Downloads" / "Reports"))
     parser.add_argument("--out", default=str(ROOT / "RealSet" / "pdf"))
     parser.add_argument("--extraction", choices=EXTRACTIONS, default=PRIMARY)
@@ -705,6 +730,7 @@ def main():
     parser.add_argument("--pred")
     parser.add_argument("--also")
     parser.add_argument("--model")
+    parser.add_argument("--old")
     parser.add_argument("--pilot", default=str(ROOT / "RealSet" / "pdf"))
     args = parser.parse_args()
     out = out_dir(args)
@@ -734,6 +760,8 @@ def main():
         phoneset(out)
     elif args.command == "fallback":
         fallback(Path(args.pred), Path(args.model), out)
+    elif args.command == "gate":
+        sys.exit(0 if gate(Path(args.pred), Path(args.old), out) else 1)
 
 
 if __name__ == "__main__":

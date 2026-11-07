@@ -299,6 +299,21 @@ class PdfPilotTests(unittest.TestCase):
         self.assertEqual(mine["previousYearEps"], {"text": "$1.95", "page": 2})      # the reader's null, filled
         self.assertEqual(mine["revenue"], reader_answers["revenue"])                 # tamper: the model never replaces a value
 
+    def test_gate_counts_gained_lost_and_wrong(self):
+        out = self.tmp / "gate"
+        (out / "text").mkdir(parents=True, exist_ok=True)
+        p.text_file(out, "made-up.pdf", "layout").write_text(json.dumps(self.pages))
+        labels = {"made-up.pdf": LABEL}
+        full = p.baseline_answers(self.pages, LABEL)
+        pred = lambda answers: {"extraction": "layout", "runs": [{"seed": 0, "answers": {"made-up.pdf": answers}}]}
+        old = pred(dict(full, eps=None))
+        self.assertEqual(p.gate_counts(pred(full), old, labels, out), (1, 0, 0))     # eps gained
+        self.assertEqual(p.gate_counts(old, old, labels, out), (0, 0, 0))
+        # tamper: a lost amount and a wrong amount each make the gate fail
+        self.assertEqual(p.gate_counts(pred(dict(full, eps=None, revenue=None)), old, labels, out), (0, 1, 0))
+        wrong = pred(dict(full, eps=None, capex={"text": "(91)", "page": 3}))
+        self.assertEqual(p.gate_counts(wrong, old, labels, out), (0, 1, 1))
+
     # the Swift scripts
     @unittest.skipUnless(shutil.which("swift"), "needs swift")
     def test_pdfkit_text_and_embeddings(self):

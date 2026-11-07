@@ -43,6 +43,10 @@ nonisolated enum Abstention: String, Error, CaseIterable, Sendable {
     case dash
     /// Neither statement page prints the unit of its amounts.
     case noUnit
+    /// A loss row (or a loss-per-share row) printed without parentheses: its sign cannot be read from the number (Phase 2h, R3).
+    case unsignedLoss
+    /// The page's unit names another currency than the dollar, which the app cannot read (Phase 2h, R5).
+    case currency
 }
 
 /// What the reader found in one report: an amount or the reason for a null, for each of its keys.
@@ -63,7 +67,14 @@ nonisolated struct StatementReading: Equatable, Sendable {
 ///   prints none, the unit of the other statement. The text keeps the cell as printed and adds the unit word.
 /// - A null with its reason whenever a rule cannot decide (T6).
 ///
-/// The synonym table was written on the five reports of the PDF pilot only (the development set).
+/// Phase 2h (`Specs/phase-2h-table-reader-round2.md`) adds, from the misses Phase 2g named: loss rows (a number in parentheses
+/// is negative; without them the field is null, R3), a combined "basic and diluted" EPS row, "consolidated" ignored at the start
+/// of a row label, more operating cash flow and capex forms (the broader capex lines only when no strict one is printed), the
+/// cash flow title in either word order, note references kept out of the cells, capex read only inside the investing section
+/// (R4), and a currency guard: a unit in another currency makes every field of the page null (R5).
+///
+/// The synonym table was written on the five reports of the PDF pilot (Phase 2g) and the 17 labelled reports (Phase 2h), the
+/// development sets.
 nonisolated enum StatementTableReader {
 
     /// The keys the reader fills, in the order of the schema.
@@ -76,14 +87,21 @@ nonisolated enum StatementTableReader {
     /// be missing: its fields are then null, `noPage`).
     static func read(income: [TableRow]?, cashFlow: [TableRow]?) -> StatementReading {
         var reading = StatementReading()
-        let incomeUnit = income.flatMap(unit(in:))
-        let cashFlowUnit = cashFlow.flatMap(unit(in:))
+        let incomeForeign = income.map(foreignCurrency(in:)) ?? false
+        let cashFlowForeign = cashFlow.map(foreignCurrency(in:)) ?? false
+        let incomeUnit = incomeForeign ? nil : income.flatMap(unit(in:))
+        let cashFlowUnit = cashFlowForeign ? nil : cashFlow.flatMap(unit(in:))
         for field in fields {
             let rows = field.statement == .income ? income : cashFlow
+            let foreign = field.statement == .income ? incomeForeign : cashFlowForeign
             let pageUnit = field.statement == .income ? (incomeUnit ?? cashFlowUnit) : (cashFlowUnit ?? incomeUnit)
             var outputs = [(field.current, false)]
             if let previous = field.previous { outputs.append((previous, true)) }
             for (key, previousYear) in outputs {
+                if foreign, rows != nil {
+                    reading.abstained[key] = .currency
+                    continue
+                }
                 switch value(of: field, previousYear: previousYear, in: rows, unit: pageUnit) {
                 case .success(let amount): reading.amounts[key] = amount
                 case .failure(let reason): reading.abstained[key] = reason
@@ -147,8 +165,34 @@ nonisolated enum StatementTableReader {
         return nil
     }
 
-    /// A row label made comparable: lowercase, without "$", footnote markers, "(loss)" and "(used in)" asides, extra
-    /// spaces or a final colon, comma or period.
+    /// Whether the page's amounts are in another currency than the dollar (R5). Read in the header, the rows above the first
+    /// amount, where a statement declares its currency: a currency symbol other than "$"; a unit phrase followed by "of" and
+    /// anything but dollars or shares ("in millions of euros", "of Canadian dollars"); or a currency word or code in a row that
+    /// names a unit ("€ in millions", "(EUR millions)"). Below the header, only a foreign symbol printed right before a row's
+    /// numbers counts, so a line such as "Repayment of €750 million notes" does not make a dollar statement foreign.
+    static func foreignCurrency(in rows: [TableRow]) -> Bool {
+        let symbols: [Character] = ["€", "£", "¥", "₹", "₩", "₣"]
+        if rows.contains(where: { row in !row.cells.isEmpty && row.label.last.map(symbols.contains) == true }) { return true }
+        let header = rows.prefix { row in row.cells.allSatisfy { year($0) != nil } }
+        for row in header {
+            let text = (row.label + " " + row.cells.joined(separator: " ")).lowercased()
+            if symbols.contains(where: { text.contains($0) }) { return true }
+            let range = NSRange(text.startIndex..., in: text)
+            for match in unitPattern.matches(in: text, range: range) {
+                guard let whole = Range(match.range, in: text) else { continue }
+                let after = text[whole.upperBound...].trimmingCharacters(in: .whitespaces)
+                guard after.hasPrefix("of ") else { continue }
+                let next = after.dropFirst(3).split(whereSeparator: { " ,;)".contains($0) }).first.map(String.init) ?? ""
+                if !["dollars", "u.s.", "us", "usd", "us$", "$", "shares", "share"].contains(next) { return true }
+            }
+            let namesUnit = ["thousand", "million", "billion"].contains { text.contains($0) }
+            if namesUnit, currencyWordPattern.firstMatch(in: text, range: range) != nil { return true }
+        }
+        return false
+    }
+
+    /// A row label made comparable: lowercase, without "$", footnote markers, note references ("(Note 12)"), "(loss)" and
+    /// "(used in)" asides, a leading "consolidated", extra spaces or a final colon, comma or period.
     static func normalized(_ label: String) -> String {
         var text = label.lowercased()
             .replacingOccurrences(of: "\u{2019}", with: "'")
@@ -156,9 +200,11 @@ nonisolated enum StatementTableReader {
         for aside in ["(loss)", "(losses)", "(used in)", "(used for)", "(used by)", "$"] {
             text = text.replacingOccurrences(of: aside, with: " ")
         }
-        let range = NSRange(text.startIndex..., in: text)
-        text = footnotePattern.stringByReplacingMatches(in: text, range: range, withTemplate: " ")
+        for pattern in [notePattern, footnotePattern] {
+            text = pattern.stringByReplacingMatches(in: text, range: NSRange(text.startIndex..., in: text), withTemplate: " ")
+        }
         text = text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
+        if text.hasPrefix("consolidated ") { text.removeFirst("consolidated ".count) }
         while let last = text.last, ":,. ".contains(last) { text.removeLast() }
         return text
     }
@@ -217,9 +263,18 @@ nonisolated enum StatementTableReader {
 
     private static let attributableToCompany: Matcher = { candidate in
         let label = candidate.label
-        let named = label.hasPrefix("net income attributable to ") || label.hasPrefix("net earnings attributable to ")
+        let named = ["net income attributable to ", "net earnings attributable to ", "net loss attributable to "]
+            .contains { label.hasPrefix($0) }
         let others = ["noncontrolling", "non-controlling", "minority", "redeemable"].contains { label.contains($0) }
         return named && !others && !StatementTableReader.perShareWords(label)
+    }
+
+    /// A row that names a loss: its number must be in parentheses to be read (R3). A per-share row counts when its section
+    /// names a loss per share ("Net loss per share:").
+    private static func namesLoss(_ candidate: Candidate, perShare: Bool) -> Bool {
+        let label = candidate.label
+        if label.hasPrefix("operating loss") || label.hasPrefix("net loss") || label == "loss from operations" { return true }
+        return perShare && (candidate.section.contains("loss per") || label.contains("loss per"))
     }
 
     private static let dilutedNamed: Matcher = { candidate in
@@ -229,7 +284,7 @@ nonisolated enum StatementTableReader {
     }
 
     private static let dilutedInSection: Matcher = { candidate in
-        candidate.label == "diluted" && StatementTableReader.perShareWords(candidate.section)
+        ["diluted", "basic and diluted"].contains(candidate.label) && StatementTableReader.perShareWords(candidate.section)
             && !StatementTableReader.shareCountWords(candidate.section)
     }
 
@@ -239,21 +294,28 @@ nonisolated enum StatementTableReader {
         "net revenue", "revenues", "revenue", "net sales", "sales")
     private static let operatingIncomeLevels = exact(
         "operating income", "income from operations", "operating profit", "total operating income", "operating earnings",
-        "earnings from operations")
-    private static let netIncomeLevels = [attributableToCompany] + exact("net income", "net earnings")
+        "earnings from operations", "operating loss", "loss from operations")
+    private static let netIncomeLevels = [attributableToCompany] + exact("net income", "net earnings", "net loss")
     private static let epsLevels = [dilutedNamed, dilutedInSection]
     private static let interestExpenseLevels = exact("interest expense")
     private static let operatingCashFlowLevels = exact(
         "net cash provided by operating activities", "net cash from operating activities",
         "net cash generated by operating activities", "net cash generated from operating activities",
         "cash generated by operating activities", "cash provided by operating activities",
-        "net cash provided by operations", "net cash used in operating activities")
+        "net cash provided by operations", "net cash used in operating activities", "net cash from operations",
+        "cash provided by operations", "net cash flows from operating activities", "net cash flow from operating activities",
+        "cash generated from operations", "net cash generated from operations")
+    /// The strict capex lines first, then the broader ones (with intangible assets, or net of sales), used only when the
+    /// statement prints no strict line: the labelling choice the user agreed in Phase 2g.
     private static let capexLevels = prefix(
         "purchases of property and equipment", "purchases of property, plant and equipment",
         "purchase of property and equipment", "purchase of property, plant and equipment",
         "payments for acquisition of property, plant and equipment", "payments for property, plant and equipment",
+        "payments for property and equipment",
         "additions to property and equipment", "additions to property, plant and equipment",
-        "acquisitions of property and equipment", "acquisition of property and equipment", "capital expenditures")
+        "acquisitions of property and equipment", "acquisition of property and equipment", "capital expenditures",
+        "investment in property, plant, equipment", "investment in property, plant and equipment",
+        "investment in property and equipment", "purchases related to property and equipment")
 
     private static let fields: [Field] = [
         Field(statement: .income, perShare: false, current: "revenue", previous: "previousYearRevenue",
@@ -290,21 +352,38 @@ nonisolated enum StatementTableReader {
         guard let years = years(in: rows), let latest = years.max() else { return .failure(.noYears) }
         let year = previousYear ? latest - 1 : latest
         guard let column = years.firstIndex(of: year) else { return .failure(.noYears) }
-        let found = candidates(rows)
+        let scope = field.current == "capex" ? (investingSection(of: rows) ?? rows) : rows
+        let found = candidates(scope)
         guard let level = field.levels.first(where: { matcher in found.contains { matcher($0.key) } }) else {
             return .failure(.noRow)
         }
         let usable = found.filter { level($0.key) }.compactMap { candidate in
-            usableCells(candidate.row.cells, count: years.count, perShare: field.perShare).map { (candidate.row, $0) }
+            usableCells(candidate.row.cells, count: years.count, perShare: field.perShare).map { (candidate, $0) }
         }
         guard let first = usable.first else { return .failure(.cellCount) }
         guard Set(usable.map { $0.1[column] }).count == 1 else { return .failure(.ambiguous) }
-        let (row, cells) = first
+        let (candidate, cells) = first
+        let row = candidate.row
         let printed = cells[column]
         guard printed != "—" else { return .failure(.dash) }
+        if namesLoss(candidate.key, perShare: field.perShare), !printed.hasPrefix("(") { return .failure(.unsignedLoss) }
         if field.perShare { return .success(StatementAmount(text: printed, row: row.label, year: year)) }
         guard let unit else { return .failure(.noUnit) }
         return .success(StatementAmount(text: printed + " " + unit.rawValue, row: row.label, year: year))
+    }
+
+    /// The rows of the investing section (R4): from its header (a row of words naming investing activities, or just
+    /// "Investing") to its total ("Net cash ... investing ..."), both included; nil when either is missing.
+    static func investingSection(of rows: [TableRow]) -> [TableRow]? {
+        guard let start = rows.firstIndex(where: { row in
+            let label = normalized(row.label)
+            return row.cells.isEmpty && (label == "investing" || label.contains("investing activities"))
+        }) else { return nil }
+        guard let end = rows[start...].firstIndex(where: { row in
+            let label = normalized(row.label)
+            return !row.cells.isEmpty && label.hasPrefix("net cash") && label.contains("investing")
+        }) else { return nil }
+        return Array(rows[start...end])
     }
 
     /// The cells of a row when they line up with the header's years: a leading footnote marker ("(1)") is dropped; a
@@ -336,7 +415,8 @@ nonisolated enum StatementTableReader {
                       "statements of earnings", "statement of earnings", "income statements", "income statement"]
         case .cashFlow:
             titles = ["statements of cash flows", "statement of cash flows", "statements of cash flow",
-                      "statement of cash flow"]
+                      "statement of cash flow", "cash flows statements", "cash flows statement", "cash flow statements",
+                      "cash flow statement"]
         }
         for row in rows.prefix(12) {
             var text = row.label.lowercased().replacingOccurrences(of: "consolidated ", with: "")
@@ -353,4 +433,8 @@ nonisolated enum StatementTableReader {
     private static let unitPattern = try! NSRegularExpression(
         pattern: #"\bin (?:thousands|millions|billions)\b|\b(?:thousands|millions|billions) of (?:u\.s\. )?dollars\b"#)
     private static let footnotePattern = try! NSRegularExpression(pattern: #"\(\d{1,2}\)|\([a-z]\)"#)
+    private static let notePattern = try! NSRegularExpression(pattern: #"\((?:see )?notes? [^)]*\)"#)
+    private static let currencyWordPattern = try! NSRegularExpression(
+        pattern: #"\b(?:euros?|pounds?|sterling|yen|francs?|kron(?:a|or|e|er)|yuan|renminbi|rupees?|pesos?|reais|rand|won|"#
+            + #"eur|gbp|jpy|chf|cad|aud|nzd|hkd|sgd|cny|rmb|inr|krw|sek|nok|dkk|brl|mxn|zar)\b"#)
 }

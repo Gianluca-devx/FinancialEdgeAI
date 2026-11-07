@@ -47,13 +47,17 @@ nonisolated enum StatementTable {
         return joinWrappedLabels(rows)
     }
 
-    /// One row from its text: the number cells are read from the right end, and the rest is the label.
+    /// One row from its text: the number cells are read from the right end, and the rest is the label. A note reference is
+    /// part of the label (Phase 2h): a number after "(Note" or "(Notes", or a number of one or two digits after "Note" or
+    /// "Notes"; reading cells stops there ("Proceeds from issuance of notes 1,234" keeps its cell).
     static func row(from text: String) -> TableRow {
         var words = text.split(whereSeparator: \.isWhitespace).map(String.init)
         var cells: [String] = []
         while let last = words.last {
             if last == "$" {
                 words.removeLast()
+            } else if isNoteReference(last, after: words.count > 1 ? words[words.count - 2] : "") {
+                break
             } else if let value = cell(last) {
                 cells.insert(value, at: 0)
                 words.removeLast()
@@ -72,6 +76,14 @@ nonisolated enum StatementTable {
         if body.hasPrefix("($") { body = "(" + body.dropFirst(2) }
         let range = NSRange(body.startIndex..., in: body)
         return number.firstMatch(in: body, range: range) != nil ? body : nil
+    }
+
+    private static func isNoteReference(_ word: String, after previous: String) -> Bool {
+        let previous = previous.lowercased()
+        if previous == "(note" || previous == "(notes" { return true }
+        guard previous == "note" || previous == "notes" else { return false }
+        let digits = word.trimmingCharacters(in: [")", ","])
+        return (1...2).contains(digits.count) && digits.allSatisfy(\.isNumber)
     }
 
     private static let dashes: Set<String> = ["—", "–", "-", "−"]

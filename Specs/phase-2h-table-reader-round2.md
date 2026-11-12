@@ -1,6 +1,7 @@
 # Spec: Phase 2h, the statement table reader, second round
 
-Status: **APPROVED by the user on 2026-11-06** (written 2026-11-06 at the user's request). The decisions are mine, each with the alternative.
+Status: **DONE on 2026-11-12: rule 3, "stop this path"** (C 51/93, 54.8%, 0 confidently wrong; [`Results/phase-2h-analysis.md`](../Results/phase-2h-analysis.md)).
+Approved by the user on 2026-11-06 (written 2026-11-06 at the user's request). The decisions are mine, each with the alternative.
 Depends on `v2.7.0`: Phase 2g (`Specs/phase-2g-table-reader.md`, `Results/phase-2g-analysis.md`), whose decision rule gave
 "improve": 81.2% of the stated amounts on the whole path, 0 confidently wrong, on 12 reports the reader was not written for.
 

@@ -8,7 +8,11 @@ output is counts only: no page text, no label, no answer.
   draw     --reports DIR             the seeded draw of 5 of the reports (P2); refuses to overwrite a frozen draw
   heldout  --reports DIR --out DIR   Phase 2g (T7): every report the pilot did not draw (--pilot, default RealSet/pdf), as the
                                      draw file of a new set; no choice is made; refuses to overwrite
-  extract  --reports DIR             the text of every page of the drawn reports, with `pdftotext -layout` and with PDFKit (P8)
+  include  --reports DIR --out DIR   Phase 2h (R7): every report of the folder that qualifies (a text layer, an annual report,
+                                     amounts in US dollars, a company not among the reports of RealSet/pdf and
+                                     RealSet/pdf-heldout), as the draw file of a new set; the others listed with their
+                                     reasons; no choice is made; refuses to overwrite
+  extract  --reports DIR            the text of every page of the drawn reports, with `pdftotext -layout` and with PDFKit (P8)
   retrieve                           the three retrievers (P9): keywords (BM25), embeddings (NLContextualEmbedding), hybrid
   recall                             recall at 3 of each retriever against the labelled pages, and the retriever chosen for C
   rows                               P8: the labelled rows found intact (label and number on one line), per extraction
@@ -147,6 +151,86 @@ def heldout(reports: Path, out: Path, pilot: Path):
     target.write_text(json.dumps({"rule": "every report the PDF pilot did not draw", "from": len(names) + len(drawn),
                                   "pilotDraw": pilot_draw["hash"], "reports": entries, "hash": digest}, indent=1))
     print(f"held out {len(names)} reports (every one the pilot did not draw); hash {digest[:12]} -> {target}")
+
+
+# --- Phase 2h, R7: the inclusion check of the new held-out set ---------------------------------------------------------
+KNOWN_DRAWS = [ROOT / "RealSet" / "pdf" / "draw.json", ROOT / "RealSet" / "pdf-heldout" / "draw.json"]
+MIN_HELDOUT = 10
+TEXT_PAGE = 200                # non-space characters for a page to count as a page with text
+TEXT_SHARE = Decimal("0.5")    # a text layer: at least half of the pages have text
+ANNUAL = re.compile(r"form\s+10-k\b|annual\s+report", re.I)
+DOLLAR_AMOUNT = re.compile(r"\$\s?\d")
+CURRENCY_WORD = (r"(?:euros?|pounds?(?:\s+sterling)?|sterling|yen|(?:swiss\s+)?francs?|kron[aeo]r?|yuan|renminbi|won|rupees?"
+                 r"|pesos?|reais|reals?|(?:canadian|australian|hong\s+kong|singapore|new\s+taiwan|new\s+zealand)\s+dollars)")
+FOREIGN_UNIT = re.compile(
+    r"\bin\s+(?:thousands|millions|billions)\s+of\s+" + CURRENCY_WORD + r"\b"
+    r"|[€£¥₹₩]\s*(?:in\s+)?(?:thousands|millions|billions)\b"
+    r"|\b(?:eur|gbp|jpy|chf|cny|rmb|inr|krw|sek|nok|dkk|cad|aud|brl|mxn)\s+(?:in\s+)?(?:thousands|millions|billions)\b", re.I)
+
+
+def company_key(name):
+    """The company of a report, from its file name: the letters of its first word, in lower case ("NewCo_10-K_2025.pdf"
+    gives "newco", "OLDCO 26.pdf" gives "oldco")."""
+    first = re.split(r"[\s_]+", Path(name).stem.strip())[0]
+    return re.sub(r"[^a-z]", "", first.lower())
+
+
+def inclusion(name, pages, known):
+    """R7, from the report's text only: the reasons it does not qualify (none: it qualifies) and the evidence (counts).
+    A company matches a known one when either key starts with the other, so a doubtful name is excluded and listed,
+    never let in."""
+    with_text = sum(len(re.sub(r"\s", "", page)) >= TEXT_PAGE for page in pages)
+    text = "\n".join(pages)
+    evidence = {"pages": len(pages), "textPages": with_text, "annual": bool(ANNUAL.search("\n".join(pages[:5]))),
+                "dollarAmounts": len(DOLLAR_AMOUNT.findall(text)), "foreignUnits": len(FOREIGN_UNIT.findall(text))}
+    reasons = []
+    if not pages or Decimal(with_text) < TEXT_SHARE * len(pages):
+        reasons.append("no text layer")
+    if not evidence["annual"]:
+        reasons.append("not an annual report ('Form 10-K' or 'annual report' not on its first 5 pages)")
+    if evidence["foreignUnits"]:
+        reasons.append("a unit in another currency")
+    elif not evidence["dollarAmounts"]:
+        reasons.append("no dollar amount")
+    key = company_key(name)
+    if not key:
+        reasons.append("company not readable from the file name")
+    elif any(key.startswith(k) or k.startswith(key) for k in known):
+        reasons.append("a company among the known reports")
+    return reasons, evidence
+
+
+def include(reports: Path, out: Path, known_draws=KNOWN_DRAWS):
+    """Phase 2h, R7: the new held-out set is every report of the folder that qualifies, so nothing is chosen. The others are
+    listed with their reasons (one in another currency is kept for the check of R10)."""
+    target = out / "draw.json"
+    if target.exists():
+        sys.exit(f"{target} exists: the held-out set is frozen and is never redone")
+    known = set()
+    for path in known_draws:
+        if not path.exists():
+            sys.exit(f"{path} is missing: the known reports cannot be checked")
+        known |= {company_key(e["name"]) for e in load_json(path)["reports"]}
+    included, excluded, checks = [], [], {}
+    for pdf in sorted(reports.glob("*.pdf")):
+        reasons, evidence = inclusion(pdf.name, pages_layout(pdf), known)
+        entry = {"name": pdf.name, "sha256": sha256(pdf)}
+        if reasons:
+            excluded.append({**entry, "reasons": reasons})
+        else:
+            included.append(entry)
+        checks[pdf.name] = evidence
+        print(f"{pdf.name}: pages {evidence['pages']}, with text {evidence['textPages']}, annual {evidence['annual']}, "
+              f"$ amounts {evidence['dollarAmounts']}, other-currency units {evidence['foreignUnits']} -> "
+              f"{'; '.join(reasons) if reasons else 'included'}")
+    digest = hashlib.sha256(json.dumps(included, sort_keys=True).encode()).hexdigest()
+    out.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps({"rule": "Phase 2h R7: every report of the folder that qualifies", "from": len(checks),
+                                  "known": [load_json(p)["hash"] for p in known_draws], "reports": included,
+                                  "excluded": excluded, "checks": checks, "hash": digest}, indent=1))
+    print(f"included {len(included)} of {len(checks)} reports, excluded {len(excluded)}; set hash {digest[:12]} -> {target}")
+    if len(included) < MIN_HELDOUT:
+        print(f"R7: fewer than {MIN_HELDOUT} qualifying reports; the user decides between more reports and a smaller test")
 
 
 # --- extraction (P8) --------------------------------------------------------------------------------------------------
@@ -720,7 +804,7 @@ def phoneset(out: Path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=["draw", "heldout", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score",
+    parser.add_argument("command", choices=["draw", "heldout", "include", "extract", "retrieve", "recall", "rows", "baseline", "inputs", "combine", "score",
                                             "kinds", "phoneset", "fallback", "gate"])
     parser.add_argument("--reports", default=str(Path.home() / "Downloads" / "Reports"))
     parser.add_argument("--out", default=str(ROOT / "RealSet" / "pdf"))
@@ -738,6 +822,8 @@ def main():
         draw(Path(args.reports), out)
     elif args.command == "heldout":
         heldout(Path(args.reports), out, Path(args.pilot))
+    elif args.command == "include":
+        include(Path(args.reports), out)
     elif args.command == "extract":
         extract(Path(args.reports), out)
     elif args.command == "retrieve":

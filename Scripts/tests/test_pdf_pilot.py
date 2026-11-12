@@ -287,6 +287,44 @@ class PdfPilotTests(unittest.TestCase):
         with self.assertRaises(SystemExit):          # tamper: a second held-out set is refused
             quiet(p.heldout, reports, out, pilot)
 
+    def test_inclusion_keeps_only_new_annual_text_reports_in_dollars(self):
+        cover = "UNITED STATES Form 10-K annual report " + "word " * 60
+        statement = "CONSOLIDATED STATEMENTS OF INCOME (In millions, except per share) Net sales $ 1,234 " + "x" * 200
+        known = {"oldco", "ab"}
+        reasons, evidence = p.inclusion("Newco_10-K_2025-12-31.pdf", [cover, statement, cover], known)
+        self.assertEqual(reasons, [])
+        self.assertEqual((evidence["textPages"], evidence["foreignUnits"]), (3, 0))
+        self.assertEqual(p.company_key("NewCo_10-K_2025-12-31.pdf"), "newco")
+        self.assertEqual(p.company_key("OLDCO 26.pdf"), "oldco")
+        # tamper: each condition of R7 fails on its own
+        self.assertEqual(p.inclusion("Newco.pdf", ["Form 10-K", "", statement], known)[0], ["no text layer"])
+        self.assertEqual(p.inclusion("Newco.pdf", ["word " * 60, statement], known)[0],
+                         ["not an annual report ('Form 10-K' or 'annual report' not on its first 5 pages)"])
+        for foreign in ("In millions of euros", "In millions of Canadian dollars"):
+            self.assertEqual(p.inclusion("Newco.pdf", [cover, statement.replace("In millions", foreign)], known)[0],
+                             ["a unit in another currency"])
+        self.assertEqual(p.inclusion("Newco.pdf", [cover, "(€ in millions) Revenue 1,234 " + "x" * 200], known)[0],
+                         ["a unit in another currency"])
+        self.assertEqual(p.inclusion("Newco.pdf", [cover, statement.replace("$ ", "")], known)[0], ["no dollar amount"])
+        for name in ("OLDCO_10-K_2026.pdf", "Oldco Inc 10-K.pdf", "ABC_10-K.pdf"):     # a doubtful name is kept out
+            self.assertEqual(p.inclusion(name, [cover, statement], known)[0], ["a company among the known reports"])
+        self.assertEqual(p.inclusion("Otherco_10-K.pdf", [cover, statement.replace("In millions", "In millions of shares")],
+                                     known)[0], [])                                   # shares are not a currency
+
+    def test_include_writes_the_set_with_its_exclusions_and_is_frozen(self):
+        reports, out = self.tmp / "ireports", self.tmp / "iout"
+        reports.mkdir()
+        shutil.copy(self.pdf, reports / "Newco_10-K.pdf")
+        known = self.tmp / "known.json"
+        known.write_text(json.dumps({"reports": [{"name": "OLDCO 26.pdf"}], "hash": "made-up"}))
+        quiet(p.include, reports, out, [known])
+        written = json.loads((out / "draw.json").read_text())
+        self.assertEqual(written["reports"], [])          # the made-up PDF is too short and not an annual report
+        self.assertEqual(written["excluded"][0]["name"], "Newco_10-K.pdf")
+        self.assertIn("no text layer", written["excluded"][0]["reasons"])
+        with self.assertRaises(SystemExit):          # tamper: a second set is refused
+            quiet(p.include, reports, out, [known])
+
     def test_fallback_fills_only_the_readers_nulls(self):
         reader_answers = dict(p.baseline_answers(self.pages, LABEL), previousYearEps=None)
         model_answers = dict(p.baseline_answers(self.pages, LABEL), previousYearEps={"text": "$1.95", "page": 2},

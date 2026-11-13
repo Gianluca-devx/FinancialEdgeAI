@@ -39,6 +39,10 @@ without a deadline; it began as an academic challenge.
   wrong one.** The model reads 56% of the same pages. The rule fixed beforehand gives "improve": "build" needed 85%. Every miss is a
   null with a named cause (a loss year's wording, a few row names, two title forms). See
   [the table reader](#results-a-statement-table-reader-phase-2g).
+- **A second round of the reader (Phase 2h) does not close the gap, and the rule says stop this path.** With the named forms
+  added, it reads 96% of the 17 reports the changes came from, but only **55% on 10 new reports** (67% on their true pages), under
+  the 70% fixed beforehand; it still never shows a wrong amount. On the new reports it beats the first round by 3 amounts: each new
+  set of layouts brings forms a rule list does not have. See [the second round](#results-the-table-reader-second-round-phase-2h).
 
 ## How the extraction is designed
 
@@ -250,6 +254,31 @@ hash**, and only then tested on the **12 other reports**, labelled by hand after
 - **Limits:** 12 reports of one filing year; the labeller wrote the reader (the freeze order and the spot-checks limit it); the reader
   has not run on the phone. All 17 reports are now used; a second round needs new ones.
 
+### Results: the table reader, second round (Phase 2h)
+
+The second round adds exactly the forms Phase 2g named (loss rows, a combined basic-and-diluted EPS row, "consolidated" before a
+label, more operating cash flow and capex names, either title order, note references, capex only inside the investing section) and
+a currency guard, with a gate on all 17 earlier reports (no amount lost, none wrong). It was then **frozen by commit and hash** and
+tested on **10 new reports** the user supplied, admitted by a script (a text layer, a 10-K, US dollars, a company not among the 17),
+labelled by hand after the freeze and spot-checked by the user. Analysis: [`Results/phase-2h-analysis.md`](Results/phase-2h-analysis.md).
+
+| Stated amounts correct | 17 development reports (157) | 10 new reports (93) |
+|---|---|---|
+| **Reader, whole path** (keyword search, then the page it recognises) | 150 (95.5%) | **51 (54.8%)** |
+| Reader, true statement pages | 150 (95.5%) | 62 (66.7%) |
+| The Phase 2g reader, whole path (an extra comparison) | 129 (82.2%) | 48 (51.6%) |
+
+- **The rule fixed beforehand gives "stop this path"** (under 70% on the whole path). Confidently wrong amounts: 0 everywhere.
+- **The fixes were fitted to the reports they came from:** +21 amounts there, +3 on the new reports. The new reports brought other
+  forms: a header line with the year-end date's day beside the years (one report lost all 10 amounts to it), a unit written
+  without "in", a title alone on the page before its table, EPS per share class, and other names for revenue, operating cash flow
+  and interest expense.
+- **What stands:** the reader never shows a wrong amount, and the keyword search finds the statement pages (20 of 20). What does
+  not work is reaching "build" by adding rules round by round.
+- **Limits:** 10 reports of large US companies, one a bank; the labeller wrote the reader; no report in another currency was
+  supplied, so the currency guard is tested on made-up statements only; the reader has not run on the phone. All 27 reports are now
+  used.
+
 ### What the iPhone costs
 
 | | v1.1.0 (7 numbers) | Schema version 1 (13 strings) |
@@ -335,11 +364,11 @@ FinancialEdgeAI/                 Xcode app target (Swift, SwiftUI, MLX)
 │               ExtractionPrompt, PromptTemplate
 │               MetricsParser, ValueParser, Derivations
 │               DatasetLoader, EvaluationMetrics, EvaluationRunner
-│               StatementTable, StatementTableReader, PDFStatementLines (Phase 2g, not used by the app yet)
+│               StatementTable, StatementTableReader, PDFStatementLines (Phases 2g and 2h, not used by the app)
 ├── ViewModel/  ChatViewModel, EvaluationViewModel, MetricsPresenter
 ├── Views/      ContentView (Extract), EvaluationView (Evaluate, work in progress)
 └── Resources/  schema, prompt files and test split (bundled copies, checked for drift)
-FinancialEdgeAITests/            Swift Testing, 367 tests
+FinancialEdgeAITests/            Swift Testing, 392 tests
 Dataset/                         300 labelled statements, schema.json, the prompt, labels, archive/v1.1.0
 Scripts/                         generate and validate the dataset, render the prompt, summarise and compare reports
 Scripts/lora/                    LoRA training: data check, config, run record (needs mlx-lm; weights never committed)
@@ -399,10 +428,11 @@ the prompt, of the test split with its labels, and of the schema. The schema 1 b
 The synthetic task is solved well enough to be measured against real text, which it does not yet cover. What to do next, each a
 new experiment with its own comparison:
 
-1. **A second round of the statement table reader** (the "improve" outcome of [Phase 2g](#results-a-statement-table-reader-phase-2g)):
-   the missing forms (a loss year's rows, a few row names, the title in either word order, a note reference), frozen again and
-   measured on new reports. A "build" then leads to PDF import in the app: keyword search for the pages, PDFKit for the text, the
-   reader for the statements, and a check that PDFKit gives the same rows on the phone.
+1. **After the table reader's "stop"** ([Phase 2h](#results-the-table-reader-second-round-phase-2h)), the choice is the user's,
+   each a new spec: leave PDF statements for now and turn to the overview and business sections; or a different design for the
+   rows (code keeps the rows, year columns, unit and sign, which it never got wrong, and something more general than a synonym
+   table, such as the model choosing among the page's row labels, decides which row is which field), measured on new reports; or
+   build with the reader as it is, its nulls shown as "not found", which is against the rule and would be disclosed as such.
 2. **More real passages, with stated fields.** Phase 2d is read on 12 fresh passages with no stated field; a larger blind set from other reports (the 17 reports are used up) would measure extraction on real text too.
 3. **A garbled key** is now repaired in the app (Phase 2c) instead of asked again; the cause (the adapter writing it) remains, and constrained
    decoding would remove it if it becomes available.

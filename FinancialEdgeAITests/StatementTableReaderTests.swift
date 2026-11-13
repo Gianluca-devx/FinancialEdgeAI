@@ -253,6 +253,161 @@ struct StatementTableReaderTests {
         #expect(reading.amounts["operatingCashFlow"]?.text == "400 million")
     }
 
+    // MARK: - Phase 2h: losses (R3)
+
+    private let lossYear = """
+        CONSOLIDATED STATEMENTS OF OPERATIONS
+        (In millions, except share and per share amounts)
+        2025 2024 2023
+        Total revenues 4,848.9 4,637.2 4,812.6
+        Operating loss (17.4) (79.3) (74.3)
+        Loss before income taxes (627.9) (350.5) (393.2)
+        Net loss $ (632.4) $ (352.6) $ (396.6)
+        Net loss per share:
+        Basic and diluted $ (1.34) $ (1.06) $ (2.37)
+        Weighted average shares outstanding:
+        Basic and diluted (in thousands) 472,899 332,920 167,644
+        """
+
+    @Test func lossRowsInParenthesesAreNegativeAmounts() {
+        let reading = read(lossYear, nil)
+        #expect(reading.amounts["operatingIncome"]?.text == "(17.4) million")
+        #expect(reading.amounts["netIncome"]?.text == "(632.4) million")
+        #expect(reading.amounts["previousYearNetIncome"]?.text == "(352.6) million")
+        #expect(reading.amounts["eps"]?.text == "(1.34)")             // the combined row, not the share count below
+        #expect(reading.amounts["previousYearEps"]?.text == "(1.06)")
+        #expect(StatementTableReader.recognises(.income, rows: rows(lossYear)))
+        let value = reading.amounts["netIncome"].flatMap { ValueParser.parse($0.text, kind: .amount) }
+        #expect(value.map { abs($0 + 0.6324) < 1e-9 } == true)
+    }
+
+    @Test func tamperALossPrintedWithoutParenthesesIsNull() {
+        let unsigned = lossYear.replacingOccurrences(of: "Net loss $ (632.4) $ (352.6) $ (396.6)",
+                                                     with: "Net loss $ 632.4 $ 352.6 $ 396.6")
+            .replacingOccurrences(of: "Basic and diluted $ (1.34) $ (1.06) $ (2.37)", with: "Basic and diluted $ 1.34 $ 1.06 $ 2.37")
+        let reading = read(unsigned, nil)
+        #expect(reading.abstained["netIncome"] == .unsignedLoss && reading.abstained["previousYearNetIncome"] == .unsignedLoss)
+        #expect(reading.abstained["eps"] == .unsignedLoss)
+        #expect(reading.amounts["operatingIncome"]?.text == "(17.4) million")   // still in parentheses, still read
+    }
+
+    // MARK: - Phase 2h: row names
+
+    @Test func consolidatedNetIncomeAttributableToTheCompanyIsRead() {
+        let table = """
+            Consolidated Statements of Income
+            (Amounts in millions, except per share data) 2026 2025 2024
+            Total revenues 713,163 680,985 648,125
+            Consolidated net income 22,270 20,157 16,270
+            Consolidated net income attributable to noncontrolling interest (377) (721) (759)
+            Consolidated net income attributable to the company $ 21,893 $ 19,436 $ 15,511
+            """
+        let reading = read(table, nil)
+        #expect(reading.amounts["netIncome"]?.text == "21,893 million")   // not the 22,270 including noncontrolling interest
+        #expect(reading.amounts["previousYearNetIncome"]?.text == "19,436 million")
+    }
+
+    @Test func netCashFromOperationsIsTheOperatingCashFlow() {
+        let table = cashFlow.replacingOccurrences(of: "Net cash provided by operating activities 400 350 300",
+                                                  with: "Net cash from operations 400 350 300")
+        #expect(read(income, table).amounts["operatingCashFlow"]?.text == "400 million")
+    }
+
+    @Test func aBroaderCapexLineIsReadOnlyWhenNoStrictLineIsPrinted() {
+        let broader = cashFlow.replacingOccurrences(
+            of: "Purchases of property and equipment (90) (80) (70)",
+            with: "Purchases related to property and equipment and intangible assets (95) (85) (75)")
+        #expect(read(income, broader).amounts["capex"]?.text == "(95) million")
+        let both = cashFlow.replacingOccurrences(
+            of: "Purchases of property and equipment (90) (80) (70)",
+            with: "Purchases of property and equipment (90) (80) (70)\nInvestment in property and equipment, net (88) (79) (69)")
+        #expect(read(income, both).amounts["capex"]?.text == "(90) million")   // tamper: the strict line wins
+    }
+
+    @Test func aNoteReferenceInALabelDoesNotHideTheRow() {
+        let table = income.replacingOccurrences(of: "Diluted $ 2.15 $ 1.95 $ 1.77",
+                                                with: "Diluted net income per share (Note 12) $ 2.15 $ 1.95 $ 1.77")
+        #expect(read(table, nil).amounts["eps"]?.text == "2.15")
+    }
+
+    // MARK: - Phase 2h: capex inside the investing section (R4)
+
+    private func cashFlowWithSecondCapexLine(_ second: String) -> String {
+        """
+        CONSOLIDATED STATEMENTS OF CASH FLOWS
+        (In millions)
+        2025 2024
+        Net income 210 190
+        Net cash provided by operating activities 400 350
+        Cash flows from investing activities:
+        Purchases of property and equipment (90) (80)
+        Net cash used in investing activities (150) (120)
+        \(second)
+        """
+    }
+
+    @Test(arguments: [
+        "Cash flows from investing activities of discontinued operations:\nPurchases of property and equipment (38) —",
+        "Cash flows from financing activities:\nAdditions to property, plant and equipment (30) (11)",
+        "Supplemental disclosures:\nPurchases of property and equipment included in accrued liabilities 12 9",
+    ])
+    func capexIsReadInsideTheInvestingSectionOnly(second: String) {
+        #expect(read(income, cashFlowWithSecondCapexLine(second)).amounts["capex"]?.text == "(90) million")
+    }
+
+    @Test func tamperWithoutAnInvestingSectionTwoCapexLinesStayNull() {
+        let flat = """
+            CONSOLIDATED STATEMENTS OF CASH FLOWS
+            (In millions)
+            2025 2024
+            Net cash provided by operating activities 400 350
+            Purchases of property and equipment (90) (80)
+            Purchases of property and equipment (38) —
+            """
+        #expect(read(income, flat).abstained["capex"] == .ambiguous)
+    }
+
+    // MARK: - Phase 2h: titles in either word order
+
+    @Test(arguments: ["CONSOLIDATED CASH FLOWS STATEMENTS", "CASH FLOWS STATEMENTS", "Cash Flow Statements"])
+    func theCashFlowTitleIsRecognisedInEitherWordOrder(title: String) {
+        let table = cashFlow.replacingOccurrences(of: "CONSOLIDATED STATEMENTS OF CASH FLOWS", with: title)
+        #expect(StatementTableReader.recognises(.cashFlow, rows: rows(table)))
+    }
+
+    // MARK: - Phase 2h: the currency guard (R5)
+
+    @Test(arguments: [
+        "(In millions of euros, except per share amounts)", "(In thousands of Canadian dollars)", "€ in millions",
+        "(EUR millions, except per share data)", "(In millions of Swiss francs)",
+    ])
+    func aStatementInAnotherCurrencyGivesNoAmount(header: String) {
+        let foreign = income.replacingOccurrences(
+            of: "(In millions, except number of shares, which are reflected in thousands, and per-share amounts)", with: header)
+        let reading = read(foreign, nil)
+        #expect(reading.amounts.isEmpty)
+        #expect(reading.abstained["revenue"] == .currency && reading.abstained["eps"] == .currency)
+    }
+
+    @Test(arguments: [
+        "(In millions of U.S. dollars, except per share amounts)", "(In thousands of US dollars)",
+        "(In millions of dollars and shares, except per share amounts)", "(Dollars in millions, except per share data)",
+    ])
+    func tamperADollarHeaderIsStillRead(header: String) {
+        let dollars = income.replacingOccurrences(
+            of: "(In millions, except number of shares, which are reflected in thousands, and per-share amounts)", with: header)
+        #expect(read(dollars, nil).amounts["revenue"] != nil)
+        #expect(!StatementTableReader.foreignCurrency(in: rows(dollars)))
+    }
+
+    @Test func aForeignNoteBelowTheHeaderDoesNotMakeADollarStatementForeign() {
+        let table = cashFlow.replacingOccurrences(
+            of: "Net cash used in financing activities (200) (180) (160)",
+            with: "Repayment of €750 million senior notes (812) — —\nNet cash used in financing activities (200) (180) (160)")
+        #expect(!StatementTableReader.foreignCurrency(in: rows(table)))
+        #expect(read(income, table).amounts["capex"]?.text == "(90) million")
+    }
+
     // MARK: - Recognising a statement
 
     @Test func statementsAreRecognisedByTitleYearsAndKnownRows() {

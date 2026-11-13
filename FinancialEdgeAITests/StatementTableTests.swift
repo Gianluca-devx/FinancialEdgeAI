@@ -38,6 +38,22 @@ struct StatementTableTests {
         #expect(StatementTable.row(from: "Per-share data") == TableRow(label: "Per-share data", cells: []))
     }
 
+    // MARK: - Phase 2h: note references stay in the label
+
+    @Test func aNoteReferenceIsPartOfTheLabelNotACell() {
+        #expect(StatementTable.row(from: "Diluted net income per share (Note 12) $ 5.80 $ 8.04 $ 10.81")
+                == TableRow(label: "Diluted net income per share (Note 12)", cells: ["5.80", "8.04", "10.81"]))
+        #expect(StatementTable.row(from: "Revenues Note 3 1,234 1,100")
+                == TableRow(label: "Revenues Note 3", cells: ["1,234", "1,100"]))
+    }
+
+    @Test func tamperAnAmountAfterTheWordNotesIsStillACell() {
+        #expect(StatementTable.row(from: "Proceeds from issuance of notes 1,234 1,000")
+                == TableRow(label: "Proceeds from issuance of notes", cells: ["1,234", "1,000"]))
+        #expect(StatementTable.row(from: "Repayment of senior notes (500) (400)")
+                == TableRow(label: "Repayment of senior notes", cells: ["(500)", "(400)"]))
+    }
+
     // MARK: - Rows from positions
 
     @Test func linesThatOverlapVerticallyAreOneRowReadLeftToRight() {

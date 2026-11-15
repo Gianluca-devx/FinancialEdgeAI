@@ -54,8 +54,9 @@ Over the 22 held-out reports, condition B, the three seeds pooled:
 
 ## Design (built only on "build")
 
-- **Prompts:** `Dataset/sections/` holds the instructions and the template of each section; bundled copies in `Resources/`, checked
-  identical by a test. No report text, and no number of the metrics prompt's examples, in them.
+- **Prompts:** `Prompts/` holds the instructions and the template of each section; bundled copies in `Resources/`, checked
+  identical by a test. (The draft said `Dataset/sections/`; changed with the user's approval of the step 2 plan, because the
+  validators of Phases 2b and 2d refuse any new file in `Dataset/`.) No report text, and no number of the metrics prompt's examples, in them.
 - **Services:** `SectionPrompt` (renders a prompt), `SectionAnswer` (reads an answer: trimmed text, "not stated", the format checks
   of S8, pure); `LLMService` gets one call per section, on the base model or with the adapter as S5 decides.
 - **State:** `SectionsPresenter` (pure, tested) gives each section its state: waiting, loading, text, not stated, failed (with the

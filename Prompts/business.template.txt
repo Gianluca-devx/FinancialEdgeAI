@@ -1,0 +1,6 @@
+Text from the report:
+"""
+{text}
+"""
+
+Write the main business section.

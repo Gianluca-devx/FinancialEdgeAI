@@ -1,6 +1,6 @@
 # Spec: Phase 3, the overview and business sections
 
-Status: **DRAFT, not approved** (written 2026-11-15 at the user's request, after Phase 2h's "stop this path"). No code before approval.
+Status: **APPROVED by the user on 2026-11-15** (written the same day at the user's request, after Phase 2h's "stop this path").
 The decisions are mine, each with the alternative.
 Depends on `v2.8.0`. Follows `Spec-Driven Development.md`, Phase 3: two free-text sections with their own prompts; the metrics
 prompt, schema, parser, dataset and evaluation stay unchanged.

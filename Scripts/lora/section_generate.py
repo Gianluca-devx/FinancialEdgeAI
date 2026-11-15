@@ -57,7 +57,7 @@ def condition_of(adapter):
 
 def run(texts_path: Path, answers: Path, adapter, chosen, seeds):
     condition, adapter_path = condition_of(adapter)
-    prompts = sections.prompts_hash()
+    snapshot, prompts = sections.load_prompts()
     texts = json.loads(texts_path.read_text())["texts"]
     done = set()
     if answers.exists():
@@ -79,8 +79,9 @@ def run(texts_path: Path, answers: Path, adapter, chosen, seeds):
                 for text in texts:
                     if (text["id"], section, seed) in done:
                         continue
-                    prompt = tokenizer.apply_chat_template(sections.messages(section, text["text"]), tokenize=False,
-                                                           add_generation_prompt=True, enable_thinking=False)
+                    prompt = tokenizer.apply_chat_template(sections.messages(section, text["text"], snapshot),
+                                                           tokenize=False, add_generation_prompt=True,
+                                                           enable_thinking=False)
                     mx.random.seed(seed)
                     start = time.time()
                     parts, last = [], None

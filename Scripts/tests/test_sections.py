@@ -106,15 +106,20 @@ class PromptTests(unittest.TestCase):
             self.assertEqual((system["role"], user["role"]), ("system", "user"))
             self.assertIn("Newco makes widgets.", user["content"])
             self.assertIn(s.NOT_STATED, system["content"])
-            self.assertIn(str(s.WORD_LIMIT[section]), system["content"])
+            self.assertIn(f"at most {s.PROMPT_WORDS[section]} words", system["content"])
+            self.assertLess(s.PROMPT_WORDS[section], s.WORD_LIMIT[section])
 
     def test_no_number_of_the_metrics_examples_in_the_prompts(self):
         for path in s.prompt_files():
             for number in ("7.4", "2.4", "8.2", "6.8"):
                 self.assertNotIn(number, path.read_text(), path.name)
 
-    def test_the_hash_changes_with_a_prompt(self):
-        self.assertEqual(len(s.prompts_hash()), 12)
+    def test_a_run_uses_the_snapshot_of_the_prompts(self):
+        snapshot, digest = s.load_prompts()
+        self.assertEqual((len(digest), digest), (12, s.prompts_hash()))
+        edited = dict(snapshot, overview=("Made-up instructions.", "Made-up template: {text}"))
+        system, user = s.messages("overview", "Newco.", edited)
+        self.assertEqual((system["content"], user["content"]), ("Made-up instructions.", "Made-up template: Newco."))
 
 
 class FormatTests(unittest.TestCase):
@@ -145,8 +150,8 @@ class FlagTests(unittest.TestCase):
         self.assertEqual(s.flags("Newco employs 4200 people. Its segments are Widgets and Gears.", TEXT), [])
 
     def test_tamper_an_invented_number_and_an_invented_name(self):
-        answer = GOOD + " It was founded in 1921 by John Smith in Dayton."
-        self.assertEqual(s.flags(answer, TEXT), [("number", "1921"), ("name", "John"), ("name", "Smith"),
+        answer = GOOD + " It was founded in 1921 by Ada Brown in Dayton."
+        self.assertEqual(s.flags(answer, TEXT), [("number", "1921"), ("name", "Ada"), ("name", "Brown"),
                                                  ("name", "Dayton")])
 
     def test_a_sentence_start_is_not_a_name(self):

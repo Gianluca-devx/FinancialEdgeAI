@@ -28,7 +28,8 @@ REPO = Path(__file__).resolve().parent.parent
 TEST_SPLIT = REPO / "Dataset" / "test.jsonl"
 PROMPTS = REPO / "Prompts"
 SECTIONS = ("overview", "business")
-WORD_LIMIT = {"overview": 60, "business": 100}
+WORD_LIMIT = {"overview": 60, "business": 100}         # the format check (S4)
+PROMPT_WORDS = {"overview": 50, "business": 85}        # what the prompts ask for, a margin under the check
 NOT_STATED = "Not stated in the text."
 TOKEN_LIMIT = 2500
 MAX_PAGES = 8
@@ -121,16 +122,20 @@ def prompt_files():
     return [PROMPTS / f"{section}.{part}.txt" for section in SECTIONS for part in ("instructions", "template")]
 
 
+def load_prompts():
+    """The four prompt files read once, and their hash: a run uses this snapshot, so an edit during a run changes nothing."""
+    data = [path.read_bytes() for path in prompt_files()]
+    digest = hashlib.sha256(b"".join(data)).hexdigest()[:12]
+    texts = [d.decode().strip() for d in data]
+    return {section: (texts[2 * i], texts[2 * i + 1]) for i, section in enumerate(SECTIONS)}, digest
+
+
 def prompts_hash():
-    digest = hashlib.sha256()
-    for path in prompt_files():
-        digest.update(path.read_bytes())
-    return digest.hexdigest()[:12]
+    return load_prompts()[1]
 
 
-def messages(section, text):
-    instructions = (PROMPTS / f"{section}.instructions.txt").read_text().strip()
-    template = (PROMPTS / f"{section}.template.txt").read_text().strip()
+def messages(section, text, prompts=None):
+    instructions, template = (prompts or load_prompts()[0])[section]
     return [{"role": "system", "content": instructions}, {"role": "user", "content": template.replace("{text}", text)}]
 
 

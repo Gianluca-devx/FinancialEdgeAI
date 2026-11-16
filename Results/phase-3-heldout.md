@@ -31,3 +31,32 @@ After this commit, in order: the rule of S1 on the 22 reports (one run over both
 checklists of S7 by the labelling rules of the development record, each stated fact checked against its own text, the labels
 frozen by hash, the spot-check report chosen by the pilot's seed; then the user's spot-check, before any answer is generated on a
 held-out text or on test 2.
+
+## The held-out texts and their labels (2026-11-16, after the freeze above)
+
+- **The rule of S1** (`sections.py locate`, one run over both folders): **21 of 22 reports located, 1 missed.** Of the 21, 18 texts
+  start at the Item 1 heading of the report's body. In 2 the rule took the table of contents, whose "Item" lines have no period
+  after the number, so fewer than 4 headings were counted; their texts run on into Item 1 within the window (about 250 and 1,200
+  words of it). In 1 it took a cross-reference index near the end of the report, followed by the signature page: that text holds
+  no business description. The missed report's only "Item 1 ... Business" line is in a cross-reference index with 13 headings.
+  The rule is not changed after the freeze; these 4 cases are reported in step 5.
+- **The windows** (`section_generate.py window`): 21 texts; 20 cut at 2,500 tokens (2,496 to 2,500), 1 shorter (867 tokens, 2 pages,
+  where the report ends); 516 to 2,019 words, median 1,816.
+- **Test 2** (`sections.py testsplit --source Dataset/v2/test2.jsonl`): 30 statements, ids `test2-01` to `test2-30`.
+- **The labels (S7):** 21 reports, 126 facts, **90 stated**: overview 34 of 63 (what the company does 20, a headquarters 2, a size
+  12), business 56 of 63 (segments or business lines 18, products 18, customers 20). sha256 `39bcb5f7b718`
+  (`RealSet/sections/heldout/labels.json`). The text with no business description has all six facts null.
+- **Each stated fact was checked against its own text** by the coverage rule: 90 of 90 found; a made-up term put in one group
+  fails, as it must.
+- **How the labelling rules of the development record were applied** where they leave a choice: a headquarters only where the text
+  names a city as the headquarters or the principal executive offices (2), not where it names a city where the company was founded
+  or began, nor a country; the size is the first count in the text, with its rounded forms accepted where it is large, and
+  users of products are not customers; where the text names many products, one group per business line in the text's order (8
+  reports); where no segment is named, the text's own statement of them ("one operating segment", a table by segment, the only
+  reportable segment) or its business lines (4 reports); a text that names no product or category, only "merchandise" or
+  "products", has products null (2).
+- **The spot-check:** the report chosen by the pilot's seed (20261029) among the 21, in the order of the texts file (position 18).
+  The file `RealSet/sections/heldout/spotcheck.md` holds its six facts with the sentences they come from, and my judgement calls
+  on the other 20 reports.
+
+**GATE: the user's spot-check.** No answer has been generated on a held-out text or on test 2.

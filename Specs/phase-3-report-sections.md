@@ -1,6 +1,7 @@
 # Spec: Phase 3, the overview and business sections
 
 Status: **APPROVED by the user on 2026-11-15** (written the same day at the user's request, after Phase 2h's "stop this path").
+**Amendment 1** (2026-11-16, before the freeze of step 3): "not stated" is measured on test 2; see the end of this file.
 The decisions are mine, each with the alternative.
 Depends on `v2.8.0`. Follows `Spec-Driven Development.md`, Phase 3: two free-text sections with their own prompts; the metrics
 prompt, schema, parser, dataset and evaluation stay unchanged.
@@ -122,3 +123,20 @@ flags half a day, the app one or two days, the analysis half a day. Mac: about t
   section is thinner.
 - **The labeller is the developer;** the freeze order and the spot-check limit it.
 - **Memory on the phone** with about 2,800 prompt tokens is estimated at about 3 GiB; measured in step 7.
+
+## Amendment 1 (2026-11-16, written before the freeze of step 3)
+
+**"Not stated" is measured on test 2, not on the test split.** In step 2 the prompts were changed while looking at the test split's
+"not stated" counts (versions 1 to 8 in `Results/phase-3-development.md`), so the fourth clause of the decision rule would score
+the prompts on the data they were shaped on. The held-out run therefore measures "not stated" on the **30 statements of test 2**
+(`Dataset/v2/test2.jsonl`: synthetic, committed in Phase 2b with wording kept apart from the test split's, never used in this
+phase), conditions B and L, three seeds. The clause becomes: "not stated" on **at least 90%** of test 2's answers. As in the other
+clauses, the answers of the two sections are pooled (2 sections, 30 statements, 3 seeds: 180 answers), and each section is
+reported apart. The test split's counts stay in the development record as development. Nothing else in the rule changes.
+
+- **What was seen of test 2 first** (2026-11-15): that its 30 statements are extracted from the chat file, and a word search
+  (no statement has a word such as "makes", "sells", "segment" or "customers"). No section answer of any model was produced on it.
+- **Who decided:** proposed in the development record; the user left the decision to me on 2026-11-16.
+- **Two script options added for it, before the freeze, each with a test:** `sections.py testsplit --source FILE` (test 2's ids are
+  `test2-01` to `test2-30`), and `locate --text DIR [DIR ...]`, so the 22 held-out reports, kept in two folders since Phases 2g
+  and 2h, are located in one run (a report name found in two folders is refused).

@@ -65,6 +65,19 @@ class LocateTests(unittest.TestCase):
         self.assertEqual(located["reports"]["Newco"]["pages"], [3, 4])
         self.assertEqual(located["missed"], ["Oldco"])
 
+    def test_several_folders_and_a_name_in_two_folders_is_refused(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            one, two = Path(tmp) / "one", Path(tmp) / "two"
+            one.mkdir(), two.mkdir()
+            (one / "Newco.pdfkit.json").write_text(json.dumps(["cover", BODY]))
+            (two / "Otherco.pdfkit.json").write_text(json.dumps(["cover", BODY]))
+            with contextlib.redirect_stdout(io.StringIO()):
+                s.locate([one, two], Path(tmp) / "located.json")
+            self.assertEqual(sorted(json.loads((Path(tmp) / "located.json").read_text())["reports"]), ["Newco", "Otherco"])
+            (two / "Newco.pdfkit.json").write_text(json.dumps(["cover", BODY]))   # tamper: the same report twice
+            with self.assertRaises(SystemExit), contextlib.redirect_stdout(io.StringIO()):
+                s.locate([one, two], Path(tmp) / "located.json")
+
 
 class CutTests(unittest.TestCase):
     encode = staticmethod(lambda text: text.split())
@@ -91,6 +104,15 @@ class TestSplitTests(unittest.TestCase):
         texts = s.statements()
         self.assertEqual(len(texts), 30)
         self.assertEqual(texts[0]["id"], "test-01")
+        for t in texts:
+            self.assertTrue(t["text"].strip())
+            self.assertNotIn("Extract the following fields", t["text"])
+            self.assertNotIn("financial statement:", t["text"])
+
+    def test_test_two_has_its_own_ids(self):
+        texts = s.statements(s.REPO / "Dataset" / "v2" / "test2.jsonl")
+        self.assertEqual(len(texts), 30)
+        self.assertEqual((texts[0]["id"], texts[-1]["id"]), ("test2-01", "test2-30"))
         for t in texts:
             self.assertTrue(t["text"].strip())
             self.assertNotIn("Extract the following fields", t["text"])

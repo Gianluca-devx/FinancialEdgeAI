@@ -3,12 +3,16 @@
 
 Standard library only. Nothing from a report is printed: texts, labels, answers and flags stay in RealSet/ (git-ignored).
 
-  locate    --text DIR --out FILE   S1: in every <name>.pdfkit.json of DIR (the page texts of a report), the first page with
+  locate    --text DIR [DIR ...] --out FILE
+                                    S1: in every <name>.pdfkit.json of each DIR (the page texts of a report), the first page with
                                     an "Item 1. Business" heading (also with a dash or a colon) that holds fewer than 4 Item
                                     headings, so not the table of contents; the text from that heading on, over at most 8 pages
                                     (Scripts/lora/section_generate.py window cuts it at 2,500 tokens); reports with no such page
-                                    are listed as missed
-  testsplit --out FILE              the 30 statements of the frozen test split (Dataset/test.jsonl) as texts, for "not stated"
+                                    are listed as missed; a report name found in two folders is refused
+  testsplit [--source FILE] --out FILE
+                                    the statements of a chat file as texts, for "not stated": by default the frozen test split
+                                    (Dataset/test.jsonl, ids test-01 ...); another file's ids start with its name
+                                    (Dataset/v2/test2.jsonl: test2-01 ...)
   check     --texts FILE --answers FILE [FILE ...] [--labels FILE] [--verdicts FILE] --out FILE
                                     S8: format, invented (the flags, and the answers with a flag confirmed by hand), coverage,
                                     not stated; writes the counts to FILE and the flags still waiting for a verdict to
@@ -64,10 +68,15 @@ def item1_text(pages, number):
     return "\n".join(part.strip() for part in parts), numbers
 
 
-def locate(text_dir: Path, out: Path):
-    reports, missed = {}, []
-    for path in sorted(text_dir.glob("*.pdfkit.json")):
+def locate(text_dirs, out: Path):
+    if isinstance(text_dirs, Path):
+        text_dirs = [text_dirs]
+    reports, missed, seen = {}, [], set()
+    for path in [p for d in text_dirs for p in sorted(Path(d).glob("*.pdfkit.json"))]:
         name = path.name[:-len(".pdfkit.json")]
+        if name in seen:
+            raise SystemExit(f"report {name} is in two folders")
+        seen.add(name)
         pages = json.loads(path.read_text())
         number = item1_page(pages)
         if number is None:
@@ -76,7 +85,8 @@ def locate(text_dir: Path, out: Path):
         text, numbers = item1_text(pages, number)
         reports[name] = {"pages": numbers, "text": text}
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"rule": "S1", "from": str(text_dir), "reports": reports, "missed": missed}, indent=1))
+    out.write_text(json.dumps({"rule": "S1", "from": [str(d) for d in text_dirs], "reports": reports, "missed": missed},
+                              indent=1))
     print(f"located: {len(reports)} of {len(reports) + len(missed)} reports, {len(missed)} missed")
 
 
@@ -97,6 +107,7 @@ def cut(text, encode, decode, limit=TOKEN_LIMIT):
 # ---- the test split's statements ------------------------------------------------------------------------------------
 
 def statements(path=TEST_SPLIT):
+    prefix = "test" if Path(path).resolve() == TEST_SPLIT else Path(path).stem
     texts = []
     for number, line in enumerate(path.read_text().splitlines(), start=1):
         if not line.strip():
@@ -105,15 +116,15 @@ def statements(path=TEST_SPLIT):
         match = STATEMENT.search(user)
         if not match:
             raise SystemExit(f"{path.name} line {number}: no statement found")
-        texts.append({"id": f"test-{number:02d}", "text": match.group(1)})
+        texts.append({"id": f"{prefix}-{number:02d}", "text": match.group(1)})
     return texts
 
 
-def testsplit(out: Path):
-    texts = statements()
+def testsplit(out: Path, source=TEST_SPLIT):
+    texts = statements(Path(source))
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"kind": "statements", "texts": texts}, indent=1))
-    print(f"test split: {len(texts)} statements")
+    out.write_text(json.dumps({"kind": "statements", "from": Path(source).name, "texts": texts}, indent=1))
+    print(f"{Path(source).name}: {len(texts)} statements")
 
 
 # ---- the prompts (S3, S4) -------------------------------------------------------------------------------------------
@@ -284,7 +295,8 @@ def check(texts_path: Path, answer_paths, labels_path, verdicts_path, out: Path)
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=["locate", "testsplit", "check"])
-    parser.add_argument("--text")
+    parser.add_argument("--text", nargs="+")
+    parser.add_argument("--source", default=str(TEST_SPLIT))
     parser.add_argument("--texts")
     parser.add_argument("--answers", nargs="+")
     parser.add_argument("--labels")
@@ -293,9 +305,9 @@ def main():
     args = parser.parse_args()
     out = Path(args.out)
     if args.command == "locate":
-        locate(Path(args.text), out)
+        locate([Path(d) for d in args.text], out)
     elif args.command == "testsplit":
-        testsplit(out)
+        testsplit(out, args.source)
     else:
         check(Path(args.texts), args.answers, args.labels, args.verdicts, out)
 
